@@ -54,7 +54,7 @@
       "type": "image/png"
     }
   ],
-  "start_url": "./",
+  "start_url": "./mu-sos",
   "display": "standalone",
   "theme_color": "#ffffff",
   "background_color": "#ffffff"
