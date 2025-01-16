@@ -1,0 +1,7 @@
+{
+  "name": "MUSOS",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "react-vite"
+}

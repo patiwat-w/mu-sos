@@ -1,0 +1,41 @@
+[debug] [2025-01-16T21:25:08.388Z] ----------------------------------------------------------------------
+[debug] [2025-01-16T21:25:08.391Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\PATIWAT-CLOUD\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js init
+[debug] [2025-01-16T21:25:08.391Z] CLI Version:   13.29.1
+[debug] [2025-01-16T21:25:08.392Z] Platform:      win32
+[debug] [2025-01-16T21:25:08.392Z] Node Version:  v22.13.0
+[debug] [2025-01-16T21:25:08.392Z] Time:          Fri Jan 17 2025 04:25:08 GMT+0700 (Indochina Time)
+[debug] [2025-01-16T21:25:08.392Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2025-01-16T21:25:08.402Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-01-16T21:25:08.403Z] > authorizing via signed-in user (patiwat.pfc@gmail.com)
+[info] 
+     ######## #### ########  ######## ########     ###     ######  ########
+     ##        ##  ##     ## ##       ##     ##  ##   ##  ##       ##
+     ######    ##  ########  ######   ########  #########  ######  ######
+     ##        ##  ##    ##  ##       ##     ## ##     ##       ## ##
+     ##       #### ##     ## ######## ########  ##     ##  ######  ########
+
+You're about to initialize a Firebase project in this directory:
+
+  D:\Users\PATIWAT-CLOUD\Documents\GitHub\mu-sos\MUSOS
+
+[info] 
+=== Project Setup
+[info] 
+[info] First, let's associate this project directory with a Firebase project.
+[info] You can create multiple project aliases by running firebase use --add, 
+[info] but for now we'll just set up a default project.
+[info] 
+[info] i  If you want to create a project in a Google Cloud organization or folder, please use "firebase projects:create" instead, and return to this command when you've created the project. 
+[debug] [2025-01-16T21:26:07.412Z] Checked if tokens are valid: true, expires at: 1737065952145
+[debug] [2025-01-16T21:26:07.413Z] Checked if tokens are valid: true, expires at: 1737065952145
+[debug] [2025-01-16T21:26:07.414Z] >>> [apiv2][query] POST https://cloudresourcemanager.googleapis.com/v1/projects [none]
+[debug] [2025-01-16T21:26:07.414Z] >>> [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects {"projectId":"MU-SOS-MOBILE","name":"MU-SOS-MOBILE"}
+[debug] [2025-01-16T21:26:07.826Z] <<< [apiv2][status] POST https://cloudresourcemanager.googleapis.com/v1/projects 400
+[debug] [2025-01-16T21:26:07.826Z] <<< [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects {"error":{"code":400,"message":"field [project_id] has issue [project_id contains invalid characters]","status":"INVALID_ARGUMENT","details":[{"@type":"type.googleapis.com/google.rpc.BadRequest","fieldViolations":[{"field":"project_id","description":"project_id contains invalid characters"}]},{"@type":"type.googleapis.com/google.rpc.Help","links":[{"url":"https://cloud.google.com/resource-manager/reference/rest/v1/projects"}]}]}}
+[debug] [2025-01-16T21:26:07.930Z] FirebaseError: Request to https://cloudresourcemanager.googleapis.com/v1/projects had HTTP Error: 400, field [project_id] has issue [project_id contains invalid characters]
+    at responseToError (C:\Users\PATIWAT-CLOUD\AppData\Roaming\npm\node_modules\firebase-tools\lib\responseToError.js:52:12)
+    at RetryOperation._fn (C:\Users\PATIWAT-CLOUD\AppData\Roaming\npm\node_modules\firebase-tools\lib\apiv2.js:312:77)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+[error] 
+[error] Error: Failed to create project. See firebase-debug.log for more info.

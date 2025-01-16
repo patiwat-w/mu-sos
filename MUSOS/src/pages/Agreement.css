@@ -1,0 +1,18 @@
+.agreement-container {
+  flex: 1;
+  overflow-y: auto;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+}
+
+.agreement-footer {
+  display: flex;
+  justify-content: space-around;
+  padding: 10px;
+}
+
+.agreement-footer .ion-button {
+  width: 45%;
+}
