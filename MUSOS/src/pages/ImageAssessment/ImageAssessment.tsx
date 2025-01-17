@@ -45,7 +45,7 @@ const ImageAssessment: React.FC = () => {
     <IonPage>
       <IonHeader>
         <IonToolbar>
-          <IonButton slot="start" fill="clear">
+          <IonButton slot="start" fill="clear" routerLink="/home">
             <IonIcon icon={home} />
           </IonButton>
           <IonTitle style={{ textAlign: 'center' }}>Image</IonTitle>

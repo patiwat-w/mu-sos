@@ -30,13 +30,14 @@ import '@ionic/react/css/text-alignment.css';
 import '@ionic/react/css/text-transformation.css';
 import '@ionic/react/css/flex-utils.css';
 import '@ionic/react/css/display.css';
-
+import HomePage from './pages/HomePage';
 import LoginPage from './pages/LoginPage';
 import Agreement from './pages/Agreement';
 import PreInformation from './pages/PreInformation';
 import SelectAssessment from './pages/SelectAssessment/SelectAssessment';
 import ImageAssessment from './pages/ImageAssessment/ImageAssessment';
 import VoiceAssessment from './pages/VoiceAssessment/VoiceAssessment';
+import PersonalInformationPage from './pages/PersonalInformation/PersonalInformation';
 /**
  * Ionic Dark Mode
  * -----------------------------------------------------
@@ -60,6 +61,11 @@ const App: React.FC = () => (
         {/* Route สำหรับหน้า Login */}
         <Route exact path="/login">
           <LoginPage />
+        </Route>
+        
+        {/* Route สำหรับหน้า Home */}
+        <Route exact path="/home">
+          <HomePage />
         </Route>
 
         {/* Route สำหรับ Tabs */}
@@ -118,6 +124,9 @@ const App: React.FC = () => (
 </Route>
 <Route exact path="/voice-assessment">  
 <VoiceAssessment />
+</Route>
+<Route exact path="/personal-information">
+<PersonalInformationPage />
 </Route>
 
       </IonRouterOutlet>

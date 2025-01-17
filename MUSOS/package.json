@@ -12,7 +12,8 @@
     "test.unit": "vitest",
     "lint": "eslint",
     "redeploy": "npm run build",
-    "deploy": "gh-pages -d build"
+    "deploy": "gh-pages -d build",
+    "start": "ionic serve"
     
   },
   "dependencies": {
