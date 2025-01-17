@@ -1,41 +1,17 @@
-/* ปุ่ม Responsive */
 .responsive-button {
-    --button-size: calc(50vw - 20px) !important; /* ปรับขนาดตามหน้าจอ (50% ของความกว้าง) */
-    height: var(--button-size) !important;
-    width: var(--button-size) !important;
-    max-width: 200px !important; /* จำกัดขนาดไม่ให้เกิน 200px */
-    max-height: 200px !important;
-    border-radius: 20px !important;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2) !important;
-  }
-  
-  /* ปุ่มแต่ละประเภท */
-  .btn-image {
-    background-color: #007bff !important;
-    color: white !important;
-  }
-  
-  .btn-voice {
-    background-color: #ffd700 !important;
-    color: black !important;
-  }
-  
-  .btn-info {
-    background-color: #28a745 !important;
-    color: white !important;
-  }
-  
-  .btn-result {
-    background-color: #d3d3d3 !important;
-    color: black !important;
-    opacity: 0.6 !important;
-  }
-  
-  /* ไอคอนภายในปุ่ม */
-  .btn-icon {
-    font-size: calc(var(--button-size) / 3) !important; /* ขนาดไอคอนสัมพันธ์กับขนาดปุ่ม */
-  }
-  
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100px; /* Adjust as necessary */
+}
+
+.btn-icon {
+  font-size: 2rem; /* Adjust icon size */
+  margin-bottom: 8px; /* Add spacing between icon and text */
+}
+
+.icon-text {
+  font-size: 1rem; /* Adjust text size */
+  text-align: center; /* Ensure text is centered */
+}

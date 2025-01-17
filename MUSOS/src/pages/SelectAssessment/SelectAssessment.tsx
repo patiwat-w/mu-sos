@@ -11,6 +11,8 @@ import {
   IonButton,
   IonIcon,
   IonFooter,
+  IonNote,
+  IonLabel,
 } from '@ionic/react';
 import { home, personCircle, helpCircle, image, mic, informationCircle, checkmarkCircle } from 'ionicons/icons';
 import { useHistory } from 'react-router-dom';
@@ -27,15 +29,40 @@ const SelectAssessment: React.FC = () => {
     history.push('/voice-assessment'); // Redirect to voice-assessment page
   };
 
+  const handleSubmit = () => {
+
+    history.push('/select-assessment');
+  };
+
+  const handleHomeClick = () => {
+    history.push('/home'); // Redirect to home page
+  };
+
+  const handleBack = () => {
+    history.push('/pre-information'); // Redirect to home page
+    // Add navigation logic here
+  };
+
+  const handleInfoClick = () => { 
+    history.push('/health-information');
+  };
+  const handleResultClick = () => {
+    history.push('/result');
+  }
+
+  const handleProfileClick = () => {
+    history.push('/user-profile');
+  };
+
   return (
     <IonPage>
       <IonHeader>
         <IonToolbar>
-          <IonButton slot="start" fill="clear">
+          <IonButton slot="start" fill="clear" onClick={handleHomeClick}>
             <IonIcon icon={home} />
           </IonButton>
-          <IonTitle style={{ textAlign: 'center' }}>Select Assessment</IonTitle>
-          <IonButton slot="end" fill="clear">
+          <IonTitle style={{ textAlign: 'center' }}>Select Capture Type</IonTitle>
+          <IonButton slot="end" fill="clear" onClick={handleProfileClick}>
             <IonIcon icon={personCircle} />
           </IonButton>
         </IonToolbar>
@@ -46,37 +73,48 @@ const SelectAssessment: React.FC = () => {
           <IonRow>
             <IonCol size="6" className="ion-text-center">
               <IonButton className="responsive-button btn-image" onClick={handleImageClick}>
-                <IonIcon icon={image} className="btn-icon" />
+              <IonIcon icon={image} className="btn-icon" />
+              <br />
+              <IonLabel className="icon-text">Image</IonLabel>
               </IonButton>
             </IonCol>
             <IonCol size="6" className="ion-text-center">
               <IonButton className="responsive-button btn-voice" onClick={handleVoiceClick}>
                 <IonIcon icon={mic} className="btn-icon" />
+                <br />
+              <IonLabel className="icon-text">Voice</IonLabel>
               </IonButton>
             </IonCol>
           </IonRow>
           {/* Row 2 */}
           <IonRow>
             <IonCol size="6" className="ion-text-center">
-              <IonButton className="responsive-button btn-info">
+              <IonButton className="responsive-button btn-info" onClick={handleInfoClick}>
                 <IonIcon icon={informationCircle} className="btn-icon" />
+                <br />
+              <IonLabel className="icon-text">Info</IonLabel>
               </IonButton>
             </IonCol>
             <IonCol size="6" className="ion-text-center">
-              <IonButton className="responsive-button btn-result" disabled>
+              <IonButton className="responsive-button btn-result" onClick={handleResultClick}>
                 <IonIcon icon={checkmarkCircle} className="btn-icon" />
+                <br />
+              <IonLabel className="icon-text">Result</IonLabel>
               </IonButton>
             </IonCol>
           </IonRow>
         </IonGrid>
       </IonContent>
-      <IonFooter>
-        <div style={{ textAlign: 'center', padding: '10px' }}>
-          <IonButton fill="clear" color="medium">
-            <IonIcon icon={helpCircle} />
-          </IonButton>
-        </div>
-      </IonFooter>
+         <IonFooter>
+              
+            <IonNote className="ion-margin-top" >
+               <ul > 
+                <IonIcon icon={helpCircle} />
+                
+                 Please select the assessment you want to test.</ul>               
+           
+                           </IonNote>
+            </IonFooter>
     </IonPage>
   );
 };

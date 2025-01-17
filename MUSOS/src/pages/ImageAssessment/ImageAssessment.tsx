@@ -13,8 +13,10 @@ import {
 } from '@ionic/react';
 import { home, personCircle, helpCircle, camera, videocam, cog } from 'ionicons/icons';
 import './ImageAssessment.module.css'; // CSS Module
+import { useHistory } from 'react-router';
 
 const ImageAssessment: React.FC = () => {
+  const history = useHistory();
   const videoRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
@@ -41,11 +43,25 @@ const ImageAssessment: React.FC = () => {
     };
   }, []);
 
+  const handleSubmit = () => {
+
+    history.push('/select-assessment');
+  };
+
+  const handleHomeClick = () => {
+    history.push('/home'); // Redirect to home page
+  };
+
+  const handleBack = () => {
+    history.push('/select-assessment'); // Redirect to home page
+    // Add navigation logic here
+  };
+
   return (
     <IonPage>
       <IonHeader>
         <IonToolbar>
-          <IonButton slot="start" fill="clear" routerLink="/home">
+          <IonButton slot="start" fill="clear" onClick={handleHomeClick}>
             <IonIcon icon={home} />
           </IonButton>
           <IonTitle style={{ textAlign: 'center' }}>Image</IonTitle>
@@ -113,12 +129,15 @@ const ImageAssessment: React.FC = () => {
         </p>
       </IonContent>
       <IonFooter>
-        <div style={{ textAlign: 'center', padding: '10px' }}>
-          <IonButton fill="clear" color="medium">
-            <IonIcon icon={helpCircle} />
-          </IonButton>
-        </div>
-      </IonFooter>
+              <div style={{ display: 'flex', justifyContent: 'space-between', padding: '10px' }}>
+                <IonButton color="primary" onClick={handleBack} style={{ flex: 1, marginRight: '10px' }}>
+                  Back
+                </IonButton>
+                <IonButton color="primary" onClick={handleSubmit} style={{ flex: 1, marginLeft: '10px' }}>
+                  Next
+                </IonButton>
+              </div>
+            </IonFooter>
     </IonPage>
   );
 };

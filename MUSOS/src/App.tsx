@@ -37,7 +37,11 @@ import PreInformation from './pages/PreInformation';
 import SelectAssessment from './pages/SelectAssessment/SelectAssessment';
 import ImageAssessment from './pages/ImageAssessment/ImageAssessment';
 import VoiceAssessment from './pages/VoiceAssessment/VoiceAssessment';
-import PersonalInformationPage from './pages/PersonalInformation/PersonalInformation';
+import PersonalInformation from './pages/PersonalInformation/PersonalInformation';
+import HealthInformation from './pages/PersonalInformation/HealthInformation';
+import PreDiagnosisPage from './pages/PersonalInformation/PreDiagnosisPage';
+import NHISSPage from './pages/PersonalInformation/NHISSPage';
+import UserProfilePage from './pages/UserProfile';
 /**
  * Ionic Dark Mode
  * -----------------------------------------------------
@@ -119,14 +123,30 @@ const App: React.FC = () => (
 <Route exact path="/select-assessment">
   <SelectAssessment />
 </Route>
+
 <Route exact path="/image-assessment">
   <ImageAssessment />
 </Route>
+
 <Route exact path="/voice-assessment">  
 <VoiceAssessment />
 </Route>
+
 <Route exact path="/personal-information">
-<PersonalInformationPage />
+<PersonalInformation />
+</Route>
+
+<Route exact path="/health-information">
+<HealthInformation />
+</Route>
+<Route exact path="/pre-diagnosis">
+<PreDiagnosisPage />
+</Route>
+<Route exact path="/nhiss">
+<NHISSPage />
+</Route>
+<Route exact path="/user-profile">
+<UserProfilePage />
 </Route>
 
       </IonRouterOutlet>

@@ -14,6 +14,8 @@ import {
 import { home, personCircle, helpCircle, mic, play, cog } from 'ionicons/icons';
 
 const VoiceAssessment: React.FC = () => {
+
+  
   return (
     <IonPage>
       <IonHeader>

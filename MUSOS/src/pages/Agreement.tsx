@@ -15,13 +15,13 @@ const Agreement: React.FC = () => {
   const history = useHistory();
 
   const handleAccept = () => {
-    // Handle accept action
-    history.push('/pre-information'); // Redirect to pre-information page or another page
+    // Handle accept action and pass acceptance status back to login page
+    history.push('/login', { accepted: true });
   };
- 
+
   const handleDecline = () => {
     // Handle decline action
-    history.push('/login'); // Redirect to login page or another page
+    history.push('/login', { accepted: false });
   };
 
   return (

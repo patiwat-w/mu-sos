@@ -5,24 +5,27 @@ import {
   IonToolbar,
   IonTitle,
   IonContent,
+  IonInput,
   IonItem,
   IonLabel,
-  IonInput,
   IonButton,
-  IonFooter,
   IonIcon,
+  IonDatetime,
+  IonFooter,
 } from '@ionic/react';
-import { timeOutline, helpCircle } from 'ionicons/icons';
+import { home, personCircle } from 'ionicons/icons';
+import { useHistory } from 'react-router-dom';
 
 const PreInformation: React.FC = () => {
+  const history = useHistory();
   const [subjectId, setSubjectId] = useState('');
   const [hn, setHn] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
   const [onsetTime, setOnsetTime] = useState('');
   const [lastSeenNormalTime, setLastSeenNormalTime] = useState('');
 
-  const handleNext = () => {
-    console.log('Go to the next step with:', {
+  const handleSubmit = () => {
+    console.log('Submit:', {
       subjectId,
       hn,
       phoneNumber,
@@ -30,10 +33,15 @@ const PreInformation: React.FC = () => {
       lastSeenNormalTime,
     });
     // Add navigation logic here
+    history.push('/select-assessment');
+  };
+
+  const handleHomeClick = () => {
+    history.push('/home'); // Redirect to home page
   };
 
   const handleBack = () => {
-    console.log('Go back');
+    history.push('/login'); // Redirect to home page
     // Add navigation logic here
   };
 
@@ -41,62 +49,81 @@ const PreInformation: React.FC = () => {
     <IonPage>
       <IonHeader>
         <IonToolbar>
-          <IonTitle>Pre-Information</IonTitle>
+          <IonButton slot="start" fill="clear" onClick={handleHomeClick}>
+            <IonIcon icon={home} />
+          </IonButton>
+          <IonTitle style={{ textAlign: 'center' }}>Pre-Information</IonTitle>
+          <IonButton slot="end" fill="clear">
+            <IonIcon icon={personCircle} />
+          </IonButton>
         </IonToolbar>
       </IonHeader>
       <IonContent className="ion-padding">
         <IonItem>
-          <IonLabel position="floating">Subject ID</IonLabel>
+          <IonLabel position="stacked"></IonLabel>
           <IonInput
             value={subjectId}
+            placeholder=" Subject ID"
             onIonChange={(e) => setSubjectId(e.detail.value!)}
+            style={{ border: '1px solid #ccc', borderRadius: '4px', padding: '8px', width: '100%' }}
           />
         </IonItem>
-        <p style={{ textAlign: 'center', margin: '10px 0' }}>or</p>
-        <IonItem>
-          <IonLabel position="floating">HN (Optional)</IonLabel>
-          <IonInput value={hn} onIonChange={(e) => setHn(e.detail.value!)} />
+
+        <IonItem lines="none" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '50px' }}>
+          <span style={{ paddingTop: '20px', textAlign: 'center', width: '100%' }}>Or</span>
         </IonItem>
+
         <IonItem>
-          <IonLabel position="floating">Phone Number</IonLabel>
+          <IonLabel position="stacked"></IonLabel>
           <IonInput
-            type="tel"
+            value={hn}
+            placeholder=" HN"
+            onIonChange={(e) => setHn(e.detail.value!)}
+            style={{ border: '1px solid #ccc', borderRadius: '4px', padding: '8px', width: '100%' }}
+          />
+        </IonItem>
+
+        <IonItem style={{ marginTop: '20px', marginBottom: '20px' }}>
+          <IonLabel position="stacked"></IonLabel>
+          <IonInput
             value={phoneNumber}
+            placeholder=" Phone Number"
             onIonChange={(e) => setPhoneNumber(e.detail.value!)}
+            style={{ border: '1px solid #ccc', borderRadius: '4px', padding: '8px', width: '100%' }}
           />
         </IonItem>
-        <IonItem>
-          <IonLabel position="floating">Onset Time</IonLabel>
+
+        <IonItem button onClick={() => setOnsetTime('')}>
+          <IonLabel position="stacked"></IonLabel>
           <IonInput
-            type="time"
             value={onsetTime}
-            onIonChange={(e) => setOnsetTime(e.detail.value!)}
+            readonly
+            placeholder=" Onset Time"
+            style={{ border: '1px solid #ccc', borderRadius: '4px', padding: '8px', width: '100%' }}
           />
-          <IonIcon slot="end" icon={timeOutline} />
         </IonItem>
-        <p style={{ textAlign: 'center', margin: '10px 0' }}>or</p>
-        <IonItem>
-          <IonLabel position="floating">Last Seen Normal Time</IonLabel>
+
+        <IonItem lines="none" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '50px' }}>
+          <span style={{ paddingTop: '20px', textAlign: 'center', width: '100%' }}>Or</span>
+        </IonItem>
+
+        <IonItem button onClick={() => setLastSeenNormalTime('')}>
+          <IonLabel position="stacked"></IonLabel>
           <IonInput
-            type="time"
             value={lastSeenNormalTime}
-            onIonChange={(e) => setLastSeenNormalTime(e.detail.value!)}
+            readonly
+            placeholder=" Last Seen Normal Time"
+            style={{ border: '1px solid #ccc', borderRadius: '4px', padding: '8px', width: '100%' }}
           />
-          <IonIcon slot="end" icon={timeOutline} />
         </IonItem>
-        <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '20px' }}>
-          <IonButton color="primary" onClick={handleBack}>
-            &lt;&lt; Back
-          </IonButton>
-          <IonButton color="primary" onClick={handleNext}>
-            Next &gt;&gt;
-          </IonButton>
-        </div>
       </IonContent>
       <IonFooter>
-        <div style={{ textAlign: 'center', padding: '10px' }}>
-          <IonButton fill="clear" color="medium">
-            <IonIcon icon={helpCircle} />
+        <div style={{ display: 'flex', justifyContent: 'space-between', padding: '10px' }}>
+          <IonButton color="primary" onClick={handleBack} style={{ flex: 1, marginRight: '10px' }}>
+            Back
+          </IonButton>
+          <IonButton color="primary" onClick={handleSubmit} style={{ flex: 1, marginLeft: '10px' }}>
+            Next
           </IonButton>
         </div>
       </IonFooter>

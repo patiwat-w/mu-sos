@@ -16,7 +16,9 @@ import { home, personCircle, settings, helpCircle } from 'ionicons/icons';
 
 const menuConfig = [
     { icon: home, label: 'Home', target: '/home' },
-    { icon: personCircle, label: 'Profile', target: '/profile' },
+    { icon: personCircle, label: 'Pre Iformation', target: '/pre-information' },
+    { icon: personCircle, label: 'Assessment', target: '/select-assessment' },
+    { icon: personCircle, label: 'Personal Iformation', target: '/personal-information' },
     { icon: settings, label: 'Settings', target: '/settings' },
     { icon: helpCircle, label: 'Help', target: '/help' }
 ];
