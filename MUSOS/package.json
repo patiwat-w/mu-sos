@@ -13,7 +13,9 @@
     "lint": "eslint",
     "redeploy": "npm run build",
     "deploy": "gh-pages -d build",
-    "start": "ionic serve"
+    "start": "ionic serve --external",
+    "build:web": "ionic build --prod",
+    "serve:web": "http-server ./www -P http://localhost:8080"
     
   },
   "dependencies": {
