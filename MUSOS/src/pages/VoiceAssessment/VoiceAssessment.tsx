@@ -47,7 +47,6 @@ const VoiceAssessment: React.FC = () => {
         >
           Image or Text for Reading
         </div>
-
         {/* HTML5 Audio Player */}
         <div
           style={{
