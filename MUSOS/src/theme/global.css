@@ -1,4 +1,30 @@
 @import url(variables.css);
+/* กำหนดให้ page เป็นขนาด Mobile */
+
+@media only screen and (min-width: 600px) {
+  body {
+    font-size: 14px;
+    margin: 0;
+    padding: 0;
+    max-width: 400px;
+    overflow-x: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Ensure the body takes the full height of the viewport */
+  }
+
+  .container {
+    max-width: 100%;
+    padding: 10px;
+    box-sizing: border-box; /* Ensure padding is included in the width */
+  }
+
+  .header, .footer {
+    display: none;
+  }
+}
+
 /* ปุ่ม Responsive */
 .responsive-button {
     --button-size: calc(50vw - 20px) !important; /* ปรับขนาดตามหน้าจอ (50% ของความกว้าง) */

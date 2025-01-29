@@ -136,8 +136,10 @@ const ImageAssessment: React.FC = () => {
   
     // Draw the silhouette guide (oval shape, centered)
     overlayCtx.beginPath();
-    const maxOvalWidth = width * 0.3; // Adjust the width of the oval to fit a face
-    const maxOvalHeight = height * 0.5; // Adjust the height of the oval to fit a face
+    const maxOvalWidth = 80; // Adjust the width of the oval to fit a face
+    const maxOvalHeight = 75; // Adjust the height of the oval to fit a face
+  // alert(maxOvalWidth);
+   //alert(maxOvalHeight);
     overlayCtx.ellipse(width / 2, height / 2, maxOvalWidth, maxOvalHeight, 0, 0, 2 * Math.PI);
     overlayCtx.strokeStyle = 'rgba(0, 255, 0, 0.8)';
     overlayCtx.lineWidth = 3;
@@ -145,7 +147,7 @@ const ImageAssessment: React.FC = () => {
   
     // Lighter overlay outside the silhouette
     overlayCtx.globalCompositeOperation = 'destination-over';
-    overlayCtx.fillStyle = 'rgba(0, 0, 0, 0.3)';
+    overlayCtx.fillStyle = 'transparent';
     overlayCtx.fillRect(0, 0, width, height);
     overlayCtx.globalCompositeOperation = 'source-over';
   }
@@ -196,7 +198,7 @@ const drawFaceSilhouetteGuide2 = () => {
         <div
           className="camera-display"
           style={{
-            height: 'calc(100vh - 400px)', // Adjust height dynamically
+            height: 'calc(100vh - 500px)', // Adjust height dynamically
             display: 'flex',
             justifyContent: 'center',
             alignItems: 'center',
@@ -213,11 +215,13 @@ const drawFaceSilhouetteGuide2 = () => {
               position: 'absolute', // Change to absolute
               top: 0,
               left: 0,
-              paddingTop: '30%', // 16:9 aspect ratio
+              paddingTop: '10%', // 16:9 aspect ratio
               paddingBottom: '30%', // 16:9 aspect ratio
 
               width: '100%',
               height: '100%',
+             
+           
               zIndex: 1,
               pointerEvents: 'none',
             }}
@@ -226,9 +230,10 @@ const drawFaceSilhouetteGuide2 = () => {
           playsInline 
           className="video-stream" 
           style={{ 
+            
              width: '100%'
             , height: '100%' 
-            , objectFit: 'cover' // Ensure the video maintains aspect ratio while covering the container
+            , objectFit: 'fill' // Ensure the video maintains aspect ratio while covering the container
             , backgroundColor: 'rgba(111, 26, 26, 0.5)'
           }}>
 
@@ -242,7 +247,7 @@ const drawFaceSilhouetteGuide2 = () => {
           <img src={photo} alt="Captured" 
           style={{ position: 'absolute', 
           top: 0, left: 0, 
-          objectFit: 'cover',
+          objectFit: 'fill',
           width: '100%', 
           height: '100%' }} 
           />}
