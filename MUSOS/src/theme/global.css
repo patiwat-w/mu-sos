@@ -69,7 +69,7 @@
   ion-toolbar {
     --background: var(--ion-header-bg-color);
     --color: var(--ion-header-font-color);
-    --border-color: var(--ion-table-border-color);
+    
     --border-width: 1px;
     --border-style: solid;
     --padding: 10px;

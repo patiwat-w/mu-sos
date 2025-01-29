@@ -73,12 +73,12 @@ ion-footer {
     --ion-color-dark-shade: #000000;
     --ion-color-dark-tint: #333333;
 
-    --ion-header-bg-color: #762626;
-    --ion-header-font-color: #ffffff;
+    --ion-header-bg-color: 239 ,68 ,68;
+    --ion-header-font-color: #80230c;
     --ion-header-border-color: #000000;
     /* page bg*/
-    --ion-bg-color: #ffd3b3;
-    --ion-content-bg-color: #f2f2f2;;
+    --ion-bg-color:#eff6ff;
+    --ion-content-bg-color:#eff6ff;
 
 
 }
