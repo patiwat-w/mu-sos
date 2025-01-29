@@ -222,9 +222,30 @@ const drawFaceSilhouetteGuide2 = () => {
               pointerEvents: 'none',
             }}
           ></canvas>
-          <video ref={videoRef} autoPlay playsInline className="video-stream" style={{ width: '100%', height: '100%' }}></video>
-          <canvas ref={canvasRef} style={{ display: 'none' }} width="640" height="480" />
-          {photo && <img src={photo} alt="Captured" style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' }} />}
+          <video ref={videoRef} autoPlay 
+          playsInline 
+          className="video-stream" 
+          style={{ 
+             width: '100%'
+            , height: '100%' 
+            , objectFit: 'cover' // Ensure the video maintains aspect ratio while covering the container
+            , backgroundColor: 'rgba(111, 26, 26, 0.5)'
+          }}>
+
+          </video>
+          
+          <canvas ref={canvasRef} 
+          style={{ display: 'none' }} 
+          width="640" height="480" 
+          />
+          {photo && 
+          <img src={photo} alt="Captured" 
+          style={{ position: 'absolute', 
+          top: 0, left: 0, 
+          objectFit: 'cover',
+          width: '100%', 
+          height: '100%' }} 
+          />}
         </div>
 
         {/* ปุ่มด้านล่าง */}
