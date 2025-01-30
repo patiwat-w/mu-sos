@@ -25,6 +25,31 @@
   }
 }
 
+@media only screen and (max-width: 600px) {
+  body {
+    font-size: 14px;
+    margin: 0;
+    padding: 0;
+    max-width: 100%;
+    overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100vh; /* Ensure the body takes the full height of the viewport */
+    background-color: #eff6ff; /* Light background color */
+  }
+
+  .container {
+    width: 100%;
+    padding: 10px;
+    box-sizing: border-box; /* Ensure padding is included in the width */
+  }
+
+  .header, .footer {
+    display: none;
+  }
+}
+
 /* ปุ่ม Responsive */
 .responsive-button {
     --button-size: calc(50vw - 20px) !important; /* ปรับขนาดตามหน้าจอ (50% ของความกว้าง) */
@@ -37,6 +62,7 @@
     align-items: center !important;
     justify-content: center !important;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2) !important;
+    margin: 10px !important; /* Add margin for spacing */
   }
   
   /* ปุ่มแต่ละประเภท */
@@ -64,89 +90,89 @@
   /* ไอคอนภายในปุ่ม */
   .btn-icon {
     font-size: calc(var(--button-size) / 3) !important; /* ขนาดไอคอนสัมพันธ์กับขนาดปุ่ม */
+    
   }
-  
+   /* 
   ion-toolbar {
     --background: var(--ion-header-bg-color);
-    --color: var(--ion-header-font-color);
+    color: var(--ion-header-font-color);
     
     --border-width: 1px;
     --border-style: solid;
     --padding: 10px;
-    --box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    font-size: larger;
 }
-  
+ 
   ion-content {
-    --background: var(--ion-content-bg-color);
-    --color: var(--ion-content-font-color);
-    --padding: 10px;
+    background: var(--ion-content-bg-color);
+    color: var(--ion-content-font-color);
+    padding: 10px;
 }
   
   ion-footer {
-    --background: var(--ion-footer-bg-color);
-    --color: var(--ion-footer-font-color);
-    --border-color: var(--ion-table-border-color);
-    --border-width: 1px;
-    --border-style: solid;
-    --padding: 10px;
-    --box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    background: var(--ion-footer-bg-color);
+    color: var(--ion-footer-font-color);
+    border-color: var(--ion-table-border-color);
+    border-width: 1px;
+    border-style: solid;
+    padding: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
   
   ion-card {
-    --background: var(--ion-card-bg-color);
-    --color: var(--ion-card-font-color);
+    background: var(--ion-card-bg-color);
+    color: var(--ion-card-font-color);
     --border-color: var(--ion-table-border-color);
     --border-width: 1px;
     --border-style: solid;
-    --padding: 10px;
-    --box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    padding: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
   
   ion-card-header {
-    --background: var(--ion-card-header-bg-color);
-    --color: var(--ion-card-header-font-color);
-    --border-color: var(--ion-table-border-color);
-    --border-width: 1px;
-    --border-style: solid;
-    --padding: 10px;
+    background: var(--ion-card-header-bg-color);
+    color: var(--ion-card-header-font-color);
+    border-color: var(--ion-table-border-color);
+    border-width: 1px;
+    border-style: solid;
+    padding: 10px;
 }
   
   ion-card-content {
-    --background: var(--ion-card-content-bg-color);
-    --color: var(--ion-card-content-font-color);
-    --border-color: var(--ion-table-border-color);
-    --border-width: 1px;
-    --border-style: solid;
-    --padding: 10px;
+    background: var(--ion-card-content-bg-color);
+    color: var(--ion-card-content-font-color);
+    border-color: var(--ion-table-border-color);
+    border-width: 1px;
+    border-style: solid;
+    padding: 10px;
 }
   
   ion-item {
-    --background: var(--ion-item-bg-color);
-    --color: var(--ion-item-font-color);
+    background: var(--ion-item-bg-color);
+    color: var(--ion-item-font-color);
     --border-color: var(--ion-table-border-color);
     --border-width: 1px;
     --border-style: solid;
-    --padding: 10px;
+    padding: 10px;
 }
   
   ion-label {
-    --color: var(--ion-label-font-color);
+    color: var(--ion-label-font-color);
 }
   
   ion-input {
-    --background: var(--ion-input-bg-color);
-    --color: var(--ion-input-font-color);
-    --border-color: var(--ion-table-border-color);
-    --border-width: 1px;
-    --border-style: solid;
-    --padding: 10px;
+    background: var(--ion-input-bg-color);
+    color: var(--ion-input-font-color);
+    border-color: var(--ion-table-border-color);
+    border-width: 1px;
+    border-style: solid;
+    padding: 10px;
 }
 
 
 ion-page {
-    --background: var(--ion-page-bg-color);
-    --color: var(--ion-page-font-color);
-    --padding: 10px;
-}
-  
-  /* ปุ่ม Responsive */
+    background: var(--ion-page-bg-color);
+    color: var(--ion-page-font-color);
+    padding: 10px;
+} */

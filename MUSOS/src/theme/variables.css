@@ -3,10 +3,12 @@ http://ionicframework.com/docs/theming/ */
 
 ion-item {
     --inner-padding: 10px;
+    font-size: 16px; /* เพิ่มขนาดตัวอักษร */
 }
 
 ion-footer {
     background-color: transparent;
+    font-size: 14px; /* เพิ่มขนาดตัวอักษร */
 }
 
 :root {
@@ -74,11 +76,29 @@ ion-footer {
     --ion-color-dark-tint: #333333;
 
     --ion-header-bg-color: 239 ,68 ,68;
-    --ion-header-font-color: #80230c;
+    --ion-header-font-color: #130bf0;
     --ion-header-border-color: #000000;
     /* page bg*/
     --ion-bg-color:#eff6ff;
     --ion-content-bg-color:#eff6ff;
 
+    /* เพิ่มการตั้งค่าขนาดตัวอักษรสำหรับ Mobile Web */
+    --ion-font-size-small: 12px;
+    --ion-font-size-medium: 16px;
+    --ion-font-size-large: 20px;
 
+    /* เพิ่มการตั้งค่าการจัดเรียง */
+    --ion-padding-horizontal: 16px;
+    --ion-padding-vertical: 12px;
+
+    /* เพิ่มการตั้งค่าความกว้างของ display */
+    --ion-display-width: 100%;
 }
+
+/* เพิ่มการตั้งค่าการจัดเรียงสำหรับ Mobile Web */
+body {
+    padding: var(--ion-padding-vertical) var(--ion-padding-horizontal);
+    font-size: var(--ion-font-size-medium);
+    width: var(--ion-display-width); /* เพิ่มความกว้างของ display */
+}
+

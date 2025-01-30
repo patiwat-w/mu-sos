@@ -4,18 +4,43 @@
   align-items: center !important;
   justify-content: center !important;
   height: 100px !important; /* Adjust as necessary */
+  width: 100px !important; /* Adjust as necessary */
+  margin: 10px !important; /* Add margin for spacing */
+  border-radius: 10px !important; /* Rounded corners */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1) !important; /* Subtle shadow */
 }
 
 .btn-icon {
   font-size: 2rem; /* Adjust icon size */
   margin-bottom: 8px; /* Add spacing between icon and text */
   color: #000000; /* Adjust icon color */
-
 }
 
 .icon-text {
-  font-size: 0.5rem !important; /* Adjust text size */
+  font-size: 0.75rem !important; /* Adjust text size */
   text-align: center !important; /* Ensure text is centered */
   color: #000000; /* Adjust text color */
-  
+}
+
+.ion-title-custom {
+  display: block !important;
+  text-align: center !important;
+  font-size: 1.5rem !important;
+  font-weight: 600 !important;
+  color: var(--ion-color-primary) !important;
+  padding: 1rem 0 !important;
+  margin: 0 !important;
+  background-color: #f8f9fa !important; /* Light background */
+  border-bottom: 1px solid #dee2e6 !important; /* Bottom border */
+}
+
+/* Use with global styles */
+:global(.ion-title-custom) {
+  display: block !important;
+  text-align: center !important;
+  font-size: 1.5rem !important;
+  font-weight: 600 !important;
+  color: var(--ion-color-primary) !important;
+  padding: 1rem 0 !important;
+  margin: 0 !important;
 }

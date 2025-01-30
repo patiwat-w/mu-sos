@@ -61,7 +61,7 @@ const SelectAssessment: React.FC = () => {
           <IonButton slot="start" fill="clear" onClick={handleHomeClick}>
             <IonIcon icon={home} />
           </IonButton>
-          <IonTitle style={{ textAlign: 'center' }}>Select Capture Type</IonTitle>
+          <IonTitle className="ion-title-custom">Select Capture Type</IonTitle>
           <IonButton slot="end" fill="clear" onClick={handleProfileClick}>
             <IonIcon icon={personCircle} />
           </IonButton>
