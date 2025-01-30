@@ -217,6 +217,7 @@ const ImageAssessment: React.FC = () => {
             <IonCol size="auto" className="ion-text-center">
               <IonButton
                 onClick={takePhoto}
+                fill="clear"
                 style={{
                   width: '70px',
                   height: '70px',
@@ -239,6 +240,7 @@ const ImageAssessment: React.FC = () => {
             <IonCol size="auto" className="ion-text-center">
               <IonButton
                 onClick={handleDiscard}
+                fill="clear"
                 style={{
                   width: '70px',
                   height: '70px',
@@ -257,13 +259,15 @@ const ImageAssessment: React.FC = () => {
           )}
 
           {/* ปุ่ม Record Video */}
+          {!isPhotoTaken && (
           <IonCol size="auto" className="ion-text-center">
             <IonButton
+              fill="clear"
               style={{
                 width: '70px',
                 height: '70px',
                 borderRadius: '50%',
-                backgroundColor: '#2196F3', // Blue color for record
+                backgroundColor: '#000000', //  color for record
                 boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)',
                 transition: 'transform 0.2s, box-shadow 0.2s',
               }}
@@ -274,20 +278,23 @@ const ImageAssessment: React.FC = () => {
             </IonButton>
             <p style={{ marginTop: '8px', fontSize: '14px', color: '#2196F3' }}>Record Video</p>
           </IonCol>
+          )}
 
           {/* ปุ่ม Submit */}
           <IonCol size="auto" className="ion-text-center">
             <IonButton
+              fill="clear"
               style={{
                 width: '70px',
                 height: '70px',
                 borderRadius: '50%',
-                backgroundColor: '#9C27B0', // Purple color for submit
+                backgroundColor: '#2196F3', //  color for submit
                 boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)',
                 transition: 'transform 0.2s, box-shadow 0.2s',
               }}
               onMouseEnter={(e) => (e.currentTarget.style.transform = 'scale(1.1)')}
               onMouseLeave={(e) => (e.currentTarget.style.transform = 'scale(1)')}
+              onClick={handleSubmit}
             >
               <IonIcon icon={send} style={{ fontSize: '32px', color: 'white' }} />
             </IonButton>
