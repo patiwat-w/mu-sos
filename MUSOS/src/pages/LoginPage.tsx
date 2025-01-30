@@ -45,7 +45,7 @@ const LoginPage: React.FC = () => {
       const result = await signInWithPopup(auth, googleProvider);
       const user = result.user;
       console.log("User:", user);
-      alert(`Welcome ${user.displayName}`);
+      //alert(`Welcome ${user.displayName}`);
       history.push('/pre-information'); // ไปหน้าถัดไปเมื่อ login สำเร็จ
     } catch (error) {
       console.error("Google Sign-In Error:", error);
