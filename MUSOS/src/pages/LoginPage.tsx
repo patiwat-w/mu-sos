@@ -16,6 +16,8 @@ import {
 } from '@ionic/react';
 import { helpCircle, logoGoogle } from 'ionicons/icons';
 import { useHistory, useLocation } from 'react-router-dom'; // เพิ่ม useHistory และ useLocation
+import { GoogleOAuthProvider, GoogleLogin } from '@react-oauth/google';
+import { auth, googleProvider, signInWithPopup } from "../config/firebase"; // เพิ่ม import ของ firebase
 
 const LoginPage: React.FC = () => {
   const history = useHistory(); // ใช้ useHistory เพื่อเปลี่ยนเส้นทาง
@@ -38,15 +40,36 @@ const LoginPage: React.FC = () => {
     }
   };
 
-  const handleGoogleSignIn = () => {
-    // Handle Google sign-in logic here
-    alert('Google sign-in is not implemented yet.');
+  const handleGoogleSignIn = async () => {
+    try {
+      const result = await signInWithPopup(auth, googleProvider);
+      const user = result.user;
+      console.log("User:", user);
+      alert(`Welcome ${user.displayName}`);
+      history.push('/pre-information'); // ไปหน้าถัดไปเมื่อ login สำเร็จ
+    } catch (error) {
+      console.error("Google Sign-In Error:", error);
+      alert("Google Sign-In Failed");
+    }
   };
 
   const seeAgreement = () => {  
     // เปลี่ยนเส้นทางไปยังหน้าข้อตกลง
     history.push('/agreement');
   };
+
+
+const clientId = "YOUR_GOOGLE_CLIENT_ID"; // ใส่ Client ID ที่ได้จาก Google
+
+const handleGoogleSuccess = (response: any) => {
+  console.log("Google Response:", response);
+  alert("Login Success!");
+};
+
+const handleGoogleFailure = (error: any) => {
+  console.error("Google Login Failed", error);
+  alert("Google Login Failed");
+};
 
   return (
     <IonPage>
@@ -107,9 +130,17 @@ const LoginPage: React.FC = () => {
           style={{ marginTop: '10px' }}
           onClick={handleGoogleSignIn} // เรียกฟังก์ชัน handleGoogleSignIn เมื่อกดปุ่ม
         >
-          <IonIcon slot="start" icon={logoGoogle} />
+          <IonIcon slot="start" icon={logoGoogle} 
+          />
           Sign In with Google
         </IonButton>
+
+        <GoogleOAuthProvider clientId={clientId}>
+    <GoogleLogin
+      onSuccess={handleGoogleSuccess}
+      
+    />
+  </GoogleOAuthProvider>
 
         {/* ข้อความเพิ่มเติม */}
         

@@ -13,6 +13,18 @@ export default defineConfig({
   test: {
     globals: true,
     environment: 'jsdom',
-    setupFiles: './src/setupTests.ts',
+    setupFiles: './src/setupProxy.js',
+  },
+  server: {
+    proxy: {
+      '/api': {
+        target: 'https://192.168.10.3:5000',
+        changeOrigin: true,
+        secure: false,
+        rewrite: (path) => path.replace(/^\/api/, '')
+      }
+    },
+    host: true,
+    port: 5173
   }
 })
