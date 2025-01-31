@@ -18,6 +18,7 @@ import './ImageAssessment.module.css'; // CSS Module
 import { useHistory } from 'react-router';
 import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
 import { apiSendPhotoFaceService } from '../../services/apiSendPhotoFaceService';
+import { apiSendVideoService } from '../../services/apiSendVideoService'
 import { al } from 'vitest/dist/reporters-5f784f42';
 import Header from '../../components/Header'; // Import Header component
 
@@ -30,6 +31,9 @@ const ImageAssessment: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(false); // State to track loading
   const [uploadMessage, setUploadMessage] = useState<string>(''); // State to track upload message
   const [showAlert, setShowAlert] = useState<boolean>(false); // State to track alert visibility
+  const [isRecording, setIsRecording] = useState<boolean>(false); // State to track recording status
+  const mediaRecorderRef = useRef<MediaRecorder | null>(null);
+  const recordedChunksRef = useRef<Blob[]>([]);
 
   useEffect(() => {
     // Access user camera
@@ -115,6 +119,27 @@ const ImageAssessment: React.FC = () => {
     }
   };
 
+  // sendVideo to apiSendVideoService
+  const sendVideo = async (video: string) => {
+    try {
+        // Convert base64 to blob
+        const base64Response = await fetch(video);
+        const blob = await base64Response.blob();
+
+        // Get user from storage/context
+        const user = JSON.parse(localStorage.getItem('user') || '{}');
+
+        // Send video using service
+        const response = await apiSendVideoService.postData(blob);
+        //alert(JSON.stringify(response))
+        console.log('Video sent successfully:', response);
+        return response;
+    } catch (error) {
+        console.error('Error sending video:', error);
+        throw error;
+    }
+};
+
   const convertBlobToBase64 = (blob: Blob): Promise<string> => {
     return new Promise((resolve, reject) => {
       const reader = new FileReader();
@@ -163,6 +188,41 @@ const ImageAssessment: React.FC = () => {
         context.beginPath();
         context.arc(canvasRef.current.width / 2, canvasRef.current.height / 2, 100, 0, Math.PI * 2);
         context.stroke();
+      }
+    }
+  };
+
+  const handleRecordVideo = () => {
+    if (isRecording) {
+      // Stop recording
+      if (mediaRecorderRef.current) {
+        mediaRecorderRef.current.stop();
+      }
+      setIsRecording(false);
+    } else {
+      // Start recording
+      if (videoRef.current && videoRef.current.srcObject) {
+        const mediaStream = videoRef.current.srcObject as MediaStream;
+        const mediaRecorder = new MediaRecorder(mediaStream);
+        mediaRecorderRef.current = mediaRecorder;
+
+        mediaRecorder.ondataavailable = (event) => {
+          if (event.data.size > 0) {
+            recordedChunksRef.current.push(event.data);
+          }
+        };
+
+        mediaRecorder.onstop = async () => {
+          const blob = new Blob(recordedChunksRef.current, { type: 'video/webm' });
+          recordedChunksRef.current = [];
+          const videoUrl = URL.createObjectURL(blob);
+          const response = await sendVideo(videoUrl);
+          setUploadMessage(`Video sent successfully: ${JSON.stringify(response)}`);
+          setShowAlert(true); // Show alert with response message
+        };
+
+        mediaRecorder.start();
+        setIsRecording(true);
       }
     }
   };
@@ -307,12 +367,13 @@ const ImageAssessment: React.FC = () => {
           {!isPhotoTaken && (
           <IonCol size="auto" className="ion-text-center">
             <IonButton
+              onClick={handleRecordVideo}
               fill="clear"
               style={{
                 width: '70px',
                 height: '70px',
                 borderRadius: '50%',
-                backgroundColor: '#000000', //  color for record
+                backgroundColor: isRecording ? '#FF0000' : '#000000', // Red color for stop, black for record
                 boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)',
                 transition: 'transform 0.2s, box-shadow 0.2s',
               }}
@@ -321,7 +382,9 @@ const ImageAssessment: React.FC = () => {
             >
               <IonIcon icon={videocam} style={{ fontSize: '32px', color: 'white' }} />
             </IonButton>
-            <p style={{ marginTop: '8px', fontSize: '14px', color: '#2196F3' }}>Record Video</p>
+            <p style={{ marginTop: '8px', fontSize: '14px', color: '#2196F3' }}>
+              {isRecording ? 'Stop Record' : 'Record Video'}
+            </p>
           </IonCol>
           )}
 

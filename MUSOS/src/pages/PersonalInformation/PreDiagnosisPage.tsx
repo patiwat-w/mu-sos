@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
     IonPage,
     IonContent,
@@ -14,11 +14,36 @@ import {
 } from '@ionic/react';
 import { home, personCircle, save, closeCircle } from 'ionicons/icons';
 import { useHistory } from 'react-router';
+import { apiSubjectDataService } from '../../services/apiSubjectDataService';
+
 
 const PreDiagnosisPage: React.FC = () => {
      const history = useHistory();
-     function handleSave(event: any): void {
-        history.push('/pre-diagnosis');
+
+     // Add state for form data
+    const [formData, setFormData] = useState({
+        name: '',
+        email: '',
+        age: '',
+        gender: '',
+        notes: ''
+    });
+    
+     async function handleSave(event: any): Promise<void> {
+
+        try {
+            let response =  apiSubjectDataService.postData(formData);
+            if(response){
+                alert(JSON.stringify(response))
+            }
+            // Navigate to next page after successful submit
+           // history.push('/pre-diagnosis');
+        } catch (error) {
+            console.error('Error submitting data:', error);
+            // Show error message to user
+        }
+
+        
     }
 
     function handleCancel(event: any): void {

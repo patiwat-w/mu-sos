@@ -15,6 +15,8 @@ import {
 } from '@ionic/react';
 import { home, personCircle } from 'ionicons/icons';
 import { useHistory } from 'react-router-dom';
+import { apiSubjectDataService } from '../services/apiSubjectDataService';
+
 
 const PreInformation: React.FC = () => {
   const history = useHistory();
@@ -25,15 +27,31 @@ const PreInformation: React.FC = () => {
   const [lastSeenNormalTime, setLastSeenNormalTime] = useState('');
 
   const handleSubmit = () => {
-    console.log('Submit:', {
+    let formData = {
       subjectId,
       hn,
       phoneNumber,
       onsetTime,
       lastSeenNormalTime,
-    });
-    // Add navigation logic here
-    history.push('/select-assessment');
+    };
+    console.log('Submit:', formData);
+
+    try {
+      let res =  apiSubjectDataService.postData(formData);
+      // Navigate to next page after successful submit
+      res?.then(r=>{
+        // Add navigation logic here
+        history.push('/select-assessment');
+      }).catch(error=>{
+        console.error('Error submitting data:', error);
+      })
+     
+  } catch (error) {
+      console.error('Error submitting data:', error);
+      // Show error message to user
+  }
+
+    
   };
 
   const handleHomeClick = () => {

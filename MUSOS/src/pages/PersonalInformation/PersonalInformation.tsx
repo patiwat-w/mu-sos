@@ -52,7 +52,7 @@ const PersonalInformationPage: React.FC = () => {
                         <IonInput value={dob} readonly placeholder="Select Date" style={{ border: '1px solid #ccc', borderRadius: '4px', padding: '8px', width: '100%' }}></IonInput>
                     </IonItem>
 
-                    <IonModal isOpen={showDOBPicker} onDidDismiss={() => setShowDOBPicker(false)}>
+                    <IonModal isOpen={showDOBPicker} onDidDismiss={() => setShowDOBPicker(false)} inert={showDOBPicker ? undefined : true}>
                         <IonDatetime
                             //displayFormat="DD/MM/YYYY"
                             value={dob}
@@ -80,7 +80,7 @@ const PersonalInformationPage: React.FC = () => {
                         <IonInput value={onsetTime} readonly placeholder="Select Time" style={{ border: '1px solid #ccc', borderRadius: '4px', padding: '8px', width: '100%' }}></IonInput>
                     </IonItem>
 
-                    <IonModal isOpen={showOnsetPicker} onDidDismiss={() => setShowOnsetPicker(false)}>
+                    <IonModal isOpen={showOnsetPicker} onDidDismiss={() => setShowOnsetPicker(false)} inert={showOnsetPicker ? undefined : true}>
                         <IonDatetime
                             //displayFormat="HH:mm"
                             value={onsetTime}
@@ -94,7 +94,7 @@ const PersonalInformationPage: React.FC = () => {
                         <IonInput value={lastSeenTime} readonly placeholder="Select Time" style={{ border: '1px solid #ccc', borderRadius: '4px', padding: '8px', width: '100%' }}></IonInput>
                     </IonItem>
 
-                    <IonModal isOpen={showLastSeenPicker} onDidDismiss={() => setShowLastSeenPicker(false)}>
+                    <IonModal isOpen={showLastSeenPicker} onDidDismiss={() => setShowLastSeenPicker(false)} inert={showLastSeenPicker ? undefined : true}>
                         <IonDatetime
                             //displayFormat="HH:mm"
                             value={lastSeenTime}
