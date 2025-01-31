@@ -17,7 +17,7 @@ import { home, personCircle, helpCircle, mic, play, cog, playCircle } from 'ioni
 import * as stringSimilarity from 'string-similarity';
 import Header from '../../components/Header';
 
-const wordsToSay = ["สวัสดี", "ขอบคุณ", "ลาก่อน", "ยินดี"];
+const wordsToSay = ["แมงมุม", "ทับทิม", "ฟื้นฟู", "ขอบคุณ","รื่นเริง","ใบบัวบก"];
 
 // Style Constants
 const buttonStyle = {
