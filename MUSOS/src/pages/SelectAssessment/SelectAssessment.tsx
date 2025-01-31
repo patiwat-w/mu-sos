@@ -54,7 +54,7 @@ const SelectAssessment: React.FC = () => {
   };
 
   const handleInfoClick = () => { 
-    history.push('/health-information');
+    history.push('/personal-information');
   };
   const handleResultClick = () => {
     history.push('/result');

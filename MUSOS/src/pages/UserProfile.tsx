@@ -21,7 +21,7 @@ import { userSessionService } from '../services/UserSessionService'; // Import u
 import { IUser } from '../types/user.type';
 import Header from '../components/Header'; // Import Header component
 
-const UserProfilePage: React.FC = () => {
+const UserInformationPage: React.FC = () => {
     const [name, setName] = useState('');
     const [phone, setPhone] = useState('');
     const [role, setRole] = useState('');
@@ -173,4 +173,4 @@ const UserProfilePage: React.FC = () => {
     );
 };
 
-export default UserProfilePage;
+export default UserInformationPage;

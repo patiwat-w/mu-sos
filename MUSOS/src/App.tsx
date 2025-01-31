@@ -37,7 +37,7 @@ import PreInformation from './pages/PreInformation';
 import SelectAssessment from './pages/SelectAssessment/SelectAssessment';
 import ImageAssessment from './pages/ImageAssessment/ImageAssessment';
 import VoiceAssessment from './pages/VoiceAssessment/VoiceAssessment';
-import PersonalInformation from './pages/PersonalInformation/PersonalInformation';
+import PersonalInformationPage from './pages/PersonalInformation/PersonalInformation';
 import HealthInformation from './pages/PersonalInformation/HealthInformation';
 import PreDiagnosisPage from './pages/PersonalInformation/PreDiagnosisPage';
 import NHISSPage from './pages/PersonalInformation/NHISSPage';
@@ -133,7 +133,7 @@ const App: React.FC = () => (
 </Route>
 
 <Route exact path="/personal-information">
-<PersonalInformation />
+<PersonalInformationPage />
 </Route>
 
 <Route exact path="/health-information">
