@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
     IonPage,
     IonHeader,
@@ -15,15 +15,39 @@ import {
     IonRow,
     IonCol
 } from '@ionic/react';
-import { home, personCircle, helpCircle } from 'ionicons/icons';
+import { home, personCircle, helpCircle, arrowBack, logOut } from 'ionicons/icons';
 import { useHistory } from 'react-router';
+import { userSessionService } from '../services/UserSessionService'; // Import user session service
+import { IUser } from '../types/user.type';
+import Header from '../components/Header'; // Import Header component
 
 const UserProfilePage: React.FC = () => {
     const [name, setName] = useState('');
     const [phone, setPhone] = useState('');
     const [role, setRole] = useState('');
-
+    const [photoUrl, setPhotoUrl] = useState(''); // เพิ่ม state สำหรับ photoUrl
+    const [email, setEmail] = useState(''); // เพิ่ม state สำหรับ email
     const history = useHistory();
+
+    useEffect(() => {
+
+        const user = userSessionService.getSession();
+        if (!user) {
+          window.location.href = '/login';
+          throw new Error('Please login to continue');
+    
+        }
+
+        if (user) {
+            setName(user.displayName ?? '');
+            setPhone(user.phone ?? '');
+            setRole(user.role ?? '');
+            setEmail(user.email ?? ''); // ตั้งค่า email
+           
+            setPhotoUrl(user.photoURL ?? ''); // ตั้งค่า photoUrl
+        }
+
+    }, []);
 
     const handleBack = () => {
         history.goBack();
@@ -31,25 +55,23 @@ const UserProfilePage: React.FC = () => {
 
     const handleSignOut = () => {
         console.log('Sign out clicked');
+        userSessionService.clearSession();
         history.push('/login');
         // Add sign-out logic here
     };
+  
 
     return (
         <IonPage>
-            <IonHeader>
-                <IonToolbar>
-                    <IonButton slot="start" fill="clear" routerLink="/home">
-                        <IonIcon icon={home} />
-                    </IonButton>
-                    <IonTitle style={{ textAlign: 'center' }}>Information</IonTitle>
-                    <IonButton slot="end" fill="clear">
-                        <IonIcon icon={personCircle} />
-                    </IonButton>
-                </IonToolbar>
-            </IonHeader>
-
+            <Header title="Profile" /> {/* ใช้ Header component */}
             <IonContent className="ion-padding">
+                {/* แสดง PhotoUrl */}
+                {photoUrl && (
+                    <div style={{ textAlign: 'center', marginBottom: '20px' }}>
+                        <img src={photoUrl} alt="Profile" style={{ borderRadius: '50%', width: '150px', height: '150px' }} />
+                    </div>
+                )}
+
                 <IonItem>
                     <IonLabel position="stacked">Name Surname</IonLabel>
                     <IonInput
@@ -71,6 +93,17 @@ const UserProfilePage: React.FC = () => {
                 </IonItem>
 
                 <IonItem>
+                    <IonLabel position="stacked">Email</IonLabel>
+                    <IonInput
+                        value={email}
+                        placeholder=""
+                        onIonChange={(e) => setEmail(e.detail.value!)}
+                        style={{ border: '1px solid #ccc', borderRadius: '4px', padding: '8px' }}
+                    ></IonInput>
+                </IonItem>
+
+
+                <IonItem>
                     <IonLabel position="stacked">Role</IonLabel>
                     <IonSelect
                         value={role}
@@ -84,20 +117,41 @@ const UserProfilePage: React.FC = () => {
                     </IonSelect>
                 </IonItem>
 
-                <IonRow className="ion-justify-content-between" style={{ marginTop: '20px' }}>
-                    <IonCol size="auto">
-                        <IonButton color="primary" onClick={handleBack}>
-                            &lt;&lt;Back
+                <IonRow className="ion-justify-content-between ion-margin-top">
+                    {/* <IonCol size="auto">
+                        <IonButton 
+                            color="medium" 
+                            onClick={handleBack}
+                            fill="clear"
+                            className="ion-float-start"
+                        >
+                            <IonIcon 
+                                icon={arrowBack} 
+                                slot="start" 
+                                style={{ marginRight: '8px' }}
+                            />
+                            Back
                         </IonButton>
-                    </IonCol>
-                    <IonCol size="auto">
-                        <IonButton color="danger" onClick={handleSignOut}>
-                            Sign out
+                    </IonCol> */}
+                    
+                    <IonCol size="12">
+                        <IonButton 
+                            color="danger" 
+                            onClick={handleSignOut}
+                            fill="solid"
+                            expand="block"
+                        >
+                            <IonIcon 
+                                icon={logOut} 
+                                slot="start" 
+                                style={{ marginRight: '8px' }}
+                            />
+                            Sign Out
                         </IonButton>
                     </IonCol>
                 </IonRow>
 
-                <IonRow className="ion-justify-content-center" style={{ marginTop: '20px' }}>
+                {/* <IonRow className="ion-justify-content-center" style={{ marginTop: '20px' }}>
                     <IonButton
                         fill="clear"
                         style={{
@@ -113,7 +167,7 @@ const UserProfilePage: React.FC = () => {
                     >
                         <IonIcon icon={helpCircle} />
                     </IonButton>
-                </IonRow>
+                </IonRow> */}
             </IonContent>
         </IonPage>
     );

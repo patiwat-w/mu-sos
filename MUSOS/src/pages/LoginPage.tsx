@@ -18,6 +18,8 @@ import { helpCircle, logoGoogle } from 'ionicons/icons';
 import { useHistory, useLocation } from 'react-router-dom'; // เพิ่ม useHistory และ useLocation
 import { GoogleOAuthProvider, GoogleLogin } from '@react-oauth/google';
 import { auth, googleProvider, signInWithPopup } from "../config/firebase"; // เพิ่ม import ของ firebase
+import { userSessionService } from '../services/UserSessionService';
+import { IUser } from '../types/user.type';
 
 const LoginPage: React.FC = () => {
   const history = useHistory(); // ใช้ useHistory เพื่อเปลี่ยนเส้นทาง
@@ -44,7 +46,17 @@ const LoginPage: React.FC = () => {
     try {
       const result = await signInWithPopup(auth, googleProvider);
       const user = result.user;
+      
       console.log("User:", user);
+      userSessionService.saveSession({
+        uid: user.uid,
+        displayName: user.displayName,
+        email: user.email,
+        photoURL: user.photoURL,
+        localUserMappingId:4,
+        role: 'User',
+        phone: '0943481249'
+      } as IUser);
       //alert(`Welcome ${user.displayName}`);
       history.push('/pre-information'); // ไปหน้าถัดไปเมื่อ login สำเร็จ
     } catch (error) {
@@ -58,6 +70,11 @@ const LoginPage: React.FC = () => {
     history.push('/agreement');
   };
 
+  useEffect(() => {
+    if (userSessionService.isAuthenticated()) {
+      history.push('/pre-information');
+    }
+  }, [history]);
 
 const clientId = "YOUR_GOOGLE_CLIENT_ID"; // ใส่ Client ID ที่ได้จาก Google
 
@@ -135,12 +152,7 @@ const handleGoogleFailure = (error: any) => {
           Sign In with Google
         </IonButton>
 
-        <GoogleOAuthProvider clientId={clientId}>
-    <GoogleLogin
-      onSuccess={handleGoogleSuccess}
-      
-    />
-  </GoogleOAuthProvider>
+
 
         {/* ข้อความเพิ่มเติม */}
         

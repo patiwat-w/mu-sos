@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   IonPage,
   IonHeader,
@@ -17,9 +17,19 @@ import {
 import { home, personCircle, helpCircle, camera, mic, documentText, checkmarkCircle } from 'ionicons/icons';
 import { useHistory } from 'react-router-dom';
 import './SelectAssessment.module.css'; // Import CSS สำหรับ Responsive
+import { userSessionService } from '../../services/UserSessionService'; // Import user session service
+import Header from '../../components/Header'; // Import Header component
 
 const SelectAssessment: React.FC = () => {
   const history = useHistory();
+  const [photoUrl, setPhotoUrl] = useState<string | null>(null); // เพิ่ม state สำหรับ photoUrl
+
+  useEffect(() => {
+    const user = userSessionService.getSession();
+    if (user) {
+      setPhotoUrl(user.photoURL ?? null); // ตั้งค่า photoUrl
+    }
+  }, []);
 
   const handleImageClick = () => {
     history.push('/image-assessment'); // Redirect to image-assessment page
@@ -51,22 +61,13 @@ const SelectAssessment: React.FC = () => {
   }
 
   const handleProfileClick = () => {
+   
     history.push('/user-profile');
   };
 
   return (
     <IonPage>
-      <IonHeader>
-        <IonToolbar>
-          <IonButton slot="start" fill="clear" onClick={handleHomeClick}>
-            <IonIcon icon={home} />
-          </IonButton>
-          <IonTitle className="ion-title-custom">Select Capture Type</IonTitle>
-          <IonButton slot="end" fill="clear" onClick={handleProfileClick}>
-            <IonIcon icon={personCircle} />
-          </IonButton>
-        </IonToolbar>
-      </IonHeader>
+      <Header title="Select Capture Type" /> {/* ใช้ Header component */}
       <IonContent className="ion-padding">
         <IonGrid>
           {/* Row 1 */}

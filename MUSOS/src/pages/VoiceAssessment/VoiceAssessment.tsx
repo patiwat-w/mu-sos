@@ -13,8 +13,9 @@ import {
   IonLoading,
   IonAlert
 } from '@ionic/react';
-import { home, personCircle, helpCircle, mic, play, cog } from 'ionicons/icons';
+import { home, personCircle, helpCircle, mic, play, cog, playCircle } from 'ionicons/icons';
 import * as stringSimilarity from 'string-similarity';
+import Header from '../../components/Header';
 
 const wordsToSay = ["สวัสดี", "ขอบคุณ", "ลาก่อน", "ยินดี"];
 
@@ -190,14 +191,16 @@ const VoiceAssessment: React.FC = () => {
 
   return (
     <IonPage style={{ backgroundColor: '#f5f5f5' }}>
-      <IonLoading isOpen={loading} message="Loading..." />
+      <IonLoading isOpen={loading} message="กรุณาอ่านข้อความที่ปรากฏ" />
       <IonAlert
         isOpen={showAlert}
         message={`Try again the word ${wordsToSay[currentWordIndex]}`}
         buttons={[{ text: 'OK', handler: () => handleAlertDismiss() }]}
         onDidDismiss={handleAlertDismiss}
       />
-      <IonHeader>
+        <Header title="Voice Assessment" />
+      {/* <IonHeader>
+    
         <IonToolbar style={{ backgroundColor: '#ffffff', boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)' }}>
           <IonButton slot="start" fill="clear" color="dark">
             <IonIcon icon={home} />
@@ -207,7 +210,7 @@ const VoiceAssessment: React.FC = () => {
             <IonIcon icon={personCircle} />
           </IonButton>
         </IonToolbar>
-      </IonHeader>
+      </IonHeader> */}
       <IonContent className="ion-padding">
         <div style={wordDisplayAreaStyle}>
           {wordsToSay[currentWordIndex] || "All words completed!"}
@@ -230,7 +233,7 @@ const VoiceAssessment: React.FC = () => {
         <IonRow className="ion-justify-content-center">
           <IonCol size="auto" className="ion-text-center">
             <IonButton
-              fill="solid"
+              fill="clear"
               style={{
                 ...buttonStyle,
                 backgroundColor: isRecording ? '#FF5252' : '#4CAF50',
@@ -245,7 +248,7 @@ const VoiceAssessment: React.FC = () => {
           </IonCol>
           <IonCol size="auto" className="ion-text-center">
             <IonButton
-              fill="solid"
+               fill="clear"
               style={{
                 ...buttonStyle,
                 backgroundColor: '#2196F3',
@@ -264,7 +267,7 @@ const VoiceAssessment: React.FC = () => {
       <IonFooter style={{ backgroundColor: '#ffffff', boxShadow: '0 -2px 4px rgba(0, 0, 0, 0.1)' }}>
         <div style={{ textAlign: 'center', padding: '10px' }}>
           <IonButton fill="clear" color="medium">
-            <IonIcon icon={helpCircle} style={{ fontSize: '1.5rem' }} />
+            <IonIcon icon={playCircle} style={{ fontSize: '1.5rem' }} />
           </IonButton>
         </div>
       </IonFooter>

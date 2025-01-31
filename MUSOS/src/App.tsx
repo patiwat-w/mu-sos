@@ -145,9 +145,11 @@ const App: React.FC = () => (
 <Route exact path="/nhiss">
 <NHISSPage />
 </Route>
+
 <Route exact path="/user-profile">
 <UserProfilePage />
 </Route>
+
 
       </IonRouterOutlet>
     </IonReactRouter>

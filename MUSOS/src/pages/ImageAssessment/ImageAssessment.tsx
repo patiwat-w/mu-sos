@@ -10,6 +10,8 @@ import {
   IonRow,
   IonCol,
   IonFooter,
+  IonSpinner,
+  IonAlert,
 } from '@ionic/react';
 import { home, personCircle, helpCircle, camera, videocam, cog, closeCircle, send } from 'ionicons/icons';
 import './ImageAssessment.module.css'; // CSS Module
@@ -17,6 +19,7 @@ import { useHistory } from 'react-router';
 import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
 import { apiSendPhotoFaceService } from '../../services/apiSendPhotoFaceService';
 import { al } from 'vitest/dist/reporters-5f784f42';
+import Header from '../../components/Header'; // Import Header component
 
 const ImageAssessment: React.FC = () => {
   const history = useHistory();
@@ -24,6 +27,9 @@ const ImageAssessment: React.FC = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [photo, setPhoto] = useState<string | null>(null);
   const [isPhotoTaken, setIsPhotoTaken] = useState<boolean>(false); // State to track if photo is taken
+  const [loading, setLoading] = useState<boolean>(false); // State to track loading
+  const [uploadMessage, setUploadMessage] = useState<string>(''); // State to track upload message
+  const [showAlert, setShowAlert] = useState<boolean>(false); // State to track alert visibility
 
   useEffect(() => {
     // Access user camera
@@ -49,8 +55,19 @@ const ImageAssessment: React.FC = () => {
     };
   }, []);
 
-  const handleSubmit = () => {
-    history.push('/select-assessment');
+  const handleSubmit = async () => {
+    setLoading(true);
+    setUploadMessage('');
+    try {
+      // Simulate an AJAX request
+      await new Promise((resolve) => setTimeout(resolve, 2000)); // Simulate a delay
+      setUploadMessage('Upload Data Completed');
+      setShowAlert(true); // Show alert
+    } catch (error) {
+      setUploadMessage('Error uploading data');
+    } finally {
+      setLoading(false);
+    }
   };
 
   const handleHomeClick = () => {
@@ -152,18 +169,46 @@ const ImageAssessment: React.FC = () => {
 
   return (
     <IonPage>
-      <IonHeader>
-        <IonToolbar>
-          <IonButton slot="start" fill="clear" onClick={handleHomeClick}>
-            <IonIcon icon={home} />
-          </IonButton>
-          <IonTitle style={{ textAlign: 'center' }}>Image</IonTitle>
-          <IonButton slot="end" fill="clear">
-            <IonIcon icon={personCircle} />
-          </IonButton>
-        </IonToolbar>
-      </IonHeader>
+      <Header title="Image Assessment" /> {/* ใช้ Header component */}
       <IonContent className="ion-padding">
+        {/* Show loading spinner as overlay */}
+        {loading && (
+          <div style={{
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            width: '100%',
+            height: '100%',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            backgroundColor: 'rgba(0, 0, 0, 0.5)',
+            zIndex: 9999
+          }}>
+            <IonSpinner name="crescent" style={{ width: '100px', height: '100px', color: 'white' }} />
+          </div>
+        )}
+        {/* Show upload message */}
+        {uploadMessage && (
+          <div style={{ textAlign: 'center', marginBottom: '20px', color: 'green' }}>
+            {uploadMessage}
+          </div>
+        )}
+        {/* Show alert dialog */}
+        <IonAlert
+          isOpen={showAlert}
+          onDidDismiss={() => setShowAlert(false)}
+          header={'Upload Data Completed'}
+          message={'Click OK to continue'}
+          buttons={[
+            {
+              text: 'Ok',
+              handler: () => {
+                history.push('/select-assessment'); // Redirect to home page
+              }
+            }
+          ]}
+        />
         {/* ปุ่ม Face และ Body */}
         <IonRow className="ion-justify-content-center ion-margin-bottom">
           <IonCol size="auto" className="ion-text-center">
