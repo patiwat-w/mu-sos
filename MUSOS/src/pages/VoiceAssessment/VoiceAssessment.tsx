@@ -11,12 +11,16 @@ import {
   IonCol,
   IonFooter,
   IonLoading,
-  IonAlert
+  IonAlert,
+  IonCard,
+  IonCardHeader,
+  IonCardTitle,
+  IonCardContent
 } from '@ionic/react';
 import { mic, play, cog, playCircle } from 'ionicons/icons';
 import * as stringSimilarity from 'string-similarity';
 import Header from '../../components/Header';
-
+import FrequencyDisplay from '../../components/FrequencyDisplay';
 const wordsToSay = ["แมงมุม", "ทับทิม", "ฟื้นฟู", "ขอบคุณ", "รื่นเริง", "ใบบัวบก"];
 
 // Style Constants
@@ -58,6 +62,8 @@ const audioPlayerAreaStyle = {
   alignItems: 'center',
   justifyContent: 'center',
 };
+
+
 
 const VoiceAssessment: React.FC = () => {
   const [isRecording, setIsRecording] = useState(false);
@@ -234,24 +240,31 @@ const VoiceAssessment: React.FC = () => {
   };
 
   // Function to analyze audio frequency
-  const analyzeAudioFrequency = (audioBlob: Blob) => {
-    const audioContext = new (window.AudioContext || (window as any).webkitAudioContext)();
-    const reader = new FileReader();
-    reader.readAsArrayBuffer(audioBlob);
-    reader.onloadend = () => {
-      audioContext.decodeAudioData(reader.result as ArrayBuffer, (buffer) => {
-        const analyser = audioContext.createAnalyser();
-        const source = audioContext.createBufferSource();
-        source.buffer = buffer;
-        source.connect(analyser);
-        analyser.connect(audioContext.destination);
-        analyser.fftSize = 256;
-        const bufferLength = analyser.frequencyBinCount;
-        const dataArray = new Uint8Array(bufferLength);
-        analyser.getByteFrequencyData(dataArray);
-        setFrequencyData(Array.from(dataArray));
-      });
-    };
+  const analyzeAudioFrequency = async (audioBlob: Blob) => {
+    try {
+      const audioContext = new AudioContext();
+      const analyser = audioContext.createAnalyser();
+      analyser.fftSize = 2048;
+  
+      const audioBuffer = await audioBlob.arrayBuffer();
+      const decodedData = await audioContext.decodeAudioData(audioBuffer);
+      
+      const source = audioContext.createBufferSource();
+      source.buffer = decodedData;
+      source.connect(analyser);
+      
+      const bufferLength = analyser.frequencyBinCount;
+      const dataArray = new Float32Array(bufferLength);
+      
+      analyser.getFloatFrequencyData(dataArray);
+      console.log('Frequency data:', dataArray);
+      
+      setFrequencyData(Array.from(dataArray));
+      setIsAudioReady(true);
+      
+    } catch (error) {
+      console.error('Error analyzing frequency:', error);
+    }
   };
 
   // Effect to handle transcript changes
@@ -401,6 +414,7 @@ const VoiceAssessment: React.FC = () => {
             ))}
           </div>
         </div>
+        <FrequencyDisplay data={frequencyData} />
       </IonContent>
       <IonFooter style={{ backgroundColor: '#ffffff', boxShadow: '0 -2px 4px rgba(0, 0, 0, 0.1)' }}>
         <div style={{ textAlign: 'center', padding: '10px' }}>
