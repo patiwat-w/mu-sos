@@ -15,7 +15,11 @@
     "deploy": "gh-pages -d build",
     "start": "ionic serve --external",
     "build:web": "ionic build --prod",
-    "serve:web": "http-server ./www -P http://localhost:8080"
+    "serve:web": "http-server ./www -P http://localhost:8080",
+    "start:dev": "cross-env NODE_ENV=development npm start",
+    "start:staging": "cross-env NODE_ENV=staging npm start",
+    "start:prod": "cross-env NODE_ENV=production npm start",
+    "build:web:prod": "cross-env NODE_ENV=production npm run build:web"
   },
   "dependencies": {
     "@capacitor/app": "6.0.2",
@@ -39,7 +43,8 @@
     "react-dom": "^18.2.0",
     "react-router": "^5.3.4",
     "react-router-dom": "^5.3.4",
-    "string-similarity": "^4.0.4"
+    "string-similarity": "^4.0.4",
+    "cross-env": "^7.0.3"
   },
   "devDependencies": {
     "@capacitor/cli": "6.2.0",

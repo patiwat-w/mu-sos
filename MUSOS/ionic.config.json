@@ -1,8 +1,14 @@
 {
   "name": "MUSOS",
+  "type": "react-vite",
   "integrations": {
     "capacitor": {}
   },
-  "type": "react-vite",
-  "proxyUrl": "http://localhost:8100"
+ 
+  "proxies": [
+    {
+      "path": "/api",
+      "proxyUrl": "https://msu-triage.egmu-research.org/service/proxy.ashx?http://192.168.10.3:5000"
+    }
+  ]
 }

@@ -28,15 +28,16 @@ const LoginPage: React.FC = () => {
 
   useEffect(() => {
     // ตรวจสอบ state ที่ส่งกลับมาจากหน้า Agreement
-    if (location.state && location.state.accepted !== undefined) {
-      setAgree(location.state.accepted);
+    if (location.state && typeof location.state === 'object' && 'accepted' in location.state) {
+      setAgree((location.state as { accepted: boolean }).accepted);
     }
   }, [location.state]);
 
   const handleSignIn = () => {
     if (agree) {
       // เปลี่ยนเส้นทางไปยังหน้าข้อตกลง
-      history.push('/pre-information');
+      //history.push('/home');
+      window.location.href="/home";
     } else {
       alert('Please agree to the terms and conditions.');
     }
@@ -58,7 +59,8 @@ const LoginPage: React.FC = () => {
         phone: '0943481249'
       } as IUser);
       //alert(`Welcome ${user.displayName}`);
-      history.push('/pre-information'); // ไปหน้าถัดไปเมื่อ login สำเร็จ
+      //history.push('/home'); // ไปหน้าถัดไปเมื่อ login สำเร็จ
+      window.location.href="/home";
     } catch (error) {
       console.error("Google Sign-In Error:", error);
       alert("Google Sign-In Failed");
@@ -72,7 +74,8 @@ const LoginPage: React.FC = () => {
 
   useEffect(() => {
     if (userSessionService.isAuthenticated()) {
-      history.push('/pre-information');
+      //history.push('/home');
+      window.location.href="/home";
     }
   }, [history]);
 
@@ -131,14 +134,14 @@ const handleGoogleFailure = (error: any) => {
         </IonItem>
 
         {/* ปุ่ม Sign In */}
-        <IonButton
+        {/* <IonButton
           expand="block"
           color="danger"
           style={{ marginTop: '20px' }}
           onClick={handleSignIn} // เรียกฟังก์ชัน handleSignIn เมื่อกดปุ่ม
         >
           Sign In
-        </IonButton>
+        </IonButton> */}
 
         {/* ปุ่ม Sign In with Google */}
         <IonButton

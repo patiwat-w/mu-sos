@@ -13,11 +13,11 @@ import {
   IonLoading,
   IonAlert
 } from '@ionic/react';
-import { home, personCircle, helpCircle, mic, play, cog, playCircle } from 'ionicons/icons';
+import { mic, play, cog, playCircle } from 'ionicons/icons';
 import * as stringSimilarity from 'string-similarity';
 import Header from '../../components/Header';
 
-const wordsToSay = ["แมงมุม", "ทับทิม", "ฟื้นฟู", "ขอบคุณ","รื่นเริง","ใบบัวบก"];
+const wordsToSay = ["แมงมุม", "ทับทิม", "ฟื้นฟู", "ขอบคุณ", "รื่นเริง", "ใบบัวบก"];
 
 // Style Constants
 const buttonStyle = {
@@ -67,15 +67,44 @@ const VoiceAssessment: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [showAlert, setShowAlert] = useState(false);
+  const [wordTimer, setWordTimer] = useState<NodeJS.Timeout | null>(null);
+  const [log, setLog] = useState<{ word: string, spokenWord: string, time: string }[]>([]);
+  const [expectedLog, setExpectedLog] = useState<{ word: string, time: string }[]>([]);
+  const [frequencyData, setFrequencyData] = useState<number[]>([]);
+  const [audioBlob, setAudioBlob] = useState<Blob | null>(null);
+  const [isAudioReady, setIsAudioReady] = useState(false);
   const recognitionRef = useRef<SpeechRecognition | null>(null);
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
   const audioChunksRef = useRef<Blob[]>([]);
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const similarityThreshold = 0.7;
 
+  // Function to start showing words
+  const startShowingWords = () => {
+    setCurrentWordIndex(0);
+    setExpectedLog([]); // Reset the expected log
+    const timer = setInterval(() => {
+      setCurrentWordIndex(prev => {
+        logExpectedWord(wordsToSay[prev]); // Log the expected word
+        if (prev < wordsToSay.length - 1) {
+          return prev + 1;
+        } else {
+          clearInterval(timer);
+          stopRecording(); // Stop recording when all words are shown
+          setTimeout(() => setCurrentWordIndex(wordsToSay.length), 3000); // Show "All words completed!" after a delay
+          return prev;
+        }
+      });
+    }, 3000);
+    setWordTimer(timer);
+  };
+
+  // Function to start recording
   const startRecording = async () => {
     setLoading(true);
     setError(null);
+    setLog([]); // Reset the log
+    setExpectedLog([]); // Reset the expected log
     try {
       const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
       const mediaRecorder = new MediaRecorder(stream);
@@ -86,13 +115,30 @@ const VoiceAssessment: React.FC = () => {
         audioChunksRef.current.push(event.data);
       };
 
-      mediaRecorder.onstop = () => {
-        const audioBlob = new Blob(audioChunksRef.current, { type: 'audio/wav' });
-        const audioUrl = URL.createObjectURL(audioBlob);
-        setAudioUrl(audioUrl);
+      mediaRecorder.onstop = async () => {
+        try {
+          const audioBlob = new Blob(audioChunksRef.current, { type: 'audio/wav' });
+          setAudioBlob(audioBlob);
+          const url = URL.createObjectURL(audioBlob);
+          setAudioUrl(url);
+          
+          // Wait for audio to be ready
+          if (audioRef.current) {
+            audioRef.current.src = url;
+            audioRef.current.onloadeddata = () => {
+              setIsAudioReady(true);
+              analyzeAudioFrequency(audioBlob);
+            };
+          }
+        } catch (error) {
+          console.error('Error processing audio:', error);
+          setError('Error processing audio recording.');
+        }
       };
+
       mediaRecorder.start();
       setIsRecording(true);
+
       const SpeechRecognition = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
       const recognition = new SpeechRecognition();
       recognitionRef.current = recognition;
@@ -101,48 +147,39 @@ const VoiceAssessment: React.FC = () => {
       recognition.lang = 'th-TH';
 
       recognition.onresult = (event: SpeechRecognitionEvent) => {
-        console.log("---------------------------------------------------");
-        console.log('Speech recognition result:', event);
         let interimTranscript = '';
         for (let i = event.resultIndex; i < event.results.length; i++) {
           const transcriptPart = event.results[i][0].transcript;
-          console.log('Transcript:', i, transcriptPart);
           if (event.results[i].isFinal) {
-            console.log('Final:', transcriptPart);
             setTranscript(prev => transcriptPart);
-            const currentWord = wordsToSay[i];
+            logSpokenWord(transcriptPart); // Log the spoken word
+            const currentWord = wordsToSay[currentWordIndex];
             if (currentWord) {
-              // Remove whitespace
               let transcriptPartClean = transcriptPart.replace(/\s/g, '');
               let currentWordClean = currentWord.replace(/\s/g, '');
 
               const similarity = stringSimilarity.compareTwoStrings(transcriptPartClean, currentWordClean);
-              console.log("Similarity Score:", transcriptPartClean, currentWordClean, similarity);
               if (similarity >= similarityThreshold) {
                 console.log('Correct or Similar word:', transcriptPart);
-                setCurrentWordIndex(prev => prev + 1);
-                setTranscript('');
-                console.log('Reset transcript for the next word:');
-                console.log('Current word index:', currentWordIndex);
               } else {
                 console.log('Incorrect word:', transcriptPart);
-                setShowAlert(true);
               }
             }
           } else {
-            console.log('else:', transcriptPart);
             interimTranscript = transcriptPart;
           }
         }
-        console.log('Interim Transcript:', interimTranscript);
       };
+
       recognition.onerror = (event) => {
         console.error('Speech recognition error', event);
         setError('Error during speech recognition.');
       };
+
       recognition.onend = () => {
         setIsRecording(false);
       };
+
       recognition.start();
     } catch (err) {
       console.error("Error accessing microphone", err);
@@ -152,42 +189,95 @@ const VoiceAssessment: React.FC = () => {
     }
   };
 
+  // Function to stop recording
   const stopRecording = () => {
+    setIsAudioReady(false);
     if (recognitionRef.current) {
       recognitionRef.current.stop();
+      recognitionRef.current = null;
     }
     if (mediaRecorderRef.current) {
       mediaRecorderRef.current.stop();
     }
+    if (wordTimer) {
+      clearInterval(wordTimer);
+    }
     setIsRecording(false);
   };
 
-  const playRecordedAudio = () => {
-    if (audioRef.current) {
-      audioRef.current.play().catch(error => {
-        console.error('Error playing audio:', error);
-        setError('Error playing audio. Please try again.');
-      });
+  // Function to play recorded audio
+  const playRecordedAudio = async () => {
+    if (!audioRef.current || !audioUrl) {
+      setError('Audio not ready for playback');
+      return;
+    }
+
+    try {
+      await audioRef.current.play();
+    } catch (error) {
+      console.error('Error playing audio:', error);
+      setError('Error playing audio. Please try again.');
     }
   };
 
-  useEffect(() => {
-    if (audioUrl && audioRef.current) {
-      audioRef.current.load();
-    }
-  }, [audioUrl]);
+  // Function to log spoken words
+  const logSpokenWord = (spokenWord: string) => {
+    const currentWord = wordsToSay[currentWordIndex];
+    const time = new Date().toLocaleTimeString();
+    setLog(prevLog => [...prevLog, { word: currentWord, spokenWord, time }]);
+  };
 
+  // Function to log expected words
+  const logExpectedWord = (word: string) => {
+    const time = new Date().toLocaleTimeString();
+    setExpectedLog(prevLog => [...prevLog, { word, time }]);
+  };
+
+  // Function to analyze audio frequency
+  const analyzeAudioFrequency = (audioBlob: Blob) => {
+    const audioContext = new (window.AudioContext || (window as any).webkitAudioContext)();
+    const reader = new FileReader();
+    reader.readAsArrayBuffer(audioBlob);
+    reader.onloadend = () => {
+      audioContext.decodeAudioData(reader.result as ArrayBuffer, (buffer) => {
+        const analyser = audioContext.createAnalyser();
+        const source = audioContext.createBufferSource();
+        source.buffer = buffer;
+        source.connect(analyser);
+        analyser.connect(audioContext.destination);
+        analyser.fftSize = 256;
+        const bufferLength = analyser.frequencyBinCount;
+        const dataArray = new Uint8Array(bufferLength);
+        analyser.getByteFrequencyData(dataArray);
+        setFrequencyData(Array.from(dataArray));
+      });
+    };
+  };
+
+  // Effect to handle transcript changes
   useEffect(() => {
-    if (transcript && transcript.includes(wordsToSay[currentWordIndex])) {
-      console.log('Correct word:', transcript);
-      setCurrentWordIndex(prev => prev + 1);
-      setTranscript('');
+    if (transcript) {
+      const currentWord = wordsToSay[currentWordIndex];
+      if (currentWord) {
+        let transcriptPartClean = transcript.replace(/\s/g, '');
+        let currentWordClean = currentWord.replace(/\s/g, '');
+
+        const similarity = stringSimilarity.compareTwoStrings(transcriptPartClean, currentWordClean);
+        if (similarity >= similarityThreshold) {
+          console.log('Correct word:', transcript);
+        }
+      }
     }
   }, [transcript, currentWordIndex]);
 
-  const handleAlertDismiss = () => {
-    setShowAlert(false);
-  };
+  // Effect to clean up timers
+  useEffect(() => {
+    return () => {
+      if (wordTimer) {
+        clearInterval(wordTimer);
+      }
+    };
+  }, [wordTimer]);
 
   return (
     <IonPage style={{ backgroundColor: '#f5f5f5' }}>
@@ -195,25 +285,13 @@ const VoiceAssessment: React.FC = () => {
       <IonAlert
         isOpen={showAlert}
         message={`Try again the word ${wordsToSay[currentWordIndex]}`}
-        buttons={[{ text: 'OK', handler: () => handleAlertDismiss() }]}
-        onDidDismiss={handleAlertDismiss}
+        buttons={[{ text: 'OK', handler: () => setShowAlert(false) }]}
+        onDidDismiss={() => setShowAlert(false)}
       />
-        <Header title="Voice Assessment" />
-      {/* <IonHeader>
-    
-        <IonToolbar style={{ backgroundColor: '#ffffff', boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)' }}>
-          <IonButton slot="start" fill="clear" color="dark">
-            <IonIcon icon={home} />
-          </IonButton>
-          <IonTitle style={{ textAlign: 'center', color: '#333333', fontWeight: 'bold' }}>Voice Assessment</IonTitle>
-          <IonButton slot="end" fill="clear" color="dark">
-            <IonIcon icon={personCircle} />
-          </IonButton>
-        </IonToolbar>
-      </IonHeader> */}
+      <Header title="Voice Assessment" />
       <IonContent className="ion-padding">
         <div style={wordDisplayAreaStyle}>
-          {wordsToSay[currentWordIndex] || "All words completed!"}
+          {currentWordIndex < wordsToSay.length ? wordsToSay[currentWordIndex] : "All words completed!"}
         </div>
         <div style={audioPlayerAreaStyle}>
           <audio
@@ -224,6 +302,10 @@ const VoiceAssessment: React.FC = () => {
               maxWidth: '400px',
               borderRadius: '12px',
               boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
+            }}
+            onError={(e) => {
+              console.error('Audio error:', e);
+              setError('Error loading audio');
             }}
           >
             <source src={audioUrl || ""} type="audio/wav" />
@@ -238,7 +320,14 @@ const VoiceAssessment: React.FC = () => {
                 ...buttonStyle,
                 backgroundColor: isRecording ? '#FF5252' : '#4CAF50',
               }}
-              onClick={isRecording ? stopRecording : startRecording}
+              onClick={() => {
+                if (!isRecording) {
+                  startRecording();
+                  startShowingWords();
+                } else {
+                  stopRecording();
+                }
+              }}
             >
               <IonIcon icon={isRecording ? play : mic} />
             </IonButton>
@@ -248,21 +337,70 @@ const VoiceAssessment: React.FC = () => {
           </IonCol>
           <IonCol size="auto" className="ion-text-center">
             <IonButton
-               fill="clear"
+              fill="clear"
               style={{
                 ...buttonStyle,
                 backgroundColor: '#2196F3',
+                opacity: isAudioReady ? 1 : 0.5
               }}
               onClick={playRecordedAudio}
-              disabled={!audioUrl}
+              disabled={!isAudioReady}
             >
-              <IonIcon icon={cog} />
+              <IonIcon icon={play} />
             </IonButton>
             <p style={{ fontSize: '0.9rem', marginTop: '8px', color: '#555555' }}>Play</p>
           </IonCol>
         </IonRow>
         {error && <p style={{ color: '#FF5252', textAlign: 'center' }}>{error}</p>}
         <p style={{ textAlign: 'center', color: '#333333' }}>{transcript}</p>
+        <div style={{ marginTop: '20px' }}>
+          <h3>Expected Words Log</h3>
+          <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+            <thead>
+              <tr>
+                <th style={{ border: '1px solid #ddd', padding: '8px' }}>Time</th>
+                <th style={{ border: '1px solid #ddd', padding: '8px' }}>Expected Word</th>
+              </tr>
+            </thead>
+            <tbody>
+              {expectedLog.map((entry, index) => (
+                <tr key={index}>
+                  <td style={{ border: '1px solid #ddd', padding: '8px' }}>{entry.time}</td>
+                  <td style={{ border: '1px solid #ddd', padding: '8px' }}>{entry.word}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+        <div style={{ marginTop: '20px' }}>
+          <h3>Log</h3>
+          <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+            <thead>
+              <tr>
+                <th style={{ border: '1px solid #ddd', padding: '8px' }}>Time</th>
+                <th style={{ border: '1px solid #ddd', padding: '8px' }}>Expected Word</th>
+                <th style={{ border: '1px solid #ddd', padding: '8px' }}>Spoken Word</th>
+              </tr>
+            </thead>
+            <tbody>
+              {log.map((entry, index) => (
+                <tr key={index}>
+                  <td style={{ border: '1px solid #ddd', padding: '8px' }}>{entry.time}</td>
+                  <td style={{ border: '1px solid #ddd', padding: '8px' }}>{entry.word}</td>
+                  <td style={{ border: '1px solid #ddd', padding: '8px' }}>{entry.spokenWord}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+        <div style={{ marginTop: '20px' }}>
+          <h3>Frequency Data</h3>
+          <div style={{ display: 'flex', flexWrap: 'wrap' }}>
+            {frequencyData.map((value, index) => (
+              <div key={index} style={{ width: '10px', height: `${value}px`, backgroundColor: '#4CAF50', margin: '1px' }}></div>
+            ))}
+          </div>
+        </div>
       </IonContent>
       <IonFooter style={{ backgroundColor: '#ffffff', boxShadow: '0 -2px 4px rgba(0, 0, 0, 0.1)' }}>
         <div style={{ textAlign: 'center', padding: '10px' }}>

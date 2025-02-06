@@ -12,24 +12,33 @@ import {
     IonCol,
     IonMenuButton
 } from '@ionic/react';
-import { home, personCircle, settings, helpCircle } from 'ionicons/icons';
-
+import { personCircle, settings, helpCircle, addCircle } from 'ionicons/icons';
+import { useHistory } from 'react-router-dom';
+import { userSessionService } from '../services/UserSessionService';
 const menuConfig = [
-    { icon: home, label: 'Home', target: '/home' },
-    { icon: personCircle, label: 'Pre Iformation', target: '/pre-information' },
-    { icon: personCircle, label: 'Assessment', target: '/select-assessment' },
-    { icon: personCircle, label: 'Personal Iformation', target: '/personal-information' },
+    { icon: addCircle, label: 'New Collection', target: '/consent' },
+    { icon: personCircle, label: 'Subject List', target: '/pre-information' },
+
     { icon: settings, label: 'Settings', target: '/settings' },
     { icon: helpCircle, label: 'Help', target: '/help' }
 ];
 
 const HomePage: React.FC = () => {
+    const history = useHistory();
+
+    const handleSignOut = () => {
+        console.log('Sign out clicked');
+        userSessionService.clearSession();
+        history.push('/login');
+        // Add sign-out logic here
+    };
+
     return (
         <IonApp>
             <IonHeader>
                 <IonToolbar>
                     <IonMenuButton slot="start" />
-                    <IonTitle style={{ textAlign: 'center' }}>Home</IonTitle>
+                    <IonTitle style={{ textAlign: 'left' }}>MSU TRIAGE</IonTitle>
                     <IonButton slot="end" fill="clear">
                         <IonIcon icon={personCircle} />
                     </IonButton>
@@ -40,14 +49,24 @@ const HomePage: React.FC = () => {
                 <IonGrid>
                     {menuConfig.map((item, index) => (
                         <IonRow key={index}>
-                            <IonCol size="12" sizeSm="6" className="ion-text-center">
-                                <IonButton expand="block" routerLink={item.target} fill="clear">
+                            <IonCol size="12" className="ion-text-left">
+                                <IonButton expand="block" routerLink={item.target} fill="outline" size="large" style={{ justifyContent: 'flex-start' }}>
                                     <IonIcon icon={item.icon} slot="start" />
                                     {item.label}
                                 </IonButton>
                             </IonCol>
                         </IonRow>
                     ))}
+                </IonGrid>
+                <IonGrid style={{ position: 'absolute', bottom: 0, width: '95%' }}>
+                    <IonRow>
+                        <IonCol size="12" className="ion-text-left">
+                            <IonButton expand="block" fill="outline" size="large" style={{ justifyContent: 'flex-start' }} onClick={handleSignOut}>
+                                <IonIcon icon={personCircle} slot="start" />
+                                Log Out
+                            </IonButton>
+                        </IonCol>
+                    </IonRow>
                 </IonGrid>
             </IonContent>
         </IonApp>
