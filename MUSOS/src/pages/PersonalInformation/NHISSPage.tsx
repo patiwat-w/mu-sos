@@ -11,7 +11,10 @@ import {
     IonIcon,
     IonRow,
     IonCol,
-    IonFooter
+    IonFooter,
+    IonGrid,
+    IonSegment,
+    IonSegmentButton
 } from '@ionic/react';
 import { home, personCircle, save, closeCircle, helpCircle } from 'ionicons/icons';
 import { useHistory } from 'react-router';
@@ -66,28 +69,34 @@ const NHISSPage: React.FC = () => {
             </IonHeader>
 
             <IonContent className="ion-padding">
-                {nhissItems.map((item) => (
-                    <IonItem key={item.id}>
-                         <IonRow style={{ display: 'flex', width: '100%' }}> 
-                         <IonCol size="full" >{item.id} {item.label}</IonCol>
-                        
-                        </IonRow>
-                       <hr/>
-                        <IonRow style={{ display: 'flex', width: '100%' }}>
-                            {item.options.map((option) => (
-                                <IonCol size="auto" key={option} style={{ textAlign: 'left', margin: '0px' }}>
-                                    <IonButton
-                                        fill={scores[item.id] === option ? "solid" : "outline"}
-                                        onClick={() => handleScoreChange(item.id, option)}
-                                        style={{ margin: '0px' }}
-                                    >
-                                        {option}
-                                    </IonButton>
-                                </IonCol>
-                            ))}
-                        </IonRow>
-                    </IonItem>
-                ))}
+            {nhissItems.map((item) => (
+  <IonGrid key={item.id} className="nhiss-item">
+    {/* Label อยู่บรรทัดแรก */}
+    <IonRow>
+      <IonCol size="12">
+        <strong>{item.id} {item.label}</strong>
+      </IonCol>
+    </IonRow>
+
+    {/* ปุ่มตัวเลือกอยู่บรรทัดที่สอง */}
+    <IonRow className="button-group">
+      {item.options.map((option) => (
+        <IonCol key={option} size="auto">
+          <IonButton
+            expand="block"
+            fill={scores[item.id] === option ? "solid" : "outline"}
+            onClick={() => handleScoreChange(item.id, option)}
+            className="option-button"
+          >
+            {option}
+          </IonButton>
+        </IonCol>
+      ))}
+    </IonRow>
+  </IonGrid>
+))}
+
+
             </IonContent>
 
             <IonFooter>

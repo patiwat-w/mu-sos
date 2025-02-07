@@ -21,6 +21,7 @@ import {
 } from '@ionic/react';
 import { save, closeCircle } from 'ionicons/icons';
 import Header from '../../components/Header';
+import { useHistory } from 'react-router-dom';
 
 const PersonalInformationPage: React.FC = () => {
     const [gender, setGender] = useState('Male');
@@ -31,8 +32,15 @@ const PersonalInformationPage: React.FC = () => {
     const [onsetTime, setOnsetTime] = useState('');
     const [lastSeenTime, setLastSeenTime] = useState('');
 
+    const history = useHistory();
+
     const handleToggleGender = () => {
         setGender(gender === 'Male' ? 'Female' : 'Male');
+    };
+
+    const handleSave = () => {
+        // Add your save logic here
+        history.push('/health-information');
     };
 
     return (
@@ -140,6 +148,7 @@ const PersonalInformationPage: React.FC = () => {
                                     boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)',
                                     color: 'black',
                                 }}
+                                onClick={handleSave}
                             >
                                 <IonIcon icon={save} />
                             </IonButton>
