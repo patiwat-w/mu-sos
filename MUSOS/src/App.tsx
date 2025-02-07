@@ -44,6 +44,7 @@ import PreDiagnosisPage from './pages/PersonalInformation/PreDiagnosisPage';
 import NHISSPage from './pages/PersonalInformation/NHISSPage';
 import UserProfilePage from './pages/UserProfile';
 import ConsentPage from './pages/Consent/ConsentPage'; // Import ConsentPage
+import SubjectListPage from './pages/SubjectList/SubjectListPage'; // Import SubjectListPage
 /**
  * Ionic Dark Mode
  * -----------------------------------------------------
@@ -108,6 +109,9 @@ const App: React.FC = () => (
         </Route>
         <Route exact path="/consent"> {/* Add route for ConsentPage */}
           <ConsentPage />
+        </Route>
+        <Route exact path="/subject-list"> {/* Add route for SubjectListPage */}
+          <SubjectListPage />
         </Route>
 
         {/* Catch-all Route */}

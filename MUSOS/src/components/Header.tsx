@@ -17,7 +17,7 @@ const Header: React.FC<{ title: string }> = ({ title }) => {
 
   const handleHomeClick = () => {
     //history.push('/select-assessment'); // Redirect to home page
-    location.href = '/select-assessment';
+    location.href = '/home';
   };
 
   const handleProfileClick = () => {

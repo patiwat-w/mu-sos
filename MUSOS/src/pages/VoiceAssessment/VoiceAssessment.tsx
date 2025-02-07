@@ -303,6 +303,9 @@ const VoiceAssessment: React.FC = () => {
       />
       <Header title="Voice Assessment" />
       <IonContent className="ion-padding">
+        <div style={{ textAlign: 'center' }}>
+          <h3>กรุณากด 'เริ่ม' และอ่านคำที่ปรากฏ โดยคำที่ปรากฏจะเปลี่ยนทุก 2 วินาที</h3>
+        </div>
         <div style={wordDisplayAreaStyle}>
           {currentWordIndex < wordsToSay.length ? wordsToSay[currentWordIndex] : "All words completed!"}
         </div>

@@ -17,7 +17,7 @@ import { useHistory } from 'react-router-dom';
 import { userSessionService } from '../services/UserSessionService';
 const menuConfig = [
     { icon: addCircle, label: 'New Collection', target: '/consent' },
-    { icon: personCircle, label: 'Subject List', target: '/pre-information' },
+    { icon: personCircle, label: 'Subject List', target: '/subject-list' },
 
     { icon: settings, label: 'Settings', target: '/settings' },
     { icon: helpCircle, label: 'Help', target: '/help' }
