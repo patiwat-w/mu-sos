@@ -32,12 +32,12 @@ const PreDiagnosisPage: React.FC = () => {
      async function handleSave(event: any): Promise<void> {
 
         try {
-            let response =  apiSubjectDataService.postData(formData);
+            let response = await apiSubjectDataService.postData(formData);
             if(response){
-                alert(JSON.stringify(response))
+                //alert(JSON.stringify(response))
             }
-            // Navigate to next page after successful submit
-           // history.push('/pre-diagnosis');
+            // Navigate to select-assessment page after successful submit
+            history.push('/select-assessment');
         } catch (error) {
             console.error('Error submitting data:', error);
             // Show error message to user

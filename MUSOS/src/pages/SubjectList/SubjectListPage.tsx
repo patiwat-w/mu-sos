@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 import {
   IonPage,
   IonHeader,
@@ -23,6 +24,7 @@ interface Subject {
 const SubjectListPage: React.FC = () => {
   const [subjects, setSubjects] = useState<Subject[]>([]);
   const [isInfiniteDisabled, setInfiniteDisabled] = useState(false);
+  const history = useHistory();
 
   useEffect(() => {
     // Initial load
@@ -44,13 +46,20 @@ const SubjectListPage: React.FC = () => {
     }, 1000);
   };
 
+  const handleItemClick = (subject: Subject) => {
+    history.push({
+      pathname: '/select-assessment',
+      state: { subject }
+    });
+  };
+
   return (
     <IonPage>
       <Header title="Subject List" />
       <IonContent>
         <IonList>
           {subjects.map((subject, index) => (
-            <IonItem key={index}>
+            <IonItem key={index} onClick={() => handleItemClick(subject)}>
               <IonLabel>
                 <h2>{subject.id}</h2>
                 <p>{subject.date}</p>

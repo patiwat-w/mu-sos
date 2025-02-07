@@ -67,7 +67,8 @@ const SelectAssessment: React.FC = () => {
   };
   const handleResultClick = () => {
     setMenuStatus({ ...menuStatus, result: 'done' });
-    history.push('/result');
+    history.push('/result'); // Ensure this route matches the one defined in App.tsx
+    location.href = '/result';
   }
 
   const handleProfileClick = () => {

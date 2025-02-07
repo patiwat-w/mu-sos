@@ -45,6 +45,7 @@ import NHISSPage from './pages/PersonalInformation/NHISSPage';
 import UserProfilePage from './pages/UserProfile';
 import ConsentPage from './pages/Consent/ConsentPage'; // Import ConsentPage
 import SubjectListPage from './pages/SubjectList/SubjectListPage'; // Import SubjectListPage
+import ResultPage from './pages/Result/ResultPage'; // Import ResultPage
 /**
  * Ionic Dark Mode
  * -----------------------------------------------------
@@ -112,6 +113,9 @@ const App: React.FC = () => (
         </Route>
         <Route exact path="/subject-list"> {/* Add route for SubjectListPage */}
           <SubjectListPage />
+        </Route>
+        <Route exact path="/result"> {/* Add route for ResultPage */}
+          <ResultPage />
         </Route>
 
         {/* Catch-all Route */}
