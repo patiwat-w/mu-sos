@@ -1,6 +1,11 @@
 using System.Text.Json.Serialization;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
+
+// Add services to the container.
+builder.Services.AddDbContext<DataContext>(options =>
+    options.UseSqlite(builder.Configuration.GetConnectionString("DataCollectionDb")));
 
 builder.Services.ConfigureHttpJsonOptions(options =>
 {
@@ -10,7 +15,7 @@ builder.Services.ConfigureHttpJsonOptions(options =>
 var app = builder.Build();
 
 // สำคัญ: ต้องเรียก UsePathBase ก่อน UseStaticFiles
-app.UsePathBase("/app");
+app.UsePathBase("/api");
 app.UseForwardedHeaders();
 
 // Configure the HTTP request pipeline
@@ -30,20 +35,9 @@ app.UseStaticFiles(new StaticFileOptions
 app.UseStaticFiles();
 app.UseRouting();
 
-var sampleTodos = new Todo[] {
-    new(1, "Walk the dog"),
-    new(2, "Do the dishes", DateOnly.FromDateTime(DateTime.Now)),
-    new(3, "Do the laundry", DateOnly.FromDateTime(DateTime.Now.AddDays(1))),
-    new(4, "Clean the bathroom"),
-    new(5, "Clean the car", DateOnly.FromDateTime(DateTime.Now.AddDays(2)))
-};
-
-var todosApi = app.MapGroup("/todos");
-todosApi.MapGet("/", () => sampleTodos);
-todosApi.MapGet("/{id}", (int id) =>
-    sampleTodos.FirstOrDefault(a => a.Id == id) is { } todo
-        ? Results.Ok(todo)
-        : Results.NotFound());
+// Register API routes
+app.MapTodoApi();
+app.MapSubjectApi();
 
 // ย้าย MapFallbackToFile ไว้หลังสุด
 app.MapFallbackToFile("index.html");
@@ -51,6 +45,9 @@ app.MapFallbackToFile("index.html");
 app.Run();
 
 public record Todo(int Id, string? Title, DateOnly? DueBy = null, bool IsComplete = false);
+
+
+
 
 [JsonSerializable(typeof(Todo[]))]
 internal partial class AppJsonSerializerContext : JsonSerializerContext

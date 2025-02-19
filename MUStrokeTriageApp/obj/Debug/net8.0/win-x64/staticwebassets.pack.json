@@ -1,0 +1,193 @@
+{
+  "Files": [
+    {
+      "Id": "D:\\MU\\Sources\\MUStrokeTriageApp\\wwwroot\\assets\\index-C6j6EGUP.js",
+      "PackagePath": "staticwebassets\\assets\\index-C6j6EGUP.js"
+    },
+    {
+      "Id": "D:\\MU\\Sources\\MUStrokeTriageApp\\wwwroot\\assets\\index-Cf2p-Kc7.css",
+      "PackagePath": "staticwebassets\\assets\\index-Cf2p-Kc7.css"
+    },
+    {
+      "Id": "D:\\MU\\Sources\\MUStrokeTriageApp\\wwwroot\\assets\\index-l4LIFtVr.js",
+      "PackagePath": "staticwebassets\\assets\\index-l4LIFtVr.js"
+    },
+    {
+      "Id": "D:\\MU\\Sources\\MUStrokeTriageApp\\wwwroot\\assets\\index-legacy-CjpRzkDm.js",
+      "PackagePath": "staticwebassets\\assets\\index-legacy-CjpRzkDm.js"
+    },
+    {
+      "Id": "D:\\MU\\Sources\\MUStrokeTriageApp\\wwwroot\\assets\\index-legacy-D8sTX5eM.js",
+      "PackagePath": "staticwebassets\\assets\\index-legacy-D8sTX5eM.js"
+    },
+    {
+      "Id": "D:\\MU\\Sources\\MUStrokeTriageApp\\wwwroot\\assets\\index9-B5Ltlkad.js",
+      "PackagePath": "staticwebassets\\assets\\index9-B5Ltlkad.js"
+    },
+    {
+      "Id": "D:\\MU\\Sources\\MUStrokeTriageApp\\wwwroot\\assets\\index9-BovxiEaI.js",
+      "PackagePath": "staticwebassets\\assets\\index9-BovxiEaI.js"
+    },
+    {
+      "Id": "D:\\MU\\Sources\\MUStrokeTriageApp\\wwwroot\\assets\\index9-legacy-BFRefDsN.js",
+      "PackagePath": "staticwebassets\\assets\\index9-legacy-BFRefDsN.js"
+    },
+    {
+      "Id": "D:\\MU\\Sources\\MUStrokeTriageApp\\wwwroot\\assets\\index9-legacy-chDT2aaK.js",
+      "PackagePath": "staticwebassets\\assets\\index9-legacy-chDT2aaK.js"
+    },
+    {
+      "Id": "D:\\MU\\Sources\\MUStrokeTriageApp\\wwwroot\\assets\\input-shims-BnORnYoY.js",
+      "PackagePath": "staticwebassets\\assets\\input-shims-BnORnYoY.js"
+    },
+    {
+      "Id": "D:\\MU\\Sources\\MUStrokeTriageApp\\wwwroot\\assets\\input-shims-kYviyFNo.js",
+      "PackagePath": "staticwebassets\\assets\\input-shims-kYviyFNo.js"
+    },
+    {
+      "Id": "D:\\MU\\Sources\\MUStrokeTriageApp\\wwwroot\\assets\\input-shims-legacy-BOSkaGVU.js",
+      "PackagePath": "staticwebassets\\assets\\input-shims-legacy-BOSkaGVU.js"
+    },
+    {
+      "Id": "D:\\MU\\Sources\\MUStrokeTriageApp\\wwwroot\\assets\\input-shims-legacy-BwAY6KMH.js",
+      "PackagePath": "staticwebassets\\assets\\input-shims-legacy-BwAY6KMH.js"
+    },
+    {
+      "Id": "D:\\MU\\Sources\\MUStrokeTriageApp\\wwwroot\\assets\\ios.transition-Cvo70EWO.js",
+      "PackagePath": "staticwebassets\\assets\\ios.transition-Cvo70EWO.js"
+    },
+    {
+      "Id": "D:\\MU\\Sources\\MUStrokeTriageApp\\wwwroot\\assets\\ios.transition-DHS080t-.js",
+      "PackagePath": "staticwebassets\\assets\\ios.transition-DHS080t-.js"
+    },
+    {
+      "Id": "D:\\MU\\Sources\\MUStrokeTriageApp\\wwwroot\\assets\\ios.transition-legacy-B5llnN8f.js",
+      "PackagePath": "staticwebassets\\assets\\ios.transition-legacy-B5llnN8f.js"
+    },
+    {
+      "Id": "D:\\MU\\Sources\\MUStrokeTriageApp\\wwwroot\\assets\\ios.transition-legacy-DVfyIDnb.js",
+      "PackagePath": "staticwebassets\\assets\\ios.transition-legacy-DVfyIDnb.js"
+    },
+    {
+      "Id": "D:\\MU\\Sources\\MUStrokeTriageApp\\wwwroot\\assets\\md.transition-BW1YndKv.js",
+      "PackagePath": "staticwebassets\\assets\\md.transition-BW1YndKv.js"
+    },
+    {
+      "Id": "D:\\MU\\Sources\\MUStrokeTriageApp\\wwwroot\\assets\\md.transition-CPXhLNIN.js",
+      "PackagePath": "staticwebassets\\assets\\md.transition-CPXhLNIN.js"
+    },
+    {
+      "Id": "D:\\MU\\Sources\\MUStrokeTriageApp\\wwwroot\\assets\\md.transition-legacy-COSuB1BI.js",
+      "PackagePath": "staticwebassets\\assets\\md.transition-legacy-COSuB1BI.js"
+    },
+    {
+      "Id": "D:\\MU\\Sources\\MUStrokeTriageApp\\wwwroot\\assets\\md.transition-legacy-OkZtAXcW.js",
+      "PackagePath": "staticwebassets\\assets\\md.transition-legacy-OkZtAXcW.js"
+    },
+    {
+      "Id": "D:\\MU\\Sources\\MUStrokeTriageApp\\wwwroot\\assets\\polyfills-legacy-BM_kMjLM.js",
+      "PackagePath": "staticwebassets\\assets\\polyfills-legacy-BM_kMjLM.js"
+    },
+    {
+      "Id": "D:\\MU\\Sources\\MUStrokeTriageApp\\wwwroot\\assets\\status-tap-B7p8OEtj.js",
+      "PackagePath": "staticwebassets\\assets\\status-tap-B7p8OEtj.js"
+    },
+    {
+      "Id": "D:\\MU\\Sources\\MUStrokeTriageApp\\wwwroot\\assets\\status-tap-BuUSfpte.js",
+      "PackagePath": "staticwebassets\\assets\\status-tap-BuUSfpte.js"
+    },
+    {
+      "Id": "D:\\MU\\Sources\\MUStrokeTriageApp\\wwwroot\\assets\\status-tap-legacy-CnuULhFy.js",
+      "PackagePath": "staticwebassets\\assets\\status-tap-legacy-CnuULhFy.js"
+    },
+    {
+      "Id": "D:\\MU\\Sources\\MUStrokeTriageApp\\wwwroot\\assets\\status-tap-legacy-Cw0YH8uT.js",
+      "PackagePath": "staticwebassets\\assets\\status-tap-legacy-Cw0YH8uT.js"
+    },
+    {
+      "Id": "D:\\MU\\Sources\\MUStrokeTriageApp\\wwwroot\\assets\\swipe-back-7jJ7coPc.js",
+      "PackagePath": "staticwebassets\\assets\\swipe-back-7jJ7coPc.js"
+    },
+    {
+      "Id": "D:\\MU\\Sources\\MUStrokeTriageApp\\wwwroot\\assets\\swipe-back-B6iWamBi.js",
+      "PackagePath": "staticwebassets\\assets\\swipe-back-B6iWamBi.js"
+    },
+    {
+      "Id": "D:\\MU\\Sources\\MUStrokeTriageApp\\wwwroot\\assets\\swipe-back-legacy-Cg6XkJUD.js",
+      "PackagePath": "staticwebassets\\assets\\swipe-back-legacy-Cg6XkJUD.js"
+    },
+    {
+      "Id": "D:\\MU\\Sources\\MUStrokeTriageApp\\wwwroot\\assets\\swipe-back-legacy-x4owHemv.js",
+      "PackagePath": "staticwebassets\\assets\\swipe-back-legacy-x4owHemv.js"
+    },
+    {
+      "Id": "D:\\MU\\Sources\\MUStrokeTriageApp\\wwwroot\\favicon.png",
+      "PackagePath": "staticwebassets\\favicon.png"
+    },
+    {
+      "Id": "D:\\MU\\Sources\\MUStrokeTriageApp\\wwwroot\\images\\icons\\icon-128x128.png",
+      "PackagePath": "staticwebassets\\images\\icons\\icon-128x128.png"
+    },
+    {
+      "Id": "D:\\MU\\Sources\\MUStrokeTriageApp\\wwwroot\\images\\icons\\icon-144x144.png",
+      "PackagePath": "staticwebassets\\images\\icons\\icon-144x144.png"
+    },
+    {
+      "Id": "D:\\MU\\Sources\\MUStrokeTriageApp\\wwwroot\\images\\icons\\icon-152x152.png",
+      "PackagePath": "staticwebassets\\images\\icons\\icon-152x152.png"
+    },
+    {
+      "Id": "D:\\MU\\Sources\\MUStrokeTriageApp\\wwwroot\\images\\icons\\icon-192x192.png",
+      "PackagePath": "staticwebassets\\images\\icons\\icon-192x192.png"
+    },
+    {
+      "Id": "D:\\MU\\Sources\\MUStrokeTriageApp\\wwwroot\\images\\icons\\icon-384x384.png",
+      "PackagePath": "staticwebassets\\images\\icons\\icon-384x384.png"
+    },
+    {
+      "Id": "D:\\MU\\Sources\\MUStrokeTriageApp\\wwwroot\\images\\icons\\icon-512x512.png",
+      "PackagePath": "staticwebassets\\images\\icons\\icon-512x512.png"
+    },
+    {
+      "Id": "D:\\MU\\Sources\\MUStrokeTriageApp\\wwwroot\\images\\icons\\icon-72x72.png",
+      "PackagePath": "staticwebassets\\images\\icons\\icon-72x72.png"
+    },
+    {
+      "Id": "D:\\MU\\Sources\\MUStrokeTriageApp\\wwwroot\\images\\icons\\icon-96x96.png",
+      "PackagePath": "staticwebassets\\images\\icons\\icon-96x96.png"
+    },
+    {
+      "Id": "D:\\MU\\Sources\\MUStrokeTriageApp\\wwwroot\\images\\manifest.json",
+      "PackagePath": "staticwebassets\\images\\manifest.json"
+    },
+    {
+      "Id": "D:\\MU\\Sources\\MUStrokeTriageApp\\wwwroot\\index.html",
+      "PackagePath": "staticwebassets\\index.html"
+    },
+    {
+      "Id": "D:\\MU\\Sources\\MUStrokeTriageApp\\wwwroot\\manifest.json",
+      "PackagePath": "staticwebassets\\manifest.json"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\win-x64\\staticwebassets\\msbuild.MUStrokeTriageApp.Microsoft.AspNetCore.StaticWebAssetEndpoints.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssetEndpoints.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\win-x64\\staticwebassets\\msbuild.MUStrokeTriageApp.Microsoft.AspNetCore.StaticWebAssets.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\win-x64\\staticwebassets\\msbuild.build.MUStrokeTriageApp.props",
+      "PackagePath": "build\\MUStrokeTriageApp.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\win-x64\\staticwebassets\\msbuild.buildMultiTargeting.MUStrokeTriageApp.props",
+      "PackagePath": "buildMultiTargeting\\MUStrokeTriageApp.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\win-x64\\staticwebassets\\msbuild.buildTransitive.MUStrokeTriageApp.props",
+      "PackagePath": "buildTransitive\\MUStrokeTriageApp.props"
+    }
+  ],
+  "ElementsToRemove": []
+}
