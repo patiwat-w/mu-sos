@@ -14,10 +14,12 @@ import {
   IonFooter,
   IonLoading,
   IonModal,
+  IonAlert,
 } from '@ionic/react';
 import { home, personCircle, calendar } from 'ionicons/icons';
 import { useHistory } from 'react-router-dom';
 import { apiSubjectDataService } from '../services/apiSubjectDataService';
+import { userSessionService } from '../services/UserSessionService';
 
 const PreInformation: React.FC = () => {
   const history = useHistory();
@@ -27,13 +29,31 @@ const PreInformation: React.FC = () => {
   const [onsetTime, setOnsetTime] = useState('');
   const [lastSeenNormalTime, setLastSeenNormalTime] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   const [showOnsetPicker, setShowOnsetPicker] = useState(false);
   const [showLastSeenPicker, setShowLastSeenPicker] = useState(false);
 
   const handleSubmit = async () => {
     setIsLoading(true);
-    let formData = { subjectId, hn, phoneNumber, onsetTime, lastSeenNormalTime };
+    const user = userSessionService.getSession();
+    if (!user) {
+      window.location.href = '/login';
+      throw new Error('Please login to continue');
+    }
+    let formData = {
+      subjectId,
+      phoneNumber,
+      onsetTime,
+      lastSeenNormalTime,
+      firstName: "",
+      lastName: "",
+      createdDate: new Date().toISOString(),
+      modifiedDate: new Date().toISOString(),
+      createdBy: ""+user.displayName,
+      modifiedBy: ""+user.displayName,
+      stateCode: 0
+    };
     console.log('Submit:', formData);
     try {
       let res = await apiSubjectDataService.postData(formData);
@@ -41,6 +61,7 @@ const PreInformation: React.FC = () => {
       history.push('/select-assessment');
     } catch (error) {
       setIsLoading(false);
+      setError(error.message);
       console.error('Error submitting data:', error);
     }
   };
@@ -60,6 +81,13 @@ const PreInformation: React.FC = () => {
       </IonHeader>
       <IonContent className="ion-padding">
         <IonLoading isOpen={isLoading} message={'Please wait...'} />
+        <IonAlert
+          isOpen={!!error}
+          onDidDismiss={() => setError(null)}
+          header={'Error'}
+          message={error}
+          buttons={['OK']}
+        />
         <IonItem>
           <IonLabel position="stacked" style={{ textAlign: 'left' }}>Subject ID</IonLabel>
           <IonInput value={subjectId} placeholder="Subject ID" onIonChange={(e) => setSubjectId(e.detail.value!)} style={{ textAlign: 'right' }} />

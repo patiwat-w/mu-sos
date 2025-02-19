@@ -1,10 +1,14 @@
 import { userSessionService } from './UserSessionService';
 import { IUser } from '../types/user.type';
+
 const API_URL = import.meta.env.VITE_AI_SERVICE_URL;
 if (!API_URL) {
   throw new Error('API_URL is not defined');
 }
-//const API_URL = "https://msu-triage.egmu-research.org/service/proxy.ashx?http://192.168.10.3:5000";
+// Ensure that API_URL is correctly set in your environment variables
+// For example, in your .env file:
+// VITE_API_URL=http://your-api-url.com
+
 function generateGUID() {
   return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
     const r = (Math.random() * 16) | 0,
@@ -12,32 +16,25 @@ function generateGUID() {
     return v.toString(16);
   });
 }
-export const apiSendPhotoFaceService = {
 
-  
-  
-  // return response
-  postData: async (blob: any) => {
-
+export const apiUserDataService = {
+  postData: async (data: any) => {
     const user = userSessionService.getSession();
     if (!user) {
-      //throw new Error('No active user session');
-      // go to login page
       window.location.href = '/login';
       throw new Error('Please login to continue');
-
     }
-   //alert(JSON.stringify(user));
-    // get guid
-    let requestGuid  = generateGUID();
-    let user_id = user.localUserMappingId;
-    // send form data binary
+    let requestGuid = generateGUID();
     const formData = new FormData();
-    //formData.append('image', data.image);
-    formData.append('frame', blob, 'frame.jpg');
-    const response = await fetch(`${API_URL}/process_frame?user_id=${user_id}`, {
+    formData.append('name', 'patiwat');
+    formData.append('email', 'patiwat.pfc@gmail.com');
+    formData.append('age', '12');
+    formData.append('gender', 'male');
+    formData.append('notes', 'tese');
+
+    const response = await fetch(`${API_URL}/submit_data`, {
       method: 'POST',
-      body: formData,      
+      body: formData,
       headers: {
         'X-Request-ID': requestGuid,
       },
