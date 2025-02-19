@@ -1,6 +1,10 @@
 import { userSessionService } from './UserSessionService';
 import { IUser } from '../types/user.type';
-const API_URL = "https://msu-triage.egmu-research.org/service/proxy.ashx?http://192.168.10.3:5000";
+
+const API_URL = import.meta.env.VITE_API_URL;
+if (!API_URL) {
+  throw new Error('API_URL is not defined');
+}
 function generateGUID() {
   return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
     const r = (Math.random() * 16) | 0,
@@ -34,6 +38,33 @@ export const apiSendVideoService = {
     const response = await fetch(`${API_URL}/submit_video?user_id=${user_id}`, {
       method: 'POST',
       body: formData,      
+      headers: {
+        'X-Request-ID': requestGuid,
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    return response;
+  },
+  postDataWithMetadata: async (blob: any, metadata: any) => {
+    const user = userSessionService.getSession();
+    if (!user) {
+      window.location.href = '/login';
+      throw new Error('Please login to continue');
+    }
+
+    let requestGuid = generateGUID();
+    let user_id = user.localUserMappingId;
+    const formData = new FormData();
+    formData.append('video', blob, 'video.webm');
+    formData.append('metadata', JSON.stringify(metadata));
+
+    const response = await fetch(`${API_URL}/submit_video_with_metadata?user_id=${user_id}`, {
+      method: 'POST',
+      body: formData,
       headers: {
         'X-Request-ID': requestGuid,
       },
