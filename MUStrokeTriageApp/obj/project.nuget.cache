@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "gvClmyLcw5g=",
+  "dgSpecHash": "tvrf2BQIWdc=",
   "success": true,
   "projectFilePath": "D:\\MU\\Sources\\MUStrokeTriageApp\\MUStrokeTriageApp.csproj",
   "expectedPackageFiles": [
@@ -22,6 +22,7 @@
     "C:\\Users\\MU-DEV\\.nuget\\packages\\microsoft.entityframeworkcore.relational\\9.0.2\\microsoft.entityframeworkcore.relational.9.0.2.nupkg.sha512",
     "C:\\Users\\MU-DEV\\.nuget\\packages\\microsoft.entityframeworkcore.sqlite\\9.0.2\\microsoft.entityframeworkcore.sqlite.9.0.2.nupkg.sha512",
     "C:\\Users\\MU-DEV\\.nuget\\packages\\microsoft.entityframeworkcore.sqlite.core\\9.0.2\\microsoft.entityframeworkcore.sqlite.core.9.0.2.nupkg.sha512",
+    "C:\\Users\\MU-DEV\\.nuget\\packages\\microsoft.extensions.apidescription.server\\6.0.5\\microsoft.extensions.apidescription.server.6.0.5.nupkg.sha512",
     "C:\\Users\\MU-DEV\\.nuget\\packages\\microsoft.extensions.caching.abstractions\\9.0.2\\microsoft.extensions.caching.abstractions.9.0.2.nupkg.sha512",
     "C:\\Users\\MU-DEV\\.nuget\\packages\\microsoft.extensions.caching.memory\\9.0.2\\microsoft.extensions.caching.memory.9.0.2.nupkg.sha512",
     "C:\\Users\\MU-DEV\\.nuget\\packages\\microsoft.extensions.configuration.abstractions\\9.0.2\\microsoft.extensions.configuration.abstractions.9.0.2.nupkg.sha512",
@@ -32,11 +33,16 @@
     "C:\\Users\\MU-DEV\\.nuget\\packages\\microsoft.extensions.logging.abstractions\\9.0.2\\microsoft.extensions.logging.abstractions.9.0.2.nupkg.sha512",
     "C:\\Users\\MU-DEV\\.nuget\\packages\\microsoft.extensions.options\\9.0.2\\microsoft.extensions.options.9.0.2.nupkg.sha512",
     "C:\\Users\\MU-DEV\\.nuget\\packages\\microsoft.extensions.primitives\\9.0.2\\microsoft.extensions.primitives.9.0.2.nupkg.sha512",
+    "C:\\Users\\MU-DEV\\.nuget\\packages\\microsoft.openapi\\1.6.22\\microsoft.openapi.1.6.22.nupkg.sha512",
     "C:\\Users\\MU-DEV\\.nuget\\packages\\mono.texttemplating\\3.0.0\\mono.texttemplating.3.0.0.nupkg.sha512",
     "C:\\Users\\MU-DEV\\.nuget\\packages\\sqlitepclraw.bundle_e_sqlite3\\2.1.10\\sqlitepclraw.bundle_e_sqlite3.2.1.10.nupkg.sha512",
     "C:\\Users\\MU-DEV\\.nuget\\packages\\sqlitepclraw.core\\2.1.10\\sqlitepclraw.core.2.1.10.nupkg.sha512",
     "C:\\Users\\MU-DEV\\.nuget\\packages\\sqlitepclraw.lib.e_sqlite3\\2.1.10\\sqlitepclraw.lib.e_sqlite3.2.1.10.nupkg.sha512",
     "C:\\Users\\MU-DEV\\.nuget\\packages\\sqlitepclraw.provider.e_sqlite3\\2.1.10\\sqlitepclraw.provider.e_sqlite3.2.1.10.nupkg.sha512",
+    "C:\\Users\\MU-DEV\\.nuget\\packages\\swashbuckle.aspnetcore\\7.2.0\\swashbuckle.aspnetcore.7.2.0.nupkg.sha512",
+    "C:\\Users\\MU-DEV\\.nuget\\packages\\swashbuckle.aspnetcore.swagger\\7.2.0\\swashbuckle.aspnetcore.swagger.7.2.0.nupkg.sha512",
+    "C:\\Users\\MU-DEV\\.nuget\\packages\\swashbuckle.aspnetcore.swaggergen\\7.2.0\\swashbuckle.aspnetcore.swaggergen.7.2.0.nupkg.sha512",
+    "C:\\Users\\MU-DEV\\.nuget\\packages\\swashbuckle.aspnetcore.swaggerui\\7.2.0\\swashbuckle.aspnetcore.swaggerui.7.2.0.nupkg.sha512",
     "C:\\Users\\MU-DEV\\.nuget\\packages\\system.codedom\\6.0.0\\system.codedom.6.0.0.nupkg.sha512",
     "C:\\Users\\MU-DEV\\.nuget\\packages\\system.collections.immutable\\7.0.0\\system.collections.immutable.7.0.0.nupkg.sha512",
     "C:\\Users\\MU-DEV\\.nuget\\packages\\system.composition\\7.0.0\\system.composition.7.0.0.nupkg.sha512",
@@ -53,9 +59,9 @@
     "C:\\Users\\MU-DEV\\.nuget\\packages\\system.text.encodings.web\\9.0.2\\system.text.encodings.web.9.0.2.nupkg.sha512",
     "C:\\Users\\MU-DEV\\.nuget\\packages\\system.text.json\\9.0.2\\system.text.json.9.0.2.nupkg.sha512",
     "C:\\Users\\MU-DEV\\.nuget\\packages\\system.threading.channels\\7.0.0\\system.threading.channels.7.0.0.nupkg.sha512",
+    "C:\\Users\\MU-DEV\\.nuget\\packages\\microsoft.aspnetcore.app.runtime.win-x64\\8.0.13\\microsoft.aspnetcore.app.runtime.win-x64.8.0.13.nupkg.sha512",
     "C:\\Users\\MU-DEV\\.nuget\\packages\\microsoft.netcore.app.runtime.win-x64\\8.0.13\\microsoft.netcore.app.runtime.win-x64.8.0.13.nupkg.sha512",
-    "C:\\Users\\MU-DEV\\.nuget\\packages\\microsoft.windowsdesktop.app.runtime.win-x64\\8.0.13\\microsoft.windowsdesktop.app.runtime.win-x64.8.0.13.nupkg.sha512",
-    "C:\\Users\\MU-DEV\\.nuget\\packages\\microsoft.aspnetcore.app.runtime.win-x64\\8.0.13\\microsoft.aspnetcore.app.runtime.win-x64.8.0.13.nupkg.sha512"
+    "C:\\Users\\MU-DEV\\.nuget\\packages\\microsoft.windowsdesktop.app.runtime.win-x64\\8.0.13\\microsoft.windowsdesktop.app.runtime.win-x64.8.0.13.nupkg.sha512"
   ],
   "logs": []
 }

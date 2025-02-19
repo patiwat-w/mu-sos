@@ -446,3 +446,8 @@ D:\MU\Sources\MUStrokeTriageApp\bin\Debug\net8.0\win-x64\ru\Microsoft.CodeAnalys
 D:\MU\Sources\MUStrokeTriageApp\bin\Debug\net8.0\win-x64\tr\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
 D:\MU\Sources\MUStrokeTriageApp\bin\Debug\net8.0\win-x64\zh-Hans\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
 D:\MU\Sources\MUStrokeTriageApp\bin\Debug\net8.0\win-x64\zh-Hant\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+D:\MU\Sources\MUStrokeTriageApp\bin\Debug\net8.0\win-x64\Microsoft.OpenApi.dll
+D:\MU\Sources\MUStrokeTriageApp\bin\Debug\net8.0\win-x64\Swashbuckle.AspNetCore.Swagger.dll
+D:\MU\Sources\MUStrokeTriageApp\bin\Debug\net8.0\win-x64\Swashbuckle.AspNetCore.SwaggerGen.dll
+D:\MU\Sources\MUStrokeTriageApp\bin\Debug\net8.0\win-x64\Swashbuckle.AspNetCore.SwaggerUI.dll
+D:\MU\Sources\MUStrokeTriageApp\obj\Debug\net8.0\win-x64\MUStrokeTriageApp.MvcApplicationPartsAssemblyInfo.cs
