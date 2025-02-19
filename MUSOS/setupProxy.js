@@ -4,7 +4,7 @@ module.exports = function(app) {
   app.use(
     '/api',
     createProxyMiddleware({
-      target: 'https://msu-triage.egmu-research.org/service/proxy.ashx?http://192.168.10.3:5000',
+      target: 'https://192.168.10.3:5000', //https://msu-triage.egmu-research.org/service/proxy.ashx?
       changeOrigin: true,
       secure: false, // If using self-signed certificate
       logLevel: 'debug',

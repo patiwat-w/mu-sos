@@ -20,11 +20,14 @@ import { GoogleOAuthProvider, GoogleLogin } from '@react-oauth/google';
 import { auth, googleProvider, signInWithPopup } from "../config/firebase"; // เพิ่ม import ของ firebase
 import { userSessionService } from '../services/UserSessionService';
 import { IUser } from '../types/user.type';
+import { saveToStorage } from '../utils/storage'; // Corrected import statement
 
 const LoginPage: React.FC = () => {
   const history = useHistory(); // ใช้ useHistory เพื่อเปลี่ยนเส้นทาง
   const location = useLocation(); // ใช้ useLocation เพื่อรับ state
   const [agree, setAgree] = useState(false); // สร้าง state สำหรับ checkbox
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
 
   useEffect(() => {
     // ตรวจสอบ state ที่ส่งกลับมาจากหน้า Agreement
@@ -91,6 +94,14 @@ const handleGoogleFailure = (error: any) => {
   alert("Google Login Failed");
 };
 
+const handleLogin = () => {
+  // Perform login logic
+  // ...
+
+  // Save user data to storage
+  saveToStorage('user', { username });
+};
+
   return (
     <IonPage>
 
@@ -155,7 +166,7 @@ const handleGoogleFailure = (error: any) => {
           Sign In with Google
         </IonButton>
 
-
+        <button onClick={handleLogin}>Login</button>
 
         {/* ข้อความเพิ่มเติม */}
         

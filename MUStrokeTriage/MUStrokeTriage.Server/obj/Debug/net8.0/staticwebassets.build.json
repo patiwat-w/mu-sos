@@ -1,0 +1,23 @@
+{
+  "Version": 1,
+  "Hash": "QwRaBtod3OmhXDmca6eJyVmseyt6CX/QfCXuPbuiw0c=",
+  "Source": "MUStrokeTriage.Server",
+  "BasePath": "_content/MUStrokeTriage.Server",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [
+    {
+      "Identity": "D:\\MU\\Sources\\MUStrokeTriage\\mustroketriage.client\\mustroketriage.client.esproj",
+      "Version": 2,
+      "Source": "mustroketriage.client",
+      "GetPublishAssetsTargets": "GetCurrentProjectPublishStaticWebAssetItems",
+      "AdditionalPublishProperties": "Configuration=Debug;Platform=AnyCPU",
+      "AdditionalPublishPropertiesToRemove": "WebPublishProfileFile;TargetFramework;RuntimeIdentifier;SelfContained",
+      "GetBuildAssetsTargets": "GetCurrentProjectBuildStaticWebAssetItems",
+      "AdditionalBuildProperties": "Configuration=Debug;Platform=AnyCPU",
+      "AdditionalBuildPropertiesToRemove": "WebPublishProfileFile;TargetFramework;RuntimeIdentifier;SelfContained"
+    }
+  ],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}

@@ -1,0 +1,6 @@
+@MUStrokeTriage.Server_HostAddress = http://localhost:5194
+
+GET {{MUStrokeTriage.Server_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

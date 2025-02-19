@@ -34,6 +34,9 @@ const ImageAssessment: React.FC = () => {
   const [isRecording, setIsRecording] = useState<boolean>(false); // State to track recording status
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
   const recordedChunksRef = useRef<Blob[]>([]);
+  const [recordedVideoUrl, setRecordedVideoUrl] = useState<string | null>(null); // State to store recorded video URL
+  const [showOverlay, setShowOverlay] = useState<boolean>(true); // State to control overlay visibility
+  const [activeButton, setActiveButton] = useState<string>('face'); // State to track active button
 
   useEffect(() => {
     // Access user camera
@@ -200,7 +203,13 @@ const ImageAssessment: React.FC = () => {
       }
       setIsRecording(false);
     } else {
-      // Start recording
+      // Cancel existing MediaRecorder if any
+      if (mediaRecorderRef.current) {
+        mediaRecorderRef.current.stop();
+        mediaRecorderRef.current = null;
+      }
+
+      // Start new recording
       if (videoRef.current && videoRef.current.srcObject) {
         const mediaStream = videoRef.current.srcObject as MediaStream;
         const mediaRecorder = new MediaRecorder(mediaStream);
@@ -216,15 +225,27 @@ const ImageAssessment: React.FC = () => {
           const blob = new Blob(recordedChunksRef.current, { type: 'video/webm' });
           recordedChunksRef.current = [];
           const videoUrl = URL.createObjectURL(blob);
+          setRecordedVideoUrl(videoUrl); // Set the recorded video URL
           const response = await sendVideo(videoUrl);
-          setUploadMessage(`Video sent successfully: ${JSON.stringify(response)}`);
-          setShowAlert(true); // Show alert with response message
+          //setUploadMessage(`Video sent successfully: ${JSON.stringify(response)}`);
+          //setShowAlert(true); // Show alert with response message
         };
 
         mediaRecorder.start();
         setIsRecording(true);
       }
     }
+  };
+
+  const handleFaceClick = () => {
+    setShowOverlay(true); // Show overlay when Face button is clicked
+    drawFaceSilhouetteGuide(); // Redraw the overlay
+    setActiveButton('face'); // Set active button to face
+  };
+
+  const handleBodyClick = () => {
+    setShowOverlay(false); // Hide overlay when Body button is clicked
+    setActiveButton('body'); // Set active button to body
   };
 
   return (
@@ -272,12 +293,12 @@ const ImageAssessment: React.FC = () => {
         {/* ปุ่ม Face และ Body */}
         <IonRow className="ion-justify-content-center ion-margin-bottom">
           <IonCol size="auto" className="ion-text-center">
-            <IonButton onClick={drawFaceSilhouetteGuide} color="primary" className="toggle-button">
+            <IonButton onClick={handleFaceClick} color={activeButton === 'face' ? 'primary' : 'medium'} className="toggle-button">
               Face
             </IonButton>
           </IonCol>
           <IonCol size="auto" className="ion-text-center">
-            <IonButton color="medium" className="toggle-button">
+            <IonButton onClick={handleBodyClick} color={activeButton === 'body' ? 'primary' : 'medium'} className="toggle-button">
               Body
             </IonButton>
           </IonCol>
@@ -297,22 +318,27 @@ const ImageAssessment: React.FC = () => {
             position: 'relative', // Change to relative
           }}
         >
-          <canvas
-            id="overlayCanvas"
-            className="camera-display"
-            style={{
-              position: 'absolute', // Change to absolute
-              top: 0,
-              left: 0,
-              width: '100%',
-              height: '100%',
-              zIndex: 1,
-              pointerEvents: 'none',
-            }}
-          ></canvas>
+          {showOverlay && (
+            <canvas
+              id="overlayCanvas"
+              className="camera-display"
+              style={{
+                position: 'absolute', // Change to absolute
+                top: 0,
+                left: 0,
+                width: '100%',
+                height: '100%',
+                zIndex: 1,
+                pointerEvents: 'none',
+              }}
+            ></canvas>
+          )}
           <video ref={videoRef} autoPlay playsInline className="video-stream" style={{ width: '100%', height: '100%', objectFit: 'fill', backgroundColor: 'rgba(9, 9, 9, 0.5)' }}></video>
           <canvas ref={canvasRef} style={{ display: 'none' }} width="640" height="480" />
           {photo && <img src={photo} alt="Captured" style={{ position: 'absolute', top: 0, left: 0, objectFit: 'fill', width: '100%', height: '100%' }} />}
+          {recordedVideoUrl && (
+            <video controls src={recordedVideoUrl} style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' }} />
+          )}
         </div>
 
         {/* ปุ่มด้านล่าง */}

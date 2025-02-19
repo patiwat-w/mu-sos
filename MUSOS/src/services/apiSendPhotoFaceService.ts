@@ -1,6 +1,6 @@
 import { userSessionService } from './UserSessionService';
 import { IUser } from '../types/user.type';
-const API_URL = "/api";
+const API_URL = "https://msu-triage.egmu-research.org/service/proxy.ashx?http://192.168.10.3:5000";
 function generateGUID() {
   return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
     const r = (Math.random() * 16) | 0,
