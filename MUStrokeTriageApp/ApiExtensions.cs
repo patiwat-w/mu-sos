@@ -11,4 +11,14 @@ public static class ApiExtensions
     {
         SubjectApi.Map(app);
     }
+
+    public static void MapUserApi(this IEndpointRouteBuilder app)
+    {
+        UserApi.Map(app);
+    }
+
+    public static void MapUserAuthenticationMethodApi(this IEndpointRouteBuilder app)
+    {
+        UserAuthenticationMethodApi.Map(app);
+    }
 }

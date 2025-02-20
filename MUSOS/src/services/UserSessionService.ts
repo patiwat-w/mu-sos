@@ -19,6 +19,8 @@ class UserSessionService {
   isAuthenticated(): boolean {
     return !!this.getSession();
   }
+
+  
 }
 
 export const userSessionService = new UserSessionService();

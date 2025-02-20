@@ -47,6 +47,8 @@ app.UseRouting();
 // Register API routes
 app.MapTodoApi();
 app.MapSubjectApi();
+app.MapUserApi();
+app.MapUserAuthenticationMethodApi();
 
 // ย้าย MapFallbackToFile ไว้หลังสุด
 app.MapFallbackToFile("index.html");
