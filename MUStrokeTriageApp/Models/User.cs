@@ -26,7 +26,22 @@ using System.ComponentModel.DataAnnotations.Schema;
         [StringLength(100)]
         [Column("Name")]
         [Display(Name = "Full Name")]
-        public required string Name { get; set; }
+        public  string? Name { get; set; }
+
+        [Required]
+        [StringLength(100)]
+        [Column("First_Name")]
+        [Display(Name = "FirstName")]
+        public  string? FirstName { get; set; }
+
+
+         [Required]
+        [StringLength(100)]
+        [Column("Last_Name")]
+        [Display(Name = "LastName")]
+        public  string? LastName { get; set; }
+
+      
 
         [Required]
         [EmailAddress]
@@ -47,9 +62,19 @@ using System.ComponentModel.DataAnnotations.Schema;
         [Display(Name = "Last Login Date")]
         public DateTime? LastLoginDate { get; set; }
 
+
+        [Column("Created_Date")]
+        [Display(Name = "Created Date")]
+        public DateTime CreatedDate { get; set; } = DateTime.Now;
+
+
+
         [Column("Modified_Date")]
         [Display(Name = "Modified Date")]
         public DateTime ModifiedDate { get; set; } = DateTime.Now;
+
+
+
 
         [Column("Created_By")]
         [StringLength(50)]

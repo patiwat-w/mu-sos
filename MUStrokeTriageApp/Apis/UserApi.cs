@@ -51,9 +51,10 @@ public static class UserApi
                     Id = user.Id,
                     FirstName = user.FirstName,
                     LastName = user.LastName,
+                    Name = user.Name,
+                    Email = user.Email,
                     CreatedDate = DateTime.Now,
-                    CreatedBy = user.CreatedBy,
-                    StateCode = user.StateCode
+                    Role = user.Role,
                     // Map other properties as needed
                 };
                 db.Users.Add(newuser);
