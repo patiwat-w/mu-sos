@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("MUStrokeTriageApp")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+cf72c7172aa372ce28d8a93fab4a3283e6defb5d")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+bb2a0529d6df7dadff3772ecad2c9088bbbe1527")]
 [assembly: System.Reflection.AssemblyProductAttribute("MUStrokeTriageApp")]
 [assembly: System.Reflection.AssemblyTitleAttribute("MUStrokeTriageApp")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

@@ -1,6 +1,5 @@
 using Microsoft.EntityFrameworkCore;
 
-
 public class DataContext : DbContext
 {
     public DataContext(DbContextOptions<DataContext> options) : base(options)
@@ -8,6 +7,8 @@ public class DataContext : DbContext
     }
 
     public DbSet<SubjectModel> Subjects { get; set; }
+    public DbSet<UserModel> Users { get; set; }
+    public DbSet<UserAuthenticationMethodModel> UserAuthenticationMethods { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -15,5 +16,16 @@ public class DataContext : DbContext
         
         modelBuilder.Entity<SubjectModel>()
             .HasKey(s => s.SubjectId);
+
+        modelBuilder.Entity<UserModel>()
+            .HasKey(u => u.Id);
+
+        modelBuilder.Entity<UserAuthenticationMethodModel>()
+            .HasKey(uam => uam.Id);
+
+        modelBuilder.Entity<UserAuthenticationMethodModel>()
+            .HasOne(uam => uam.User)
+            .WithMany()
+            .HasForeignKey(uam => uam.UserId);
     }
 }
