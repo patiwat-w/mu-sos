@@ -1,20 +1,59 @@
-/* .home-content {
+/* Overall layout */
+ion-content {
+    --background: #f4f4f4; /* Light background */
+  }
+  
+  /* Profile Card */
+  .profile-card {
+    text-align: center;
+    padding: 20px;
+    background: white;
+    margin-bottom: 20px;
+  }
+  
+  .profile-card ion-avatar {
+    width: 120px;
+    height: 120px;
+    margin: 0 auto 10px;
+  }
+  
+  .profile-card ion-label {
+    font-weight: bold;
+    display: block; /* Makes labels stack */
+    margin-bottom: 5px;
+  }
+  
+  .profile-card ion-grid {
+    padding: 10px;
+  }
+  
+  .profile-card ion-button {
+    --padding-start: 10px;
+    --padding-end: 10px;
+  }
+  
+  .member-since {
+    font-size: smaller;
+    color: gray;
+  }
+  
+  /* Segment Tabs */
+  ion-segment-button {
+    font-weight: bold;
+  }
+  
+  /* Slides (Content Area) */
+  ion-slides {
+    height: 300px; /* Adjust as needed */
+  }
+  
+  ion-slide {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100%;
-}
-
-.menu-container {
-    width: 900px;
-}
-
-.logout-container {
-    width: 900px;
-    bottom: 0;
-}
-
-.menu-button {
-    justify-content: flex-start;
-    width: 100%;
-} */
+  }
+  
+  ion-slide img {
+    max-width: 100%;
+    height: auto;
+  }

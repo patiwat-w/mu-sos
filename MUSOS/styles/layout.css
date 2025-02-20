@@ -8,6 +8,7 @@
     margin: auto !important;
     height: 100vh;
     padding-left: 25%;
+    overflow: hidden;
   }
 
   body {
@@ -19,6 +20,7 @@
     justify-content: center;
     background-color: rgb(71, 28, 28) !important;
     max-width: 900px !important;
-    border: 5px solid rgb(7, 7, 7);
+   
+    overflow: hidden;
   }
 }

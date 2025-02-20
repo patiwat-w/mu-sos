@@ -15,6 +15,9 @@ import {
   IonItem,
   IonLoading,
   IonAlert,
+  IonGrid,
+  IonCol,
+  IonRow,
 } from '@ionic/react';
 import { helpCircle, logoGoogle } from 'ionicons/icons';
 import { useHistory, useLocation } from 'react-router-dom'; // เพิ่ม useHistory และ useLocation
@@ -185,92 +188,54 @@ const handleLogin = () => {
   saveToStorage('user', { username });
 };
 
-  return (
-    <IonPage>
+return (
+  <IonPage>
+    <IonContent className="ion-padding">
+      <IonGrid style={{ height: '100%' }}>
+        <IonRow justify="center" align="center" style={{ height: '100%' ,justifyContent: 'center', alignItems: 'center'}}>
+          <IonCol size="12" sizeMd="6">
+            <div style={{ textAlign: 'center' }}> {/* ไม่ต้องใส่ marginBottom ที่นี่ */}
+              <img
+                src="images/icons/icon-384x384.png"
+                alt="MSU SOS Logo"
+                style={{ width: '150px', marginBottom: '20px' }} // ปรับขนาดและ margin
+              />
+              <h2 style={{ fontSize: '2em', fontWeight: 'bold', marginBottom: '30px' }}>
+                Stroke Triage Data Collection
+              </h2>
 
-      <IonContent className="ion-padding">
-              <IonLoading isOpen={isLoading} message={'Please wait...'} />
-                <IonAlert
-                  isOpen={!!error}
-                  onDidDismiss={() => setError(null)}
-                  header={'Error'}
-                  message={error}
-                  buttons={['OK']}
-                />
-        <div style={{ textAlign: 'center', marginTop: '20px' }}>
-          {/* โลโก้ */}
-          <img
-            src="images/icons/icon-384x384.png" // แทนที่ด้วย URL หรือ path ของโลโก้คุณ
-            alt="MSU SOS Logo"
-            style={{ width: '100px', marginBottom: '20px' }}
-          />
+              {/* ช่องกรอกข้อมูล (ถ้ามี) */}
+              {/* ... */}
 
-          {/* ชื่อโปรเจกต์ */}
-          <h2>Stroke Triage Data Collection</h2>
-        </div>
+              <IonItem lines="none" style={{ marginBottom: '20px' }}>
+                <IonCheckbox checked={agree} onIonChange={e => setAgree(e.detail.checked)} />
+                <span style={{ marginLeft: '10px' }} onClick={seeAgreement}>
+                  By signing in, you agree to our Terms and Conditions.
+                </span>
+              </IonItem>
 
-        {/* ช่องกรอกข้อมูล */}
-        {/* <div style={{ marginBottom: '20px' }}>
-          <IonLabel position="floating">Email</IonLabel>
-          <IonInput
-            type="email"
-            placeholder="email"
-            style={{ border: '1px solid #ccc', borderRadius: '4px', padding: '8px', width: '100%' }}
-          />
-        </div>
-        <div style={{ marginBottom: '20px' }}>
-          <IonLabel position="floating">Password</IonLabel>
-          <IonInput
-            type="password"
-            placeholder="Password"
-            style={{ border: '1px solid #ccc', borderRadius: '4px', padding: '8px', width: '100%' }}
-          />
-        </div> */}
+              <IonButton
+                expand="block"
+                color="primary"
+                onClick={handleGoogleSignIn}
+                style={{ backgroundColor: '#4285F4', color: 'white', fontSize: '1.2em' }}
+              >
+                <IonIcon slot="start" icon={logoGoogle} style={{ color: 'white' }} />
+                Sign In with Google
+              </IonButton>
+            </div>
+          </IonCol>
+        </IonRow>
+      </IonGrid>
+    </IonContent>
 
-        {/* Checkbox สำหรับข้อตกลง */}
-        <IonItem lines="none">
-          <IonCheckbox checked={agree} onIonChange={e => setAgree(e.detail.checked)} />
-          <span style={{ marginLeft: '10px' }} onClick={seeAgreement}>
-            By signing in, you agree to our Terms and Conditions.
-          </span>
-        </IonItem>
-
-        {/* ปุ่ม Sign In */}
-        {/* <IonButton
-          expand="block"
-          color="danger"
-          style={{ marginTop: '20px' }}
-          onClick={handleSignIn} // เรียกฟังก์ชัน handleSignIn เมื่อกดปุ่ม
-        >
-          Sign In
-        </IonButton> */}
-
-        {/* ปุ่ม Sign In with Google */}
-        <IonButton
-          expand="block"
-          color="primary"
-          style={{ marginTop: '10px' }}
-          onClick={handleGoogleSignIn} // เรียกฟังก์ชัน handleGoogleSignIn เมื่อกดปุ่ม
-        >
-          <IonIcon slot="start" icon={logoGoogle} 
-          />
-          Sign In with Google
-        </IonButton>
-
-        {/* <button onClick={handleLogin}>Login</button> */}
-
-        {/* ข้อความเพิ่มเติม */}
-        
-      </IonContent>
-
-      {/* ไอคอนคำถาม */}
-      <IonFooter>
-        <div style={{ textAlign: 'center', padding: '10px' }}>
+    <IonFooter>
+      <div style={{ textAlign: 'center', padding: '10px' }}>
         Fixed account for research data collection
-        </div>
-      </IonFooter>
-    </IonPage>
-  );
+      </div>
+    </IonFooter>
+  </IonPage>
+);
 };
 
 export default LoginPage;

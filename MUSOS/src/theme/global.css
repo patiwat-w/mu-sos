@@ -1,54 +1,4 @@
 @import url(variables.css);
-/* กำหนดให้ page เป็นขนาด Mobile */
-
-/* @media only screen and (min-width: 600px) {
-  body {
-    font-size: 14px;
-    margin: 0;
-    padding: 0;
-    max-width: 600px;
-    overflow-x: hidden;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh; 
-  }
-
-  .container {
-    max-width: 100%;
-    padding: 10px;
-    box-sizing: border-box; 
-  }
-
-  .header, .footer {
-    display: none;
-  }
-} */
-
-/* @media only screen and (max-width: 600px) {
-  body {
-    font-size: 14px;
-    margin: 0;
-    padding: 0;
-    max-width: 100%;
-    overflow-x: hidden;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    height: 100vh; 
-    background-color: #eff6ff; 
-  }
-
-  .container {
-    width: 100%;
-    padding: 10px;
-    box-sizing: border-box; 
-  }
-
-  .header, .footer {
-    display: none;
-  }
-} */
 
 /* ปุ่ม Responsive */
 .responsive-button {
@@ -67,17 +17,17 @@
   
   /* ปุ่มแต่ละประเภท */
   .btn-image {
-    background-color: #007bff !important;
+    background-color: var(--primary-color) !important;
     color: white !important;
   }
   
   .btn-voice {
-    background-color: #ffd700 !important;
+    background-color: var(--secondary-color) !important;
     color: black !important;
   }
   
   .btn-info {
-    background-color: #28a745 !important;
+    background-color: var(--accent-color) !important;
     color: white !important;
   }
   
@@ -92,90 +42,7 @@
     font-size: calc(var(--button-size) / 3) !important; /* ขนาดไอคอนสัมพันธ์กับขนาดปุ่ม */
     
   }
-   /* 
-  ion-toolbar {
-    --background: var(--ion-header-bg-color);
-    color: var(--ion-header-font-color);
-    
-    --border-width: 1px;
-    --border-style: solid;
-    --padding: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    font-size: larger;
-}
- 
-  ion-content {
-    background: var(--ion-content-bg-color);
-    color: var(--ion-content-font-color);
-    padding: 10px;
-}
-  
-  ion-footer {
-    background: var(--ion-footer-bg-color);
-    color: var(--ion-footer-font-color);
-    border-color: var(--ion-table-border-color);
-    border-width: 1px;
-    border-style: solid;
-    padding: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-}
-  
-  ion-card {
-    background: var(--ion-card-bg-color);
-    color: var(--ion-card-font-color);
-    --border-color: var(--ion-table-border-color);
-    --border-width: 1px;
-    --border-style: solid;
-    padding: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-}
-  
-  ion-card-header {
-    background: var(--ion-card-header-bg-color);
-    color: var(--ion-card-header-font-color);
-    border-color: var(--ion-table-border-color);
-    border-width: 1px;
-    border-style: solid;
-    padding: 10px;
-}
-  
-  ion-card-content {
-    background: var(--ion-card-content-bg-color);
-    color: var(--ion-card-content-font-color);
-    border-color: var(--ion-table-border-color);
-    border-width: 1px;
-    border-style: solid;
-    padding: 10px;
-}
-  
-  ion-item {
-    background: var(--ion-item-bg-color);
-    color: var(--ion-item-font-color);
-    --border-color: var(--ion-table-border-color);
-    --border-width: 1px;
-    --border-style: solid;
-    padding: 10px;
-}
-  
-  ion-label {
-    color: var(--ion-label-font-color);
-}
-  
-  ion-input {
-    background: var(--ion-input-bg-color);
-    color: var(--ion-input-font-color);
-    border-color: var(--ion-table-border-color);
-    border-width: 1px;
-    border-style: solid;
-    padding: 10px;
-}
 
-
-ion-page {
-    background: var(--ion-page-bg-color);
-    color: var(--ion-page-font-color);
-    padding: 10px;
-} */
 
 /* ทำให้ content อยู่กลาง */
 .app-container {
