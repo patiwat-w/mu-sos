@@ -14,15 +14,12 @@ import {
   IonSpinner
 } from '@ionic/react';
 import Header from '../../components/Header';
+import { apiSubjectDataService } from '../../services/apiSubjectDataService'; // Import the service
+import { ISubject } from '../../types/subject.type';
 
-interface Subject {
-  id: string;
-  date: string;
-  status: string;
-}
 
 const SubjectListPage: React.FC = () => {
-  const [subjects, setSubjects] = useState<Subject[]>([]);
+  const [subjects, setSubjects] = useState<ISubject[]>([]);
   const [isInfiniteDisabled, setInfiniteDisabled] = useState(false);
   const history = useHistory();
 
@@ -31,22 +28,19 @@ const SubjectListPage: React.FC = () => {
     fetchMoreData();
   }, []);
 
-  const fetchMoreData = () => {
-    // Simulate fetching data from an API
-    setTimeout(() => {
-      const newSubjects = Array.from({ length: 20 }, (_, i) => ({
-        id: `Subject ${subjects.length + i + 1}`,
-        date: new Date().toLocaleDateString(),
-        status: Math.random() > 0.5 ? 'Completed' : 'Pending'
-      }));
+  const fetchMoreData = async () => {
+    try {
+      const newSubjects = await apiSubjectDataService.getList(); // Fetch list of subjects from the API
       setSubjects([...subjects, ...newSubjects]);
       if (subjects.length + newSubjects.length >= 100) {
         setInfiniteDisabled(true);
       }
-    }, 1000);
+    } catch (error) {
+      console.error('Error fetching subjects:', error);
+    }
   };
-
-  const handleItemClick = (subject: Subject) => {
+ 
+  const handleItemClick = (subject: ISubject) => {
     history.push({
       pathname: '/select-assessment',
       state: { subject }
@@ -61,9 +55,12 @@ const SubjectListPage: React.FC = () => {
           {subjects.map((subject, index) => (
             <IonItem key={index} onClick={() => handleItemClick(subject)}>
               <IonLabel>
-                <h2>{subject.id}</h2>
-                <p>{subject.date}</p>
-                <p>{subject.status}</p>
+                <h2>{subject.subjectId}</h2>
+                <p>{subject.phoneNumber}</p>
+                <p>{subject.onsetTime}</p>
+                <p>{subject.lastSeenNormalTime}</p>
+                <p>{subject.createdDate}</p>
+                <p>{subject.createdBy}</p>
               </IonLabel>
             </IonItem>
           ))}
