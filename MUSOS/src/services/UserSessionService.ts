@@ -17,10 +17,15 @@ class UserSessionService {
   }
 
   isAuthenticated(): boolean {
-    return !!this.getSession();
+    try {
+      const session = this.getSession();
+      console.log('session:', session);
+      return !!session; // returns true if session exists and is valid
+    } catch (error) {
+      console.error('Error checking authentication:', error);
+      return false;
+    }
   }
-
-  
 }
 
 export const userSessionService = new UserSessionService();

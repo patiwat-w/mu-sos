@@ -27,13 +27,29 @@ const Header: React.FC<{ title: string }> = ({ title }) => {
   return (
     <IonHeader>
       <IonToolbar>
-        <IonButton slot="start" fill="clear" onClick={handleHomeClick}>
+        <IonButton 
+          slot="start" 
+          fill="clear" 
+          onClick={handleHomeClick}
+          style={{ 
+            '--background': 'white',
+            '--color': '#3880ff'
+          }}
+        >
           <IonIcon icon={home} />
         </IonButton>
         
         <IonTitle className="ion-title-custom">{title}</IonTitle>
         
-        <IonButton slot="end" fill="clear" onClick={handleProfileClick}>
+        <IonButton 
+          slot="end" 
+          fill="clear" 
+          onClick={handleProfileClick}
+          style={{ 
+            '--background': 'white',
+            '--color': '#3880ff'
+          }}
+        >
           {photoUrl ? (
             <img src={photoUrl} alt="Profile" style={{ borderRadius: '50%', width: '32px', height: '32px' }} />
           ) : (

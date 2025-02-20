@@ -18,6 +18,7 @@ import {
   IonGrid,
   IonCol,
   IonRow,
+  IonModal,
 } from '@ionic/react';
 import { helpCircle, logoGoogle } from 'ionicons/icons';
 import { useHistory, useLocation } from 'react-router-dom'; // เพิ่ม useHistory และ useLocation
@@ -29,6 +30,7 @@ import { saveToStorage } from '../utils/storage'; // Corrected import statement
 import { apiAuthenMethidDataService } from '../services/apiAuthenMethidDataService';
 import { al, au } from 'vitest/dist/reporters-5f784f42';
 import { UserAuthenticationMethodModel } from '../types/authenMethod.type';
+import TermsModal from '../components/TermsModal';
 
 const LoginPage: React.FC = () => {
   const history = useHistory(); // ใช้ useHistory เพื่อเปลี่ยนเส้นทาง
@@ -38,6 +40,7 @@ const LoginPage: React.FC = () => {
   const [password, setPassword] = useState('');
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [showModal, setShowModal] = useState(false);
   useEffect(() => {
     // ตรวจสอบ state ที่ส่งกลับมาจากหน้า Agreement
     if (location.state && typeof location.state === 'object' && 'accepted' in location.state) {
@@ -51,11 +54,21 @@ const LoginPage: React.FC = () => {
       //history.push('/home');
       window.location.href="/home";
     } else {
-      alert('Please agree to the terms and conditions.');
+      setShowModal(true);
     }
   };
-
+  const handleAgreement= async () => {
+   
+      setShowModal(true);
+      return;
+    
+  }
   const handleGoogleSignIn = async () => {
+    if (!agree) {
+      setShowModal(true);
+      return;
+    }
+
     try {
       const result = await signInWithPopup(auth, googleProvider);
       const user = result.user;
@@ -158,7 +171,7 @@ const LoginPage: React.FC = () => {
 
   const seeAgreement = () => {  
     // เปลี่ยนเส้นทางไปยังหน้าข้อตกลง
-    history.push('/agreement');
+    setShowModal(true);
   };
 
   useEffect(() => {
@@ -192,7 +205,7 @@ return (
   <IonPage>
     <IonContent className="ion-padding">
       <IonGrid style={{ height: '100%' }}>
-        <IonRow justify="center" align="center" style={{ height: '100%' ,justifyContent: 'center', alignItems: 'center'}}>
+        <IonRow style={{ height: '100%', justifyContent: 'center', alignItems: 'center' }}>
           <IonCol size="12" sizeMd="6">
             <div style={{ textAlign: 'center' }}> {/* ไม่ต้องใส่ marginBottom ที่นี่ */}
               <img
@@ -234,6 +247,8 @@ return (
         Fixed account for research data collection
       </div>
     </IonFooter>
+
+    <TermsModal isOpen={showModal} onClose={() => setShowModal(false)} />
   </IonPage>
 );
 };

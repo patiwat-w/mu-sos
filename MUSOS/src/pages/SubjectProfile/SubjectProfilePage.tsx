@@ -17,60 +17,19 @@ import { IonAvatar, IonLabel,  IonSegment, IonSegmentButton, } from '@ionic/reac
 import { createOutline, locationOutline, mailOutline, callOutline, cameraOutline, checkmarkDoneOutline } from 'ionicons/icons';
 import { personCircle, settings, helpCircle, addCircle, logOutOutline, addCircleOutline } from 'ionicons/icons';
 import { useHistory } from 'react-router-dom';
-import { userSessionService } from '../services/UserSessionService';
-import './HomePage.css';
-import SubjectList from '../components/SubjectList';
 
-const menuConfig = [
-    { icon: addCircle, label: 'New Collection', target: '/consent' },
-    { icon: personCircle, label: 'Subject List', target: '/subject-list' },
-    { icon: settings, label: 'Settings', target: '/settings' },
-    { icon: helpCircle, label: 'Help', target: '/help' }
-];
 
-const HomePage: React.FC = () => {
+const SubjectProfilePage: React.FC = () => {
     const history = useHistory();
     const [user, setUser] = useState<any>(null);
     const [photoUrl, setPhotoUrl] = useState<string | null>(null); // เพิ่ม state สำหรับ photoUrl
 
-    useEffect(() => {
-        const sessionUser = userSessionService.getSession();
-        if (sessionUser) {
-            setUser(sessionUser);
-        } else {
-            history.push('/login');
-        }
 
-       
-            if (sessionUser) {
-              //setProfileImage(user.profileImage || 'default-profile-image.jpg'); // ตั้งค่า profileImage
-              setPhotoUrl(sessionUser.photoURL ?? null); // ตั้งค่า photoUrl
-            }
-    }, [history]);
 
-    const handleSignOut = () => {
-        console.log('Sign out clicked');
-        userSessionService.clearSession();
-        history.push('/login');
-    };
-
-    const handleAddSubject = () => {
-        history.push('/pre-information');
-    };
 
     return (
         <IonContent>
             
-          {/* Header Section */}
-          <IonHeader>
-            <IonToolbar>
-              <IonTitle>MSU Triage</IonTitle>
-              <IonButton slot="end" onClick={handleSignOut}>
-                <IonIcon icon={logOutOutline} />
-              </IonButton>
-            </IonToolbar>
-          </IonHeader>
-    
           {/* Profile Card */}
           <div className="profile-card">
             <IonAvatar>
@@ -87,7 +46,7 @@ const HomePage: React.FC = () => {
                       shape="round" 
                       fill="solid" 
                       color="primary"
-                      onClick={handleAddSubject}
+                      
                   >
                     <IonIcon icon={addCircleOutline} />
                   </IonButton>
@@ -114,14 +73,14 @@ const HomePage: React.FC = () => {
     
           {/* Content based on selected segment */}
 
-          <SubjectList />
+        
          
     
         </IonContent>
       );
 };
 
-export default HomePage;
+export default SubjectProfilePage;
 function setProfileImage(arg0: string | null) {
     throw new Error('Function not implemented.');
 }

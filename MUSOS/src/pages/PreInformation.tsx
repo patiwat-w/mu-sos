@@ -20,6 +20,7 @@ import { home, personCircle, calendar } from 'ionicons/icons';
 import { useHistory } from 'react-router-dom';
 import { apiSubjectDataService } from '../services/apiSubjectDataService';
 import { userSessionService } from '../services/UserSessionService';
+import Header from '../components/Header';
 
 const PreInformation: React.FC = () => {
   const history = useHistory();
@@ -59,16 +60,22 @@ const PreInformation: React.FC = () => {
       let res = await apiSubjectDataService.postData(formData);
       setIsLoading(false);
       history.push('/select-assessment');
-    } catch (error) {
+    } catch (error : any) {
       setIsLoading(false);
-      setError(error.message);
+      setError(""+error?.message);
       console.error('Error submitting data:', error);
     }
   };
 
+  const handleCancel = () => {
+    //history.push('/home');
+    location.href = '/home';
+  }
+
   return (
     <IonPage>
-      <IonHeader>
+      <Header title='Pre-Information' />
+      {/* <IonHeader>
         <IonToolbar>
           <IonButton slot="start" fill="clear" onClick={() => history.push('/home')}>
             <IonIcon icon={home} />
@@ -78,14 +85,14 @@ const PreInformation: React.FC = () => {
             <IonIcon icon={personCircle} />
           </IonButton>
         </IonToolbar>
-      </IonHeader>
+      </IonHeader> */}
       <IonContent className="ion-padding">
         <IonLoading isOpen={isLoading} message={'Please wait...'} />
         <IonAlert
           isOpen={!!error}
           onDidDismiss={() => setError(null)}
           header={'Error'}
-          message={error}
+          message={error || ''}
           buttons={['OK']}
         />
         <IonItem>
@@ -148,8 +155,8 @@ const PreInformation: React.FC = () => {
       
       <IonFooter>
         <div style={{ display: 'flex', justifyContent: 'space-between', padding: '10px' }}>
-          <IonButton color="primary" onClick={() => history.push('/login')} style={{ flex: 1, marginRight: '10px' }}>
-            Back
+          <IonButton color="primary" onClick={handleCancel} style={{ flex: 1, marginRight: '10px' }}>
+            Cancel
           </IonButton>
           <IonButton color="primary" onClick={handleSubmit} style={{ flex: 1, marginLeft: '10px' }}>
             Next

@@ -60,6 +60,7 @@ import ResultPage from './pages/Result/ResultPage'; // Import ResultPage
 /* Theme variables */
 import './theme/variables.css';
 import './theme/global.css';
+import SubjectProfilePage from './pages/SubjectProfile/SubjectProfilePage';
 setupIonicReact();
 
 const App: React.FC = () => (
@@ -117,6 +118,10 @@ const App: React.FC = () => (
         <Route exact path="/result"> {/* Add route for ResultPage */}
           <ResultPage />
         </Route>
+        <Route exact path="/subject-profile/:id"> {/* Add route for SubjectProfilePage */}
+          <SubjectProfilePage />
+        </Route>
+
 
         {/* Catch-all Route */}
         <Route>
