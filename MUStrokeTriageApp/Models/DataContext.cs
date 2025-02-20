@@ -15,7 +15,7 @@ public class DataContext : DbContext
         base.OnModelCreating(modelBuilder);
         
         modelBuilder.Entity<SubjectModel>()
-            .HasKey(s => s.SubjectId);
+            .HasKey(s => s.Id);
 
         modelBuilder.Entity<UserModel>()
             .HasKey(u => u.Id);

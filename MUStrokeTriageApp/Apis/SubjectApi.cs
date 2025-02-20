@@ -54,6 +54,8 @@ public static class SubjectApi
                     LastSeenNormalTime = subject.LastSeenNormalTime,
                     FirstName = subject.FirstName,
                     LastName = subject.LastName,
+                    SubjectName = subject.SubjectName,
+                    HN = subject.HN,
                     CreatedDate = DateTime.Now,
                     CreatedBy = subject.CreatedBy,
                     StateCode = subject.StateCode
@@ -85,6 +87,8 @@ public static class SubjectApi
                 subject.LastSeenNormalTime = updatedSubject.LastSeenNormalTime;
                 subject.FirstName = updatedSubject.FirstName;
                 subject.LastName = updatedSubject.LastName;
+                subject.SubjectName = updatedSubject.SubjectName;
+                subject.HN = updatedSubject.HN;
                 subject.ModifiedDate = DateTime.Now;
                 subject.ModifiedBy = updatedSubject.ModifiedBy;
                 subject.StateCode = updatedSubject.StateCode;

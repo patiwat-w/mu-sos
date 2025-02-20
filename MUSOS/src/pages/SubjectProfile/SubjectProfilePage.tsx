@@ -35,7 +35,6 @@ const SubjectProfilePage: React.FC = () => {
     const [phoneNumber, setPhoneNumber] = useState<string>('');
     const [onsetTime, setOnsetTime] = useState<string | null>(null);
     const [subjectName, setSubjectName] = useState<string | null>(null);
-    
     const [lastSeenNormalTime, setLastSeenNormalTime] = useState<string | null>(null);
     const [showOnsetPicker, setShowOnsetPicker] = useState<boolean>(false);
     const [showLastSeenPicker, setShowLastSeenPicker] = useState<boolean>(false);
@@ -45,6 +44,15 @@ const SubjectProfilePage: React.FC = () => {
         info: 'normal',
         result: 'normal',
     });
+    const [isEditing, setIsEditing] = useState<boolean>(false);
+
+    const toggleEdit = () => {
+        setIsEditing(!isEditing);
+        if (isEditing) {
+            // Save changes logic here
+        }
+    };
+
     useEffect(() => {
         const fetchSubject = async () => {
             try {
@@ -102,19 +110,25 @@ const SubjectProfilePage: React.FC = () => {
 
                     {/* Form Card */}
                     <IonCard>
+                        <IonCardHeader>
+                            <IonTitle>Subject Information</IonTitle>
+                            <IonButton onClick={toggleEdit} style={{ position: 'absolute', top: '10px', right: '10px' }}>
+                                {isEditing ? 'Save' : 'Edit'}
+                            </IonButton>
+                        </IonCardHeader>
                         <IonCardContent>
                             <IonGrid>
                                 <IonRow>
                                     <IonCol size="12" size-md="6">
                                         <IonItem>
                                             <IonLabel position="stacked" style={{ textAlign: 'left' }}>Subject ID</IonLabel>
-                                            <IonInput value={subject?.subjectId} placeholder="Subject ID"  style={{ textAlign: 'right' }} />
+                                            <IonInput value={subject?.subjectId} placeholder="Subject ID"  style={{ textAlign: 'right' }} disabled={!isEditing} />
                                         </IonItem>
                                     </IonCol>
                                     <IonCol size="12" size-md="6">
                                         <IonItem>
                                             <IonLabel position="stacked" style={{ textAlign: 'left' }}>HN</IonLabel>
-                                            <IonInput value={subject?.hn} placeholder="HN" onIonChange={(e) => setHn(e.detail.value!)} style={{ textAlign: 'right' }} />
+                                            <IonInput value={subject?.hn} placeholder="HN" onIonChange={(e) => setHn(e.detail.value!)} style={{ textAlign: 'right' }} disabled={!isEditing} />
                                         </IonItem>
                                     </IonCol>
                                 </IonRow>
@@ -122,13 +136,13 @@ const SubjectProfilePage: React.FC = () => {
                                 <IonCol size="12" size-md="6">
                                         <IonItem>
                                             <IonLabel position="stacked" style={{ textAlign: 'left' }}>Subject Name</IonLabel>
-                                            <IonInput value={subject?.subjectName} placeholder="Subject Name" onIonChange={(e) => setPhoneNumber(e.detail.value!)} style={{ textAlign: 'right' }} />
+                                            <IonInput value={subject?.subjectName} placeholder="Subject Name" onIonChange={(e) => setSubjectName(e.detail.value!)} style={{ textAlign: 'right' }} disabled={!isEditing} />
                                         </IonItem>
                                     </IonCol>
                                     <IonCol size="12" size-md="6">
                                         <IonItem>
                                             <IonLabel position="stacked" style={{ textAlign: 'left' }}>Phone Number</IonLabel>
-                                            <IonInput value={subject?.phoneNumber} placeholder="Phone Number" onIonChange={(e) => setPhoneNumber(e.detail.value!)} style={{ textAlign: 'right' }} />
+                                            <IonInput value={subject?.phoneNumber} placeholder="Phone Number" onIonChange={(e) => setPhoneNumber(e.detail.value!)} style={{ textAlign: 'right' }} disabled={!isEditing} />
                                         </IonItem>
                                     </IonCol>
                                     
@@ -141,10 +155,11 @@ const SubjectProfilePage: React.FC = () => {
                                                 value={subject?.onsetTime ? new Date(subject?.onsetTime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : ''}
                                                 placeholder="Onset Time"
                                                 readonly
-                                                onClick={() => setShowOnsetPicker(true)}
+                                                onClick={() => isEditing && setShowOnsetPicker(true)}
                                                 style={{ textAlign: 'right' }}
+                                                disabled={!isEditing}
                                             />
-                                            <IonIcon icon={calendar} slot="end" onClick={() => setShowOnsetPicker(true)} />
+                                            {/* <IonIcon icon={calendar} slot="end" onClick={() => isEditing && setShowOnsetPicker(true)} /> */}
                                         </IonItem>
                                         <IonModal isOpen={showOnsetPicker}>
                                             <IonDatetime
@@ -162,10 +177,11 @@ const SubjectProfilePage: React.FC = () => {
                                                 value={subject?.lastSeenNormalTime}
                                                 placeholder="Last Seen Normal Time"
                                                 readonly
-                                                onClick={() => setShowLastSeenPicker(true)}
+                                                onClick={() => isEditing && setShowLastSeenPicker(true)}
                                                 style={{ textAlign: 'right' }}
+                                                disabled={!isEditing}
                                             />
-                                            <IonIcon icon={calendar} slot="end" onClick={() => setShowLastSeenPicker(true)} />
+                                            {/* <IonIcon icon={calendar} slot="end" onClick={() => isEditing && setShowLastSeenPicker(true)} /> */}
                                         </IonItem>
                                         <IonModal isOpen={showLastSeenPicker}>
                                             <IonDatetime

@@ -6,6 +6,9 @@ using System.ComponentModel.DataAnnotations.Schema;
 public class SubjectModel
 {
     [Key]
+    [Column("ID")]
+    public int Id { get; set; } // รหัส
+
     [Column("Subject_ID")]
     [StringLength(20)]
     public string? SubjectId { get; set; } // รหัสผู้ป่วย
@@ -27,6 +30,14 @@ public class SubjectModel
     [Column("Last_Name")]
     [StringLength(50)]
     public string? LastName { get; set; } // นามสกุล
+
+    [Column("SubjectName")]
+    [StringLength(500)]
+    public string? SubjectName { get; set; }
+
+    [Column("HN")]
+    [StringLength(50)]
+    public string? HN { get; set; }
 
     [Column("Created_Date")]
     public DateTime CreatedDate { get; set; } = DateTime.Now; // วันที่สร้างข้อมูล
