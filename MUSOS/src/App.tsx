@@ -118,7 +118,7 @@ const App: React.FC = () => (
         <Route exact path="/result"> {/* Add route for ResultPage */}
           <ResultPage />
         </Route>
-        <Route exact path="/subject-profile/:id"> {/* Add route for SubjectProfilePage */}
+        <Route exact path="/subject-profile/:subjectId"> {/* Add route for SubjectProfilePage */}
           <SubjectProfilePage />
         </Route>
 
