@@ -15,10 +15,11 @@ import {
 import { personCircle, settings, helpCircle, addCircle } from 'ionicons/icons';
 import { useHistory } from 'react-router-dom';
 import { userSessionService } from '../services/UserSessionService';
+import './HomePage.css';
+
 const menuConfig = [
     { icon: addCircle, label: 'New Collection', target: '/consent' },
     { icon: personCircle, label: 'Subject List', target: '/subject-list' },
-
     { icon: settings, label: 'Settings', target: '/settings' },
     { icon: helpCircle, label: 'Help', target: '/help' }
 ];
@@ -30,7 +31,6 @@ const HomePage: React.FC = () => {
         console.log('Sign out clicked');
         userSessionService.clearSession();
         history.push('/login');
-        // Add sign-out logic here
     };
 
     return (
@@ -45,12 +45,12 @@ const HomePage: React.FC = () => {
                 </IonToolbar>
             </IonHeader>
 
-            <IonContent className="ion-padding">
-                <IonGrid>
+            <IonContent className="home-content">
+                <IonGrid className="menu-container">
                     {menuConfig.map((item, index) => (
                         <IonRow key={index}>
-                            <IonCol size="12" className="ion-text-left">
-                                <IonButton expand="block" routerLink={item.target} fill="outline" size="large" style={{ justifyContent: 'flex-start' }}>
+                            <IonCol size="12">
+                                <IonButton expand="block" routerLink={item.target} fill="outline" size="large" className="menu-button">
                                     <IonIcon icon={item.icon} slot="start" />
                                     {item.label}
                                 </IonButton>
@@ -58,10 +58,12 @@ const HomePage: React.FC = () => {
                         </IonRow>
                     ))}
                 </IonGrid>
-                <IonGrid style={{ position: 'absolute', bottom: 0, width: '95%' }}>
+                
+                <IonGrid className="logout-container">
+                    
                     <IonRow>
-                        <IonCol size="12" className="ion-text-left">
-                            <IonButton expand="block" fill="outline" size="large" style={{ justifyContent: 'flex-start' }} onClick={handleSignOut}>
+                        <IonCol size="12">
+                            <IonButton expand="block" fill="outline" size="large" className="menu-button" onClick={handleSignOut}>
                                 <IonIcon icon={personCircle} slot="start" />
                                 Log Out
                             </IonButton>

@@ -63,9 +63,9 @@ import './theme/global.css';
 setupIonicReact();
 
 const App: React.FC = () => (
-  <IonApp>
+  <IonApp className="app-container">
     <IonReactRouter>
-      <IonRouterOutlet>
+      <IonRouterOutlet className="page-content">
         {/* Authentication Routes */}
         <Route exact path="/">
           <Redirect to="/login" />

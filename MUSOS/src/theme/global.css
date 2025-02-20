@@ -1,7 +1,7 @@
 @import url(variables.css);
 /* กำหนดให้ page เป็นขนาด Mobile */
 
-@media only screen and (min-width: 600px) {
+/* @media only screen and (min-width: 600px) {
   body {
     font-size: 14px;
     margin: 0;
@@ -11,21 +11,21 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh; /* Ensure the body takes the full height of the viewport */
+    height: 100vh; 
   }
 
   .container {
     max-width: 100%;
     padding: 10px;
-    box-sizing: border-box; /* Ensure padding is included in the width */
+    box-sizing: border-box; 
   }
 
   .header, .footer {
     display: none;
   }
-}
+} */
 
-@media only screen and (max-width: 600px) {
+/* @media only screen and (max-width: 600px) {
   body {
     font-size: 14px;
     margin: 0;
@@ -35,20 +35,20 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    height: 100vh; /* Ensure the body takes the full height of the viewport */
-    background-color: #eff6ff; /* Light background color */
+    height: 100vh; 
+    background-color: #eff6ff; 
   }
 
   .container {
     width: 100%;
     padding: 10px;
-    box-sizing: border-box; /* Ensure padding is included in the width */
+    box-sizing: border-box; 
   }
 
   .header, .footer {
     display: none;
   }
-}
+} */
 
 /* ปุ่ม Responsive */
 .responsive-button {
@@ -176,3 +176,56 @@ ion-page {
     color: var(--ion-page-font-color);
     padding: 10px;
 } */
+
+/* ทำให้ content อยู่กลาง */
+.app-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  text-align: center;
+}
+
+.ion-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.ion-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 900px;
+  max-width: 90%;
+}
+
+/* Styles for PC screens */
+@media (min-width: 1024px) {
+  .app-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    text-align: center;
+  }
+
+  .ion-page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+  }
+
+  .ion-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 900px;
+    max-width: 90%;
+  }
+}
+
+
+
