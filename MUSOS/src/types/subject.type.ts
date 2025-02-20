@@ -10,4 +10,6 @@ export interface ISubject {
   createdBy: string;
   modifiedBy: string;
   stateCode: number;
+  subjectName: string;
+  hn: string;
 }
