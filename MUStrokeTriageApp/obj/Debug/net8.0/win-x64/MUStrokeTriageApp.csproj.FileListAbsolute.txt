@@ -486,3 +486,5 @@ D:\MU\Sources\MUStrokeTriageApp\obj\Debug\net8.0\win-x64\refint\MUStrokeTriageAp
 D:\MU\Sources\MUStrokeTriageApp\obj\Debug\net8.0\win-x64\MUStrokeTriageApp.pdb
 D:\MU\Sources\MUStrokeTriageApp\obj\Debug\net8.0\win-x64\MUStrokeTriageApp.genruntimeconfig.cache
 D:\MU\Sources\MUStrokeTriageApp\obj\Debug\net8.0\win-x64\ref\MUStrokeTriageApp.dll
+D:\MU\Sources\MUStrokeTriageApp\bin\Debug\net8.0\win-x64\MUStrokeTriageApp.xml
+D:\MU\Sources\MUStrokeTriageApp\obj\Debug\net8.0\win-x64\MUStrokeTriageApp.xml

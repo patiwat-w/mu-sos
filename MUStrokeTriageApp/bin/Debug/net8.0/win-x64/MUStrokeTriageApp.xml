@@ -1,0 +1,109 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>MUStrokeTriageApp</name>
+    </assembly>
+    <members>
+        <member name="T:FileApi">
+            <summary>
+            Provides endpoints for file operations.
+            </summary>
+        </member>
+        <member name="M:FileApi.Map(Microsoft.AspNetCore.Routing.IEndpointRouteBuilder)">
+            <summary>
+            Maps the file upload endpoint.
+            </summary>
+            <param name="app">The endpoint route builder.</param>
+        </member>
+        <member name="T:MUStrokeTriageApp.Migrations.AddSubjectModel">
+            <inheritdoc />
+        </member>
+        <member name="M:MUStrokeTriageApp.Migrations.AddSubjectModel.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:MUStrokeTriageApp.Migrations.AddSubjectModel.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:MUStrokeTriageApp.Migrations.AddSubjectModel.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="T:MUStrokeTriageApp.Migrations.UserAndUserAuthenticationMethodMigration">
+            <inheritdoc />
+        </member>
+        <member name="M:MUStrokeTriageApp.Migrations.UserAndUserAuthenticationMethodMigration.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:MUStrokeTriageApp.Migrations.UserAndUserAuthenticationMethodMigration.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:MUStrokeTriageApp.Migrations.UserAndUserAuthenticationMethodMigration.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="T:MUStrokeTriageApp.Migrations.AddIdToSubjectPK">
+            <inheritdoc />
+        </member>
+        <member name="M:MUStrokeTriageApp.Migrations.AddIdToSubjectPK.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:MUStrokeTriageApp.Migrations.AddIdToSubjectPK.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:MUStrokeTriageApp.Migrations.AddIdToSubjectPK.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="P:AppJsonSerializerContext.Boolean">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:AppJsonSerializerContext.DateOnly">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:AppJsonSerializerContext.NullableDateOnly">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:AppJsonSerializerContext.Todo">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:AppJsonSerializerContext.TodoArray">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:AppJsonSerializerContext.Int32">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:AppJsonSerializerContext.String">
+            <summary>
+            Defines the source generated JSON serialization contract metadata for a given type.
+            </summary>
+        </member>
+        <member name="P:AppJsonSerializerContext.Default">
+            <summary>
+            The default <see cref="T:System.Text.Json.Serialization.JsonSerializerContext"/> associated with a default <see cref="T:System.Text.Json.JsonSerializerOptions"/> instance.
+            </summary>
+        </member>
+        <member name="P:AppJsonSerializerContext.GeneratedSerializerOptions">
+            <summary>
+            The source-generated options associated with this context.
+            </summary>
+        </member>
+        <member name="M:AppJsonSerializerContext.#ctor">
+            <inheritdoc/>
+        </member>
+        <member name="M:AppJsonSerializerContext.#ctor(System.Text.Json.JsonSerializerOptions)">
+            <inheritdoc/>
+        </member>
+        <member name="M:AppJsonSerializerContext.GetTypeInfo(System.Type)">
+            <inheritdoc/>
+        </member>
+    </members>
+</doc>

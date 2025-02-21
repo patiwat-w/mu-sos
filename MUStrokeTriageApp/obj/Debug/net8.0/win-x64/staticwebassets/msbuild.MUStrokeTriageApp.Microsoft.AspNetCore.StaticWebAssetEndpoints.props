@@ -480,17 +480,17 @@
       <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-Q7JSG4fIugGL3NhM1K3P0W1JyG9yngj9HtVVPXGH6zA="}]]]></EndpointProperties>
       <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"no-cache"},{"Name":"Content-Length","Value":"1146"},{"Name":"Content-Type","Value":"application/json"},{"Name":"ETag","Value":"\u0022Q7JSG4fIugGL3NhM1K3P0W1JyG9yngj9HtVVPXGH6zA=\u0022"},{"Name":"Last-Modified","Value":"Tue, 28 Jan 2025 08:49:32 GMT"}]]]></ResponseHeaders>
     </StaticWebAssetEndpoint>
-    <StaticWebAssetEndpoint Include="_content/MUStrokeTriageApp/index.a5hvy7h5kn.html">
-      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\index.html'))</AssetFile>
-      <Selectors><![CDATA[[]]]></Selectors>
-      <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"a5hvy7h5kn"},{"Name":"integrity","Value":"sha256-jpY/lORDuoEcNFJnipuTm/dMjFcOE9Arss3Cb6vy1E8="},{"Name":"label","Value":"_content/MUStrokeTriageApp/index.html"}]]]></EndpointProperties>
-      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"1964"},{"Name":"Content-Type","Value":"text/html"},{"Name":"ETag","Value":"\u0022jpY/lORDuoEcNFJnipuTm/dMjFcOE9Arss3Cb6vy1E8=\u0022"},{"Name":"Last-Modified","Value":"Thu, 20 Feb 2025 20:28:50 GMT"}]]]></ResponseHeaders>
-    </StaticWebAssetEndpoint>
     <StaticWebAssetEndpoint Include="_content/MUStrokeTriageApp/index.html">
       <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\index.html'))</AssetFile>
       <Selectors><![CDATA[[]]]></Selectors>
-      <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-jpY/lORDuoEcNFJnipuTm/dMjFcOE9Arss3Cb6vy1E8="}]]]></EndpointProperties>
-      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"no-cache"},{"Name":"Content-Length","Value":"1964"},{"Name":"Content-Type","Value":"text/html"},{"Name":"ETag","Value":"\u0022jpY/lORDuoEcNFJnipuTm/dMjFcOE9Arss3Cb6vy1E8=\u0022"},{"Name":"Last-Modified","Value":"Thu, 20 Feb 2025 20:28:50 GMT"}]]]></ResponseHeaders>
+      <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-x4tAX1hCrAUbMahMu7v5GNTsd7a1epouUOF0VaUrVFw="}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"no-cache"},{"Name":"Content-Length","Value":"1954"},{"Name":"Content-Type","Value":"text/html"},{"Name":"ETag","Value":"\u0022x4tAX1hCrAUbMahMu7v5GNTsd7a1epouUOF0VaUrVFw=\u0022"},{"Name":"Last-Modified","Value":"Fri, 21 Feb 2025 04:35:46 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/MUStrokeTriageApp/index.rbycflvaqb.html">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\index.html'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"rbycflvaqb"},{"Name":"integrity","Value":"sha256-x4tAX1hCrAUbMahMu7v5GNTsd7a1epouUOF0VaUrVFw="},{"Name":"label","Value":"_content/MUStrokeTriageApp/index.html"}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"1954"},{"Name":"Content-Type","Value":"text/html"},{"Name":"ETag","Value":"\u0022x4tAX1hCrAUbMahMu7v5GNTsd7a1epouUOF0VaUrVFw=\u0022"},{"Name":"Last-Modified","Value":"Fri, 21 Feb 2025 04:35:46 GMT"}]]]></ResponseHeaders>
     </StaticWebAssetEndpoint>
     <StaticWebAssetEndpoint Include="_content/MUStrokeTriageApp/manifest.json">
       <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\manifest.json'))</AssetFile>
