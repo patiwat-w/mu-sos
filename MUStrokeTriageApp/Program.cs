@@ -2,6 +2,10 @@ using System.Text.Json.Serialization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerGen;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -20,6 +24,11 @@ builder.Services.ConfigureHttpJsonOptions(options =>
 {
     options.SerializerOptions.TypeInfoResolverChain.Insert(0, AppJsonSerializerContext.Default);
 });
+
+builder.Services.AddLogging();
+
+// Add authorization services
+builder.Services.AddAuthorization();
 
 var app = builder.Build();
 
@@ -47,9 +56,9 @@ app.UseStaticFiles(new StaticFileOptions
 
 app.UseStaticFiles();
 app.UseRouting();
+app.UseAuthorization();
 
 // Register API routes
-//app.MapTodoApi();
 app.MapSubjectApi();
 app.MapUserApi();
 app.MapUserAuthenticationMethodApi();

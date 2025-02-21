@@ -1,4 +1,7 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 
 public static class ApiExtensions
 {
@@ -9,7 +12,8 @@ public static class ApiExtensions
 
     public static void MapSubjectApi(this IEndpointRouteBuilder app)
     {
-        SubjectApi.Map(app);
+        var logger = app.ServiceProvider.GetRequiredService<ILogger<Program>>();
+        SubjectApi.Map(app, logger);
     }
 
     public static void MapUserApi(this IEndpointRouteBuilder app)

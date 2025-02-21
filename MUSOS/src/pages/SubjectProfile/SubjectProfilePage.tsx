@@ -14,9 +14,8 @@ import {
     IonPage,
     IonCardHeader,
     IonFooter
-
 } from '@ionic/react';
-import { IonAvatar, IonLabel,  IonSegment, IonSegmentButton, IonItem, IonInput, IonModal, IonDatetime, IonCard, IonCardContent } from '@ionic/react';
+import { IonAvatar, IonLabel, IonSegment, IonSegmentButton, IonItem, IonInput, IonModal, IonDatetime, IonCard, IonCardContent } from '@ionic/react';
 import { createOutline, locationOutline, mailOutline, callOutline, cameraOutline, checkmarkDoneOutline, calendar } from 'ionicons/icons';
 import { personCircle, settings, helpCircle, addCircle, logOutOutline, addCircleOutline } from 'ionicons/icons';
 import { useHistory, useParams } from 'react-router-dom';
@@ -25,10 +24,12 @@ import { apiSubjectDataService } from '../../services/apiSubjectDataService';
 import { ISubject } from '../../types/subject.type';
 import SelectAssessment from '../SelectAssessment/SelectAssessment';
 import AssessmentButton from '../../components/AssessmentButton';
+import { format } from 'date-fns';
+import { th } from 'date-fns/locale';
 
 const SubjectProfilePage: React.FC = () => {
     const history = useHistory();
-    const { subjectId } = useParams<{ subjectId: string }>();
+    const { id } = useParams<{ id: string }>();
     const [subject, setSubject] = useState<ISubject | null>(null);
     const [photoUrl, setPhotoUrl] = useState<string | null>(null);
     const [hn, setHn] = useState<string>('');
@@ -56,8 +57,7 @@ const SubjectProfilePage: React.FC = () => {
     useEffect(() => {
         const fetchSubject = async () => {
             try {
-              
-                const data = await apiSubjectDataService.getData(subjectId);
+                const data = await apiSubjectDataService.getData(id);
                 setSubject(data);
             } catch (error) {
                 console.error('Error fetching subject data:', error);
@@ -65,36 +65,47 @@ const SubjectProfilePage: React.FC = () => {
         };
 
         fetchSubject();
-    }, [subjectId]);
+    }, [id]);
 
     const handleImageClick = () => {
         setMenuStatus({ ...menuStatus, image: 'done' });
         history.push('/image-assessment');
-      };
-    
-      const handleVoiceClick = () => {
+    };
+
+    const handleVoiceClick = () => {
         setMenuStatus({ ...menuStatus, voice: 'done' });
         history.push('/voice-assessment');
-      };
-    
-      const handleInfoClick = () => {
+    };
+
+    const handleInfoClick = () => {
         setMenuStatus({ ...menuStatus, info: 'done' });
         history.push('/personal-information');
-      };
-    
-      const handleResultClick = () => {
+    };
+
+    const handleResultClick = () => {
         setMenuStatus({ ...menuStatus, result: 'done' });
         history.push('/result');
-      };
+    };
 
     function handleCancel(): void {
-       location.href = '/home'; 
-        
+        location.href = '/home';
     }
 
     function handleSubmit(): void {
-       
+        // Submit logic here
     }
+
+    const formatDateTime = (dateString: string | null) => {
+        if (!dateString) return '';
+        const date = new Date(dateString);
+        return format(date, 'dd MMMM yyyy HH:mm', { locale: th });
+    };
+
+    const formatTime = (timeString: string | null) => {
+        if (!timeString) return '';
+        const date = new Date(timeString);
+        return format(date, 'HH:mm', { locale: th });
+    };
 
     return (
         <IonPage>
@@ -122,7 +133,7 @@ const SubjectProfilePage: React.FC = () => {
                                     <IonCol size="12" size-md="6">
                                         <IonItem>
                                             <IonLabel position="stacked" style={{ textAlign: 'left' }}>Subject ID</IonLabel>
-                                            <IonInput value={subject?.subjectId} placeholder="Subject ID"  style={{ textAlign: 'right' }} disabled={!isEditing} />
+                                            <IonInput value={subject?.subjectId} placeholder="Subject ID" style={{ textAlign: 'right' }} disabled={!isEditing} />
                                         </IonItem>
                                     </IonCol>
                                     <IonCol size="12" size-md="6">
@@ -133,7 +144,7 @@ const SubjectProfilePage: React.FC = () => {
                                     </IonCol>
                                 </IonRow>
                                 <IonRow>
-                                <IonCol size="12" size-md="6">
+                                    <IonCol size="12" size-md="6">
                                         <IonItem>
                                             <IonLabel position="stacked" style={{ textAlign: 'left' }}>Subject Name</IonLabel>
                                             <IonInput value={subject?.subjectName} placeholder="Subject Name" onIonChange={(e) => setSubjectName(e.detail.value!)} style={{ textAlign: 'right' }} disabled={!isEditing} />
@@ -145,14 +156,13 @@ const SubjectProfilePage: React.FC = () => {
                                             <IonInput value={subject?.phoneNumber} placeholder="Phone Number" onIonChange={(e) => setPhoneNumber(e.detail.value!)} style={{ textAlign: 'right' }} disabled={!isEditing} />
                                         </IonItem>
                                     </IonCol>
-                                    
                                 </IonRow>
                                 <IonRow>
-                                <IonCol size="12" size-md="6">
+                                    <IonCol size="12" size-md="6">
                                         <IonItem>
                                             <IonLabel position="stacked" style={{ textAlign: 'left' }}>Onset Time</IonLabel>
                                             <IonInput
-                                                value={subject?.onsetTime ? new Date(subject?.onsetTime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : ''}
+                                                value={formatTime(subject?.onsetTime)}
                                                 placeholder="Onset Time"
                                                 readonly
                                                 onClick={() => isEditing && setShowOnsetPicker(true)}
@@ -174,7 +184,7 @@ const SubjectProfilePage: React.FC = () => {
                                         <IonItem>
                                             <IonLabel position="stacked" style={{ textAlign: 'left' }}>Last Seen Normal Time</IonLabel>
                                             <IonInput
-                                                value={subject?.lastSeenNormalTime}
+                                                value={formatDateTime(subject?.lastSeenNormalTime ?? null)}
                                                 placeholder="Last Seen Normal Time"
                                                 readonly
                                                 onClick={() => isEditing && setShowLastSeenPicker(true)}
@@ -197,7 +207,6 @@ const SubjectProfilePage: React.FC = () => {
                         </IonCardContent>
                     </IonCard>
                     {/* Optional: Member Since */}
-                   
                 </div>
                 {/* Segment Tabs */}
                 {/* <IonSegment>
@@ -217,65 +226,63 @@ const SubjectProfilePage: React.FC = () => {
                     <IonCardHeader>
                         <IonTitle>Select Collection Type </IonTitle>
                     </IonCardHeader>
-                        <IonCardContent>
-
-                       
-                <IonGrid>
-                <IonRow>
-                    <IonCol size="6" className="ion-text-center"> {/* Keep ion-text-center for overall alignment */}
-                        <div style={{ display: 'flex', justifyContent: 'center' }}> {/* Center the button */}
-                            <AssessmentButton
-                                label="Image"
-                                status={menuStatus.image}
-                                onClick={handleImageClick}
-                            />
-                        </div>
-                    </IonCol>
-                    <IonCol size="6" className="ion-text-center"> {/* Keep ion-text-center */}
-                        <div style={{ display: 'flex', justifyContent: 'center' }}> {/* Center the button */}
-                            <AssessmentButton
-                                label="Voice"
-                                status={menuStatus.voice}
-                                onClick={handleVoiceClick}
-                            />
-                        </div>
-                    </IonCol>
-                </IonRow>
-                <IonRow>
-                    <IonCol size="6" className="ion-text-center"> {/* Keep ion-text-center */}
-                        <div style={{ display: 'flex', justifyContent: 'center' }}> {/* Center the button */}
-                            <AssessmentButton
-                                label="Info"
-                                status={menuStatus.info}
-                                onClick={handleInfoClick}
-                            />
-                        </div>
-                    </IonCol>
-                    <IonCol size="6" className="ion-text-center"> {/* Keep ion-text-center */}
-                        <div style={{ display: 'flex', justifyContent: 'center' }}> {/* Center the button */}
-                            <AssessmentButton
-                                label="Pre-Result"
-                                status={menuStatus.result}
-                                onClick={handleResultClick}
-                            />
-                        </div>
-                    </IonCol>
-                </IonRow>
-            </IonGrid> 
-            </IonCardContent>
-            </IonCard>
+                    <IonCardContent>
+                        <IonGrid>
+                            <IonRow>
+                                <IonCol size="6" className="ion-text-center"> {/* Keep ion-text-center for overall alignment */}
+                                    <div style={{ display: 'flex', justifyContent: 'center' }}> {/* Center the button */}
+                                        <AssessmentButton
+                                            label="Image"
+                                            status={menuStatus.image}
+                                            onClick={handleImageClick}
+                                        />
+                                    </div>
+                                </IonCol>
+                                <IonCol size="6" className="ion-text-center"> {/* Keep ion-text-center */}
+                                    <div style={{ display: 'flex', justifyContent: 'center' }}> {/* Center the button */}
+                                        <AssessmentButton
+                                            label="Voice"
+                                            status={menuStatus.voice}
+                                            onClick={handleVoiceClick}
+                                        />
+                                    </div>
+                                </IonCol>
+                            </IonRow>
+                            <IonRow>
+                                <IonCol size="6" className="ion-text-center"> {/* Keep ion-text-center */}
+                                    <div style={{ display: 'flex', justifyContent: 'center' }}> {/* Center the button */}
+                                        <AssessmentButton
+                                            label="Info"
+                                            status={menuStatus.info}
+                                            onClick={handleInfoClick}
+                                        />
+                                    </div>
+                                </IonCol>
+                                <IonCol size="6" className="ion-text-center"> {/* Keep ion-text-center */}
+                                    <div style={{ display: 'flex', justifyContent: 'center' }}> {/* Center the button */}
+                                        <AssessmentButton
+                                            label="Pre-Result"
+                                            status={menuStatus.result}
+                                            onClick={handleResultClick}
+                                        />
+                                    </div>
+                                </IonCol>
+                            </IonRow>
+                        </IonGrid>
+                    </IonCardContent>
+                </IonCard>
             </IonContent>
 
-             <IonFooter style={{ backgroundColor: '#f8f8f8' }}>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', padding: '10px' }}>
-                      <IonButton color="primary" onClick={handleCancel} style={{ flex: 1, marginRight: '10px' }}>
+            <IonFooter style={{ backgroundColor: '#f8f8f8' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', padding: '10px' }}>
+                    <IonButton color="primary" onClick={handleCancel} style={{ flex: 1, marginRight: '10px' }}>
                         Back
-                      </IonButton>
-                      <IonButton color="primary" onClick={handleSubmit} style={{ flex: 1, marginLeft: '10px' }}>
+                    </IonButton>
+                    <IonButton color="primary" onClick={handleSubmit} style={{ flex: 1, marginLeft: '10px' }}>
                         Submit
-                      </IonButton>
-                    </div>
-                  </IonFooter>
+                    </IonButton>
+                </div>
+            </IonFooter>
         </IonPage>
     );
 };

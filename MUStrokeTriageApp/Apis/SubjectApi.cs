@@ -1,12 +1,13 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Threading.Tasks;
 
 public static class SubjectApi
 {
-    public static void Map(IEndpointRouteBuilder app)
+    public static void Map(IEndpointRouteBuilder app, ILogger logger)
     {
         var subjectsApi = app.MapGroup("/subjects");
         subjectsApi.MapGet("/", async (DataContext db) =>
@@ -15,9 +16,9 @@ public static class SubjectApi
             {
                 return Results.Ok(await db.Set<SubjectModel>().ToListAsync());
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                // Log exception
+                logger.LogError(ex, "An error occurred while retrieving subjects.");
                 return Results.Problem("An error occurred while retrieving subjects.");
             }
             finally
@@ -29,12 +30,17 @@ public static class SubjectApi
         {
             try
             {
-                var subject = await db.Subjects.FindAsync(id);
+                if (!int.TryParse(id, out var subjectId))
+                {
+                    return Results.BadRequest("Invalid subject ID.");
+                }
+
+                var subject = await db.Subjects.FindAsync(subjectId);
                 return subject is not null ? Results.Ok(subject) : Results.NotFound();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                // Log exception
+                logger.LogError(ex, "An error occurred while retrieving the subject.");
                 return Results.Problem("An error occurred while retrieving the subject.");
             }
             finally
@@ -65,9 +71,9 @@ public static class SubjectApi
                 await db.SaveChangesAsync();
                 return Results.Created($"/subjects/{subject.SubjectId}", subject);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                // Log exception
+                logger.LogError(ex, "An error occurred while creating the subject.");
                 return Results.Problem("An error occurred while creating the subject.");
             }
             finally
@@ -79,7 +85,12 @@ public static class SubjectApi
         {
             try
             {
-                var subject = await db.Subjects.FindAsync(id);
+                if (!int.TryParse(id, out var subjectId))
+                {
+                    return Results.BadRequest("Invalid subject ID.");
+                }
+
+                var subject = await db.Subjects.FindAsync(subjectId);
                 if (subject is null) return Results.NotFound();
 
                 subject.PhoneNumber = updatedSubject.PhoneNumber;
@@ -97,9 +108,9 @@ public static class SubjectApi
                 await db.SaveChangesAsync();
                 return Results.NoContent();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                // Log exception
+                logger.LogError(ex, "An error occurred while updating the subject.");
                 return Results.Problem("An error occurred while updating the subject.");
             }
             finally
@@ -111,16 +122,21 @@ public static class SubjectApi
         {
             try
             {
-                var subject = await db.Subjects.FindAsync(id);
+                if (!int.TryParse(id, out var subjectId))
+                {
+                    return Results.BadRequest("Invalid subject ID.");
+                }
+
+                var subject = await db.Subjects.FindAsync(subjectId);
                 if (subject is null) return Results.NotFound();
 
                 db.Subjects.Remove(subject);
                 await db.SaveChangesAsync();
                 return Results.NoContent();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                // Log exception
+                logger.LogError(ex, "An error occurred while deleting the subject.");
                 return Results.Problem("An error occurred while deleting the subject.");
             }
             finally

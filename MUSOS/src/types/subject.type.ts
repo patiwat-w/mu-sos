@@ -1,4 +1,5 @@
 export interface ISubject {
+  id: string;
   subjectId: string;
   phoneNumber: string;
   onsetTime: string;
