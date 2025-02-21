@@ -21,4 +21,12 @@ public static class ApiExtensions
     {
         UserAuthenticationMethodApi.Map(app);
     }
+
+    //FileApi
+    public static void MapFileApi(this IEndpointRouteBuilder app)
+    {
+        FileApi.Map(app);
+    }
+
+  
 }

@@ -30,7 +30,7 @@ public class UserAuthenticationMethodModel
     [Required]
     [Column("ProviderKey")]
     [Display(Name = "Provider Key")]
-    public string ProviderKey { get; set; }
+    public string? ProviderKey { get; set; }
 
     [Column("DisplayName")]
     [Display(Name = "Display Name")]
@@ -46,6 +46,6 @@ public class UserAuthenticationMethodModel
 
     [ForeignKey("UserId")]
     [Display(Name = "User")]
-    public UserModel User { get; set; }
+    public UserModel? User { get; set; }
 }
 

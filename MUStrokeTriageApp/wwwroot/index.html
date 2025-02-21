@@ -1,36 +1,51 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <title>Ionic App</title>
-    
-    <base href="/" />
-    
-    <meta name="color-scheme" content="light dark" />
-    <meta
-      name="viewport"
-      content="viewport-fit=cover, width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
-    />
-    <meta name="format-detection" content="telephone=no" />
-    <meta name="msapplication-tap-highlight" content="no" />
-    
-    <link rel="manifest" href="/app/manifest.json" />
-    
-    <link rel="shortcut icon" type="image/png" href="/app/favicon.png" />
-    
-    <!-- add to homescreen for ios -->
-    <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-title" content="Ionic App" />
-    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
-    <script type="module" crossorigin src="/app/assets/index-l4LIFtVr.js"></script>
-    <link rel="stylesheet" crossorigin href="/app/assets/index-Cf2p-Kc7.css">
-    <script type="module">import.meta.url;import("_").catch(()=>1);(async function*(){})().next();if(location.protocol!="file:"){window.__vite_is_modern_browser=true}</script>
-    <script type="module">!function(){if(window.__vite_is_modern_browser)return;console.warn("vite: loading legacy chunks, syntax error above and the same error below should be ignored");var e=document.getElementById("vite-legacy-polyfill"),n=document.createElement("script");n.src=e.src,n.onload=function(){System.import(document.getElementById('vite-legacy-entry').getAttribute('data-src'))},document.body.appendChild(n)}();</script>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script nomodule>!function(){var e=document,t=e.createElement("script");if(!("noModule"in t)&&"onbeforeload"in t){var n=!1;e.addEventListener("beforeload",(function(e){if(e.target===t)n=!0;else if(!e.target.hasAttribute("nomodule")||!n)return;e.preventDefault()}),!0),t.type="module",t.src=".",e.head.appendChild(t),t.remove()}}();</script>
-    <script nomodule crossorigin id="vite-legacy-polyfill" src="/app/assets/polyfills-legacy-BM_kMjLM.js"></script>
-    <script nomodule crossorigin id="vite-legacy-entry" data-src="/app/assets/index-legacy-D8sTX5eM.js">System.import(document.getElementById('vite-legacy-entry').getAttribute('data-src'))</script>
-  </body>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>File Upload</title>
+</head>
+<body>
+    <h1>Upload File</h1>
+    <form id="uploadForm">
+        <input type="file" id="fileInput" name="file" required>
+        <input type="number" id="subjectId" name="subjectId" placeholder="Subject ID">
+        <input type="number" id="userId" name="userId" placeholder="User ID">
+        <input type="text" id="fileType" name="fileType" placeholder="File Type">
+        <button type="submit">Upload</button>
+    </form>
+
+    <script>
+        document.getElementById('uploadForm').addEventListener('submit', async function(event) {
+            event.preventDefault();
+
+            const fileInput = document.getElementById('fileInput');
+            const subjectId = document.getElementById('subjectId').value;
+            const userId = document.getElementById('userId').value;
+            const fileType = document.getElementById('fileType').value;
+
+            const formData = new FormData();
+            formData.append('File', fileInput.files[0]);
+            formData.append('SubjectId', subjectId);
+            formData.append('UserId', userId);
+            formData.append('FileType', fileType);
+
+            try {
+                const response = await fetch('/api/UploadFile/Upload', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                if (response.ok) {
+                    const result = await response.json();
+                    console.log('File uploaded successfully:', result);
+                } else {
+                    console.error('Error uploading file:', response.statusText);
+                }
+            } catch (error) {
+                console.error('Error uploading file:', error);
+            }
+        });
+    </script>
+</body>
 </html>
