@@ -45,7 +45,7 @@ public static class FileApi
         /// Uploads a file.
         /// </summary>
         /// <param name="context">The HTTP context.</param>
-        uploadApi.MapPost("/upload", async context =>
+        uploadApi.MapPost("/upload", async (HttpContext context, DataContext db) =>
         {
             var request = context.Request;
 
@@ -58,11 +58,13 @@ public static class FileApi
 
             var form = await request.ReadFormAsync();
             var file = form.Files["file"];
+            var subjectId = form["SubjectId"];
+            var userId = form["UserId"];
 
-            if (file == null)
+            if (file == null || string.IsNullOrEmpty(subjectId) || string.IsNullOrEmpty(userId))
             {
                 context.Response.StatusCode = 400;
-                await context.Response.WriteAsync("No file uploaded.");
+                await context.Response.WriteAsync("Missing required fields.");
                 return;
             }
 
@@ -79,7 +81,19 @@ public static class FileApi
                 await file.CopyToAsync(stream);
             }
 
-            await context.Response.WriteAsync($"File uploaded successfully: {filePath}");
+            var fileModel = new FileModel
+            {
+                Name = file.FileName,
+                FilePath = filePath,
+                SubjectId = int.Parse(subjectId),
+                UserId = int.Parse(userId),
+                CreationTime = DateTime.UtcNow
+            };
+
+            db.Files.Add(fileModel);
+            await db.SaveChangesAsync();
+
+            await context.Response.WriteAsJsonAsync(fileModel); // Return the inserted record as JSON
         });
     }
 }

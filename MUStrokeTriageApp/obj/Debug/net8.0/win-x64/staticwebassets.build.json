@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "id3wzi7HHj2DGJn5JX3jbenCq0f8CV0CmTMib4URMmE=",
+  "Hash": "MOVr4ljIlioQ1iU0fP8kXAUOfq809UnN9tSVVfRbJVw=",
   "Source": "MUStrokeTriageApp",
   "BasePath": "_content/MUStrokeTriageApp",
   "Mode": "Default",
@@ -871,8 +871,8 @@
       "RelatedAsset": "",
       "AssetTraitName": "",
       "AssetTraitValue": "",
-      "Fingerprint": "rbycflvaqb",
-      "Integrity": "x4tAX1hCrAUbMahMu7v5GNTsd7a1epouUOF0VaUrVFw=",
+      "Fingerprint": "bkw3awgidl",
+      "Integrity": "mxEaXcK2hI54SD63acJVy3q6CillArvtv1Q769Ad6qU=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\index.html"
@@ -4181,6 +4181,51 @@
       ]
     },
     {
+      "Route": "index.bkw3awgidl.html",
+      "AssetFile": "D:\\MU\\Sources\\MUStrokeTriageApp\\wwwroot\\index.html",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "2004"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/html"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"mxEaXcK2hI54SD63acJVy3q6CillArvtv1Q769Ad6qU=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Fri, 21 Feb 2025 04:41:12 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "bkw3awgidl"
+        },
+        {
+          "Name": "label",
+          "Value": "index.html"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-mxEaXcK2hI54SD63acJVy3q6CillArvtv1Q769Ad6qU="
+        }
+      ]
+    },
+    {
       "Route": "index.html",
       "AssetFile": "D:\\MU\\Sources\\MUStrokeTriageApp\\wwwroot\\index.html",
       "Selectors": [],
@@ -4191,7 +4236,7 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "1954"
+          "Value": "2004"
         },
         {
           "Name": "Content-Type",
@@ -4199,11 +4244,11 @@
         },
         {
           "Name": "ETag",
-          "Value": "\"x4tAX1hCrAUbMahMu7v5GNTsd7a1epouUOF0VaUrVFw=\""
+          "Value": "\"mxEaXcK2hI54SD63acJVy3q6CillArvtv1Q769Ad6qU=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Fri, 21 Feb 2025 04:35:46 GMT"
+          "Value": "Fri, 21 Feb 2025 04:41:12 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -4213,52 +4258,7 @@
       "EndpointProperties": [
         {
           "Name": "integrity",
-          "Value": "sha256-x4tAX1hCrAUbMahMu7v5GNTsd7a1epouUOF0VaUrVFw="
-        }
-      ]
-    },
-    {
-      "Route": "index.rbycflvaqb.html",
-      "AssetFile": "D:\\MU\\Sources\\MUStrokeTriageApp\\wwwroot\\index.html",
-      "Selectors": [],
-      "ResponseHeaders": [
-        {
-          "Name": "Accept-Ranges",
-          "Value": "bytes"
-        },
-        {
-          "Name": "Content-Length",
-          "Value": "1954"
-        },
-        {
-          "Name": "Content-Type",
-          "Value": "text/html"
-        },
-        {
-          "Name": "ETag",
-          "Value": "\"x4tAX1hCrAUbMahMu7v5GNTsd7a1epouUOF0VaUrVFw=\""
-        },
-        {
-          "Name": "Last-Modified",
-          "Value": "Fri, 21 Feb 2025 04:35:46 GMT"
-        },
-        {
-          "Name": "Cache-Control",
-          "Value": "max-age=31536000, immutable"
-        }
-      ],
-      "EndpointProperties": [
-        {
-          "Name": "fingerprint",
-          "Value": "rbycflvaqb"
-        },
-        {
-          "Name": "label",
-          "Value": "index.html"
-        },
-        {
-          "Name": "integrity",
-          "Value": "sha256-x4tAX1hCrAUbMahMu7v5GNTsd7a1epouUOF0VaUrVFw="
+          "Value": "sha256-mxEaXcK2hI54SD63acJVy3q6CillArvtv1Q769Ad6qU="
         }
       ]
     },
