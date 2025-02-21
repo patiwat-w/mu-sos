@@ -21,6 +21,7 @@ import { apiSendPhotoFaceService } from '../../services/apiSendPhotoFaceService'
 import { apiSendVideoService } from '../../services/apiSendVideoService'
 import { al } from 'vitest/dist/reporters-5f784f42';
 import Header from '../../components/Header'; // Import Header component
+import { apiFileService } from '../../services/apiFileService';
 
 const ImageAssessment: React.FC = () => {
   const history = useHistory();
@@ -66,10 +67,24 @@ const ImageAssessment: React.FC = () => {
     setLoading(true);
     setUploadMessage('');
     try {
-      // Simulate an AJAX request
-      await new Promise((resolve) => setTimeout(resolve, 2000)); // Simulate a delay
-      setUploadMessage('Upload Data Completed');
-      setShowAlert(true); // Show alert
+      if (photo) {
+        const base64Response = await fetch(photo);
+        const blob = await base64Response.blob();
+        const subjectId = 1; // Replace with actual subject ID
+        const userId = 1; // Replace with actual user ID
+        const documentType = "FACE"; // Replace with actual document type
+        // conver blob to File binaly
+        let file = new File([blob], "filename", { type: "image/png" });
+        const response = await apiFileService.uploadFile(file, subjectId, userId, documentType);
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+
+        setUploadMessage('Upload Data Completed');
+        setShowAlert(true); // Show alert
+      } else {
+        setUploadMessage('No photo to upload');
+      }
     } catch (error) {
       setUploadMessage('Error uploading data');
     } finally {
@@ -121,6 +136,8 @@ const ImageAssessment: React.FC = () => {
       console.log('Error sending photo:', error);
     }
   };
+
+  
 
   // sendVideo to apiSendVideoService
   const sendVideo = async (video: string) => {
