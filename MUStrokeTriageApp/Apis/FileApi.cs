@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.IO;
 using System.Threading.Tasks;
@@ -17,6 +18,9 @@ public static class FileApi
     /// <param name="app">The endpoint route builder.</param>
     public static void Map(IEndpointRouteBuilder app)
     {
+        var configuration = app.ServiceProvider.GetRequiredService<IConfiguration>();
+        var rootUploadFolder = configuration.GetValue<string>("UploadSettings:RootUploadFolder");
+
         var uploadApi = app.MapGroup("/file");
 
         /// <summary>
@@ -58,23 +62,26 @@ public static class FileApi
 
             var form = await request.ReadFormAsync();
             var file = form.Files["file"];
-            var subjectId = form["SubjectId"];
-            var userId = form["UserId"];
+            var subjectId = form["SubjectId"].FirstOrDefault() ?? "Unknown";
+            var documentType = form["DocumentType"].FirstOrDefault() ?? "Unknown";
+            var userId = form["UserId"].FirstOrDefault() ?? "Unknown";
 
-            if (file == null || string.IsNullOrEmpty(subjectId) || string.IsNullOrEmpty(userId))
+            if (file == null)
             {
                 context.Response.StatusCode = 400;
                 await context.Response.WriteAsync("Missing required fields.");
                 return;
             }
 
-            var uploadsFolder = Path.Combine("D:", "MU", "Sources", "MUStrokeTriageApp", "UploadedFiles");
+            var uploadsFolder = Path.Combine(rootUploadFolder, $"User{userId}", $"Subject{subjectId}", documentType);
             if (!Directory.Exists(uploadsFolder))
             {
                 Directory.CreateDirectory(uploadsFolder);
             }
 
-            var filePath = Path.Combine(uploadsFolder, file.FileName);
+            var timestamp = DateTime.UtcNow.ToString("yyyyMMddHHmmssfff");
+            var fileNameWithTimestamp = $"{Path.GetFileNameWithoutExtension(file.FileName)}_{timestamp}{Path.GetExtension(file.FileName)}";
+            var filePath = Path.Combine(uploadsFolder, fileNameWithTimestamp);
 
             using (var stream = new FileStream(filePath, FileMode.Create))
             {
@@ -83,10 +90,11 @@ public static class FileApi
 
             var fileModel = new FileModel
             {
-                Name = file.FileName,
+                Name = fileNameWithTimestamp,
                 FilePath = filePath,
-                SubjectId = int.Parse(subjectId),
-                UserId = int.Parse(userId),
+                SubjectId = subjectId == "SubjectUnknown" ? (int?)null : int.Parse(subjectId),
+                UserId = userId == "UserUnknown" ? (int?)null : int.Parse(userId),
+                FileType = documentType,
                 CreationTime = DateTime.UtcNow
             };
 

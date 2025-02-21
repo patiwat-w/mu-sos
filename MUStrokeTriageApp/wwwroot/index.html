@@ -11,7 +11,7 @@
         <input type="file" id="fileInput" name="file" required>
         <input type="number" id="subjectId" name="subjectId" placeholder="Subject ID">
         <input type="number" id="userId" name="userId" placeholder="User ID">
-        <input type="text" id="fileType" name="fileType" placeholder="File Type">
+        <input type="text" id="documentType" name="documentType" placeholder="File Type">
         <button type="submit">Upload</button>
     </form>
 
@@ -22,13 +22,13 @@
             const fileInput = document.getElementById('fileInput');
             const subjectId = document.getElementById('subjectId').value;
             const userId = document.getElementById('userId').value;
-            const fileType = document.getElementById('fileType').value;
+            const documentType = document.getElementById('documentType').value;
 
             const formData = new FormData();
             formData.append('File', fileInput.files[0]);
             formData.append('SubjectId', subjectId);
             formData.append('UserId', userId);
-            formData.append('FileType', fileType);
+            formData.append('DocumentType', documentType);
 
             try {
                 const response = await fetch('/file/upload', {

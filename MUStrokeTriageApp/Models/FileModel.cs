@@ -42,5 +42,5 @@ public class FileModel
     public int? SubjectId { get; set; }
 
     [Column("FileType")]
-    public int? FileType { get; set; }
+    public string? FileType { get; set; }
 }
