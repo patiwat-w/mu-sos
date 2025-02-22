@@ -50,7 +50,7 @@ const SubjectListPage: React.FC = () => {
   return (
     <IonPage>
       <Header title="Subject List" />
-      <IonContent>
+      <IonContent scrollX={false} scrollY={false} no-bounce class="no-scroll" className="ion-padding no-scroll" style={{ overflow: 'hidden' ,height: '100vh',scrollY:false}}>
         <IonList>
           {subjects.map((subject, index) => (
             <IonItem key={index} onClick={() => handleItemClick(subject)}>

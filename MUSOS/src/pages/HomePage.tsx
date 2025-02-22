@@ -10,7 +10,8 @@ import {
     IonGrid,
     IonRow,
     IonCol,
-    IonMenuButton
+    IonMenuButton,
+    IonPage
 
 } from '@ionic/react';
 import { IonAvatar, IonLabel,  IonSegment, IonSegmentButton, } from '@ionic/react';
@@ -59,7 +60,9 @@ const HomePage: React.FC = () => {
     };
 
     return (
-        <IonContent>
+      //scrollX={false} scrollY={false} no-bounce class="no-scroll" className="ion-padding no-scroll" style={{ overflow: 'hidden' ,height: '100vh',scrollY:false}}
+      <IonPage>
+        <IonContent scrollY={false} >
             
           {/* Header Section */}
           <IonHeader>
@@ -118,6 +121,7 @@ const HomePage: React.FC = () => {
          
     
         </IonContent>
+        </IonPage>
       );
 };
 

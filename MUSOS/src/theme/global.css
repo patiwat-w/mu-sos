@@ -68,6 +68,13 @@
   max-width: 90%;
 }
 
+.no-scroll {
+  --overflow: hidden !important;
+  overflow: hidden !important;
+  overflow-y: hidden !important;
+
+}
+
 /* Styles for PC screens */
 @media (min-width: 1024px) {
   .app-container {

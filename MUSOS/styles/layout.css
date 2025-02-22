@@ -1,4 +1,17 @@
 
+.container {
+  overflow: hidden !important; /* Added overflow: hidden; to .container */
+}
+.no-scroll {
+  --overflow: hidden !important;
+  overflow: hidden !important;
+  overflow-y: hidden !important;
+
+}
+html,body{
+
+  overflow: hidden !important;
+}
 
 /* Styles for PC screens */
 @media (min-width: 1024px) {
@@ -8,7 +21,7 @@
     margin: auto !important;
     height: 100vh;
     padding-left: 25%;
-    overflow: hidden;
+    overflow: hidden !important;
   }
 
   body {
@@ -21,6 +34,6 @@
     background-color: rgb(71, 28, 28) !important;
     max-width: 900px !important;
    
-    overflow: hidden;
+    overflow: hidden !important;
   }
 }

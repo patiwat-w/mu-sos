@@ -13,13 +13,12 @@ import {
   IonModal,
   IonAlert,
 } from '@ionic/react';
-import { home, personCircle, calendar } from 'ionicons/icons';
+import { calendar } from 'ionicons/icons';
 import { useHistory } from 'react-router-dom';
 import { apiSubjectDataService } from '../services/apiSubjectDataService';
 import { userSessionService } from '../services/UserSessionService';
 import Header from '../components/Header';
 import { ISubject } from '../types/subject.type';
-import { set } from 'date-fns';
 
 const PreInformation: React.FC = () => {
   const history = useHistory();
@@ -39,7 +38,6 @@ const PreInformation: React.FC = () => {
     try {
       const user = await userSessionService.checkUserSession();
       let formData = {
-        //id: 1, // Replace 1 with the appropriate integer value for id
         subjectId,
         subjectName: 'N/A', // Add appropriate value for subjectName
         hn,
@@ -56,7 +54,6 @@ const PreInformation: React.FC = () => {
       };
       console.log('Submit:', formData);
       let response = await apiSubjectDataService.postData(formData);
-      set
       let newSubject : ISubject = await response.json(); // Parse the JSON from the response
       console.log('Response:', newSubject);
       setIsLoading(false);
@@ -81,7 +78,7 @@ const PreInformation: React.FC = () => {
   return (
     <IonPage>
       <Header title='Pre-Information' />
-      <IonContent className="ion-padding">
+      <IonContent scrollX={false} scrollY={false} no-bounce class="no-scroll" className="ion-padding no-scroll" style={{ overflow: 'hidden' ,height: '100vh',scrollY:false}}> {/* Add className here */}
         <IonLoading isOpen={isLoading} message={'Please wait...'} />
         <IonAlert
           isOpen={!!error}
