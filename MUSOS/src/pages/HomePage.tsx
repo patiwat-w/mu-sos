@@ -35,18 +35,12 @@ const HomePage: React.FC = () => {
     const [photoUrl, setPhotoUrl] = useState<string | null>(null); // เพิ่ม state สำหรับ photoUrl
 
     useEffect(() => {
-        const sessionUser = userSessionService.getSession();
-        if (sessionUser) {
-            setUser(sessionUser);
-        } else {
-            history.push('/login');
-        }
-
-       
+        userSessionService.checkUserSession().then(sessionUser => {
             if (sessionUser) {
-              //setProfileImage(user.profileImage || 'default-profile-image.jpg'); // ตั้งค่า profileImage
-              setPhotoUrl(sessionUser.photoURL ?? null); // ตั้งค่า photoUrl
+                //setProfileImage(user.profileImage || 'default-profile-image.jpg'); // ตั้งค่า profileImage
+                setPhotoUrl(sessionUser.photoURL ?? null); // ตั้งค่า photoUrl
             }
+        });
     }, [history]);
 
     const handleSignOut = () => {

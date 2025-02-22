@@ -46,7 +46,7 @@ async function fetchWithAuth(url: string, options: RequestInit) {
     throw new Error('Please login to continue');
   }
   let requestGuid = generateGUID();
-  let token = btoa(user.uid + ':' + user.email);
+  let token = btoa("system:system");
 
   const defaultHeaders = {
     'Content-Type': 'application/json',

@@ -14,10 +14,6 @@ class UserSessionService {
       || user.token == 'undefined'
       || user.token == 'null') {
         user.token = btoa(user.email + ':' + user.token);
-      }else{
-        window.location.href = '/login';
-        // gologin
-
       }
     Cookies.set(SESSION_COOKIE_NAME, user.token, { secure: true, sameSite: 'Strict' });
   }
