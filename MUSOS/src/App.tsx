@@ -51,10 +51,11 @@ import ResultPage from './pages/Result/ResultPage'; // Import ResultPage
  * https://ionicframework.com/docs/theming/dark-mode
  */
 
-/* import '@ionic/react/css/palettes/dark.always.css'; */
- import '@ionic/react/css/palettes/dark.class.css'; 
-/* import '@ionic/react/css/palettes/dark.system.css'; */
+/*  import '@ionic/react/css/palettes/dark.class.css';   
 
+ /*import '@ionic/react/css/palettes/dark.always.css';*/
+/* import '@ionic/react/css/palettes/dark.system.css'; */
+/*import '@ionic/react/css/palettes/high-contrast.class.css'; */
 /* Theme variables */
 import './theme/variables.css';
 import './theme/global.css';

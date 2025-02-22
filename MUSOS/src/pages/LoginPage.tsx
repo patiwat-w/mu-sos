@@ -167,7 +167,7 @@ const LoginPage: React.FC = () => {
 
       <IonFooter>
         <div style={{ textAlign: 'center', padding: '10px' }}>
-          Fixed account for research data collection.
+        Preview Version  for research data collection. <br/>Copy right reserved by MSU Stroke Triage . 2021
         </div>
       </IonFooter>
 
