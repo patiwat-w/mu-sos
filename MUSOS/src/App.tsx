@@ -33,13 +33,13 @@ import LoginPage from './pages/LoginPage';
 import HomePage from './pages/HomePage';
 import Agreement from './pages/Agreement';
 import PreInformation from './pages/PreInformation';
-import SelectAssessment from './pages/SelectAssessment/SelectAssessment';
-import ImageAssessment from './pages/ImageAssessment/ImageAssessment';
-import VoiceAssessment from './pages/VoiceAssessment/VoiceAssessment';
-import PersonalInformationPage from './pages/PersonalInformation/PersonalInformation';
-import HealthInformation from './pages/PersonalInformation/HealthInformation';
-import PreDiagnosisPage from './pages/PersonalInformation/PreDiagnosisPage';
-import NHISSPage from './pages/PersonalInformation/NHISSPage';
+import SelectAssessment from './pages/Assessmensts/SelectAssessment/SelectAssessment';
+import ImageAssessment from './pages/Assessmensts/ImageAssessment/ImageAssessment';
+import VoiceAssessment from './pages/Assessmensts/VoiceAssessment/VoiceAssessment';
+import PersonalInformationPage from './pages/Assessmensts/PersonalInformation/PersonalInformation';
+import HealthInformation from './pages/Assessmensts/PersonalInformation/HealthInformation';
+import PreDiagnosisPage from './pages/Assessmensts/PersonalInformation/PreDiagnosisPage';
+import NHISSPage from './pages/Assessmensts/PersonalInformation/NHISSPage';
 import UserProfilePage from './pages/UserProfile';
 import ConsentPage from './pages/Consent/ConsentPage'; // Import ConsentPage
 import SubjectListPage from './pages/SubjectList/SubjectListPage'; // Import SubjectListPage
@@ -79,19 +79,21 @@ const App: React.FC = () => (
         <ProtectedRoute exact path="/home" component={HomePage} />
         <ProtectedRoute exact path="/agreement" component={Agreement} />
         <ProtectedRoute exact path="/pre-information" component={PreInformation} />
-        <ProtectedRoute exact path="/select-assessment" component={SelectAssessment} />
-        <ProtectedRoute exact path="/image-assessment" component={ImageAssessment} />
-        <ProtectedRoute exact path="/voice-assessment" component={VoiceAssessment} />
+
         <ProtectedRoute exact path="/personal-information" component={PersonalInformationPage} />
         <ProtectedRoute exact path="/health-information" component={HealthInformation} />
-        <ProtectedRoute exact path="/pre-diagnosis" component={PreDiagnosisPage} />
+        
         <ProtectedRoute exact path="/nhiss" component={NHISSPage} />
         <ProtectedRoute exact path="/user-profile" component={UserProfilePage} />
         <ProtectedRoute exact path="/consent" component={ConsentPage} />
         <ProtectedRoute exact path="/subject-list" component={SubjectListPage} />
-        <ProtectedRoute exact path="/result" component={ResultPage} />
+        
         <ProtectedRoute exact path="/subject-profile/:id" component={SubjectProfilePage} />
-
+        <ProtectedRoute exact path="/select-assessment/:subjectId" component={SelectAssessment} />
+        <ProtectedRoute exact path="/image-assessment/:subjectId" component={ImageAssessment} />
+        <ProtectedRoute exact path="/voice-assessment/:subjectId" component={VoiceAssessment} />
+        <ProtectedRoute exact path="/pre-diagnosis/:subjectId" component={PreDiagnosisPage} />
+        <ProtectedRoute exact path="/result/:subjectId" component={ResultPage} />
         {/* Catch-all Route */}
         <Route>
           <Redirect to="/login" />

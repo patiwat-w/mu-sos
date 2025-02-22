@@ -14,7 +14,7 @@ import {
 } from '@ionic/react';
 import { home, personCircle, save, closeCircle } from 'ionicons/icons';
 import { useHistory } from 'react-router';
-import { apiSubjectDataService } from '../../services/apiSubjectDataService';
+import { apiSubjectDataService } from '../../../services/apiSubjectDataService';
 
 
 const PreDiagnosisPage: React.FC = () => {

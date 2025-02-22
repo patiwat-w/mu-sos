@@ -19,8 +19,8 @@ import {
 } from '@ionic/react';
 import { mic, play, cog, playCircle } from 'ionicons/icons';
 import * as stringSimilarity from 'string-similarity';
-import Header from '../../components/Header';
-import FrequencyDisplay from '../../components/FrequencyDisplay';
+import Header from '../../../components/Header';
+import FrequencyDisplay from '../../../components/FrequencyDisplay';
 const wordsToSay = ["แมงมุม", "ทับทิม", "ฟื้นฟู", "ขอบคุณ", "รื่นเริง", "ใบบัวบก"];
 
 // Style Constants

@@ -15,7 +15,7 @@ import {
 } from '@ionic/react';
 import { home, personCircle, helpCircle, mic, play, cog, playCircle } from 'ionicons/icons';
 import * as stringSimilarity from 'string-similarity';
-import Header from '../../components/Header';
+import Header from '../../../components/Header';
 
 const wordsToSay = ["แมงมุม", "ทับทิม", "ฟื้นฟู", "ขอบคุณ","รื่นเริง","ใบบัวบก"];
 

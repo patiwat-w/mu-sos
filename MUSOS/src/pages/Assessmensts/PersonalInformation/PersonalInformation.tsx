@@ -20,7 +20,7 @@ import {
     IonPage
 } from '@ionic/react';
 import { save, closeCircle } from 'ionicons/icons';
-import Header from '../../components/Header';
+import Header from '../../../components/Header';
 import { useHistory } from 'react-router-dom';
 
 const PersonalInformationPage: React.FC = () => {

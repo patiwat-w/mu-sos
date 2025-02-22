@@ -15,16 +15,18 @@ import {
 } from '@ionic/react';
 import { home, personCircle, helpCircle, camera, videocam, cog, closeCircle, send } from 'ionicons/icons';
 import './ImageAssessment.module.css'; // CSS Module
-import { useHistory } from 'react-router';
+import { useHistory, useParams } from 'react-router-dom';
 import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
-import { apiSendPhotoFaceService } from '../../services/apiSendPhotoFaceService';
-import { apiSendVideoService } from '../../services/apiSendVideoService'
+import { apiSendPhotoFaceService } from '../../../services/apiSendPhotoFaceService';
+import { apiSendVideoService } from '../../../services/apiSendVideoService'
 import { al } from 'vitest/dist/reporters-5f784f42';
-import Header from '../../components/Header'; // Import Header component
-import { apiFileService } from '../../services/apiFileService';
+import Header from '../../../components/Header'; // Import Header component
+import { apiFileService } from '../../../services/apiFileService';
+import AssessmentHeaderSection from '../AssessmentHeaderSection';
 
 const ImageAssessment: React.FC = () => {
   const history = useHistory();
+  const { subjectId } = useParams<{ subjectId: string }>();
   const videoRef = useRef<HTMLVideoElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [photo, setPhoto] = useState<string | null>(null);
@@ -92,13 +94,13 @@ const ImageAssessment: React.FC = () => {
     }
   };
 
-  const handleHomeClick = () => {
-    history.push('/home'); // Redirect to home page
-  };
+  // const handleHomeClick = () => {
+  //   history.push('/home'); // Redirect to home page
+  // };
 
-  const handleBack = () => {
-    history.push('/select-assessment'); // Redirect to home page
-  };
+  // const handleBack = () => {
+  //   history.push('/select-assessment'); // Redirect to home page
+  // };
 
   const takePhoto = async () => {
     if (videoRef.current && canvasRef.current) {
@@ -267,7 +269,7 @@ const ImageAssessment: React.FC = () => {
 
   return (
     <IonPage>
-      <Header title="Image Assessment" /> {/* ใช้ Header component */}
+      <AssessmentHeaderSection title="Image Assessment" /> {/* ใช้ Header component */}
       <IonContent className="ion-padding">
         {/* Show loading spinner as overlay */}
         {loading && (
@@ -302,7 +304,10 @@ const ImageAssessment: React.FC = () => {
             {
               text: 'Ok',
               handler: () => {
-                history.push('/select-assessment'); // Redirect to home page
+                //history.push('/voice-assessment/'+subjectId); // Redirect to VoiceAssessment page
+                // back to subject profile page
+                history.push('/subject-profile/'+subjectId);
+
               }
             }
           ]}
@@ -453,20 +458,22 @@ const ImageAssessment: React.FC = () => {
           </IonCol>
         </IonRow>
 
-        {/* ข้อความเพิ่มเติม */}
+     
+      </IonContent>
+      <IonFooter>
+        {/* <div style={{ display: 'flex', justifyContent: 'space-between', padding: '10px' }}> */}
+            {/* ข้อความเพิ่มเติม */}
         <p style={{ textAlign: 'center', marginTop: '20px', fontSize: '14px', color: '#666' }}>
           Please keep clear and focus patient face on front/rear camera
         </p>
-      </IonContent>
-      <IonFooter>
-        <div style={{ display: 'flex', justifyContent: 'space-between', padding: '10px' }}>
-          <IonButton color="primary" onClick={handleBack} style={{ flex: 1, marginRight: '10px' }}>
+
+         {/* <IonButton color="primary" onClick={handleBack} style={{ flex: 1, marginRight: '10px' }}>
             Back
           </IonButton>
           <IonButton color="primary" onClick={handleSubmit} style={{ flex: 1, marginLeft: '10px' }}>
             Next
-          </IonButton>
-        </div>
+          </IonButton> */}
+        {/* </div> */}
       </IonFooter>
     </IonPage>
   );

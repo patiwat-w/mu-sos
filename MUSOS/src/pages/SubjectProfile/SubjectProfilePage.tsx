@@ -22,7 +22,7 @@ import { useHistory, useParams } from 'react-router-dom';
 import Header from '../../components/Header';
 import { apiSubjectDataService } from '../../services/apiSubjectDataService';
 import { ISubject } from '../../types/subject.type';
-import SelectAssessment from '../SelectAssessment/SelectAssessment';
+import SelectAssessment from '../Assessmensts/SelectAssessment/SelectAssessment';
 import AssessmentButton from '../../components/AssessmentButton';
 import { format } from 'date-fns';
 import { th } from 'date-fns/locale';
@@ -69,22 +69,22 @@ const SubjectProfilePage: React.FC = () => {
 
     const handleImageClick = () => {
         setMenuStatus({ ...menuStatus, image: 'done' });
-        history.push('/image-assessment');
+        history.push('/image-assessment/' + id);
     };
 
     const handleVoiceClick = () => {
         setMenuStatus({ ...menuStatus, voice: 'done' });
-        history.push('/voice-assessment');
+        history.push('/voice-assessment/' + id);
     };
 
     const handleInfoClick = () => {
         setMenuStatus({ ...menuStatus, info: 'done' });
-        history.push('/personal-information');
+        history.push('/personal-information/' + id);
     };
 
     const handleResultClick = () => {
         setMenuStatus({ ...menuStatus, result: 'done' });
-        history.push('/result');
+        history.push('/result/' + id);
     };
 
     function handleCancel(): void {

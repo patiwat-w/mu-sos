@@ -13,9 +13,9 @@ import {
 import { checkmarkCircle, helpCircle } from 'ionicons/icons';
 import { useHistory } from 'react-router-dom';
 import './SelectAssessment.module.css';
-import { userSessionService } from '../../services/UserSessionService';
-import Header from '../../components/Header';
-import AssessmentButton from '../../components/AssessmentButton';
+import { userSessionService } from '../../../services/UserSessionService';
+import Header from '../../../components/Header';
+import AssessmentButton from '../../../components/AssessmentButton';
 
 const SelectAssessment: React.FC = () => {
   const history = useHistory();
