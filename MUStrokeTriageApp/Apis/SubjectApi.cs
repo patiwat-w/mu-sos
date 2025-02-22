@@ -69,7 +69,7 @@ public static class SubjectApi
                 };
                 db.Subjects.Add(newSubject);
                 await db.SaveChangesAsync();
-                return Results.Created($"/subjects/{subject.SubjectId}", subject);
+                return Results.Created($"/subjects/{newSubject.SubjectId}", newSubject);
             }
             catch (Exception ex)
             {

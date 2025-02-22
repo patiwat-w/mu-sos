@@ -1,3 +1,4 @@
+import { b } from 'vitest/dist/reporters-5f784f42';
 import { IUser } from '../types/user.type';
 import Cookies from 'js-cookie';
 
@@ -8,10 +9,20 @@ class UserSessionService {
 
   saveSession(user: IUser): void {
     localStorage.setItem(this.SESSION_KEY, JSON.stringify(user));
+    if (!user.token
+      || user.token == ''
+      || user.token == 'undefined'
+      || user.token == 'null') {
+        user.token = btoa(user.email + ':' + user.token);
+      }else{
+        window.location.href = '/login';
+        // gologin
+
+      }
     Cookies.set(SESSION_COOKIE_NAME, user.token, { secure: true, sameSite: 'Strict' });
   }
 
-  getSession(): IUser | null {
+  async getSession(): Promise<IUser | null> {
     const session = localStorage.getItem(this.SESSION_KEY);
     return session ? JSON.parse(session) : null;
   }
@@ -34,6 +45,15 @@ class UserSessionService {
       console.error('Error checking authentication:', error);
       return false;
     }
+  }
+
+  async checkUserSession(): Promise<IUser> {
+    const user = await this.getSession();
+    if (!user) {
+      window.location.href = '/login';
+      throw new Error('Please login to continue');
+    }
+    return user;
   }
 }
 

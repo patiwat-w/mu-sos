@@ -1,9 +1,6 @@
 import React, { useState } from 'react';
 import {
   IonPage,
-  IonHeader,
-  IonToolbar,
-  IonTitle,
   IonContent,
   IonInput,
   IonItem,
@@ -21,6 +18,8 @@ import { useHistory } from 'react-router-dom';
 import { apiSubjectDataService } from '../services/apiSubjectDataService';
 import { userSessionService } from '../services/UserSessionService';
 import Header from '../components/Header';
+import { ISubject } from '../types/subject.type';
+import { set } from 'date-fns';
 
 const PreInformation: React.FC = () => {
   const history = useHistory();
@@ -37,32 +36,37 @@ const PreInformation: React.FC = () => {
 
   const handleSubmit = async () => {
     setIsLoading(true);
-    const user = userSessionService.getSession();
-    if (!user) {
-      window.location.href = '/login';
-      throw new Error('Please login to continue');
-    }
-    let formData = {
-      id: '', // Add appropriate value for id
-      subjectId,
-      subjectName: '', // Add appropriate value for subjectName
-      hn,
-      phoneNumber,
-      onsetTime,
-      lastSeenNormalTime,
-      firstName: "",
-      lastName: "",
-      createdDate: new Date().toISOString(),
-      modifiedDate: new Date().toISOString(),
-      createdBy: ""+user.displayName,
-      modifiedBy: ""+user.displayName,
-      stateCode: 0
-    };
-    console.log('Submit:', formData);
     try {
-      let res = await apiSubjectDataService.postData(formData);
+      const user = await userSessionService.checkUserSession();
+      let formData = {
+        //id: 1, // Replace 1 with the appropriate integer value for id
+        subjectId,
+        subjectName: 'N/A', // Add appropriate value for subjectName
+        hn,
+        phoneNumber,
+        onsetTime,
+        lastSeenNormalTime,
+        firstName: "",
+        lastName: "",
+        createdDate: new Date().toISOString(),
+        modifiedDate: new Date().toISOString(),
+        createdBy: ""+user.displayName,
+        modifiedBy: ""+user.displayName,
+        stateCode: 0
+      };
+      console.log('Submit:', formData);
+      let response = await apiSubjectDataService.postData(formData);
+      set
+      let newSubject : ISubject = await response.json(); // Parse the JSON from the response
+      console.log('Response:', newSubject);
       setIsLoading(false);
-      history.push('/select-assessment');
+      if(!newSubject?.id){
+        alert("Can't get subject id");
+        return;
+      }else{
+        history.push('/subject-profile/' + newSubject.id);
+      }
+    
     } catch (error : any) {
       setIsLoading(false);
       setError(""+error?.message);
@@ -71,24 +75,12 @@ const PreInformation: React.FC = () => {
   };
 
   const handleCancel = () => {
-    //history.push('/home');
     location.href = '/home';
   }
 
   return (
     <IonPage>
       <Header title='Pre-Information' />
-      {/* <IonHeader>
-        <IonToolbar>
-          <IonButton slot="start" fill="clear" onClick={() => history.push('/home')}>
-            <IonIcon icon={home} />
-          </IonButton>
-          <IonTitle style={{ textAlign: 'center' }}>Pre-Information</IonTitle>
-          <IonButton slot="end" fill="clear">
-            <IonIcon icon={personCircle} />
-          </IonButton>
-        </IonToolbar>
-      </IonHeader> */}
       <IonContent className="ion-padding">
         <IonLoading isOpen={isLoading} message={'Please wait...'} />
         <IonAlert

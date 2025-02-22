@@ -37,14 +37,8 @@ function generateGUID() {
 
 export const apiSubjectDataService = {
   postData: async (data: ISubject) => {
-    const user = userSessionService.getSession();
-    if (!user) {
-      window.location.href = '/login';
-      throw new Error('Please login to continue');
-    }
     let requestGuid = generateGUID();
-    // create token encript from user.uid + user.email
-    let token = btoa(user.uid +':'+ user.email); 
+    let token = userSessionService.getToken();
     const response = await fetch(`${API_URL}/subjects`, {
       method: 'POST',
       body: JSON.stringify(data),
@@ -82,13 +76,8 @@ export const apiSubjectDataService = {
     return response;
   },
   getData: async (subjectId: string) => {
-    const user = userSessionService.getSession();
-    if (!user) {
-      window.location.href = '/login';
-      throw new Error('Please login to continue');
-    }
     let requestGuid = generateGUID();
-    let token = btoa(user.uid + ':' + user.email);
+    let token = userSessionService.getToken();
     const response = await fetch(`${API_URL}/subjects/${subjectId}`, {
       method: 'GET',
       headers: {
@@ -125,13 +114,8 @@ export const apiSubjectDataService = {
     return response.json();
   },
   getList: async () => {
-    const user = userSessionService.getSession();
-    if (!user) {
-      window.location.href = '/login';
-      throw new Error('Please login to continue');
-    }
-    let requestGuid = generateGUID();
-    let token = btoa(user.uid + ':' + user.email);
+     let requestGuid = generateGUID();
+    let token = userSessionService.getToken();
     const response = await fetch(`${API_URL}/subjects`, {
       method: 'GET',
       headers: {
