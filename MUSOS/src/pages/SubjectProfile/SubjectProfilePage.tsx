@@ -232,7 +232,7 @@ const SubjectProfilePage: React.FC = () => {
                                 <IonCol size="6" className="ion-text-center"> {/* Keep ion-text-center for overall alignment */}
                                     <div style={{ display: 'flex', justifyContent: 'center' }}> {/* Center the button */}
                                         <AssessmentButton
-                                            label="Image"
+                                            label="Face"
                                             status={menuStatus.image}
                                             onClick={handleImageClick}
                                         />
