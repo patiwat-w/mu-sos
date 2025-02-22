@@ -11,9 +11,7 @@ import {
 } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
 import { ellipse, square, triangle } from 'ionicons/icons';
-import Tab1 from './pages/Tab1';
-import Tab2 from './pages/Tab2';
-import Tab3 from './pages/Tab3';
+
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
@@ -61,6 +59,7 @@ import ResultPage from './pages/Result/ResultPage'; // Import ResultPage
 import './theme/variables.css';
 import './theme/global.css';
 import SubjectProfilePage from './pages/SubjectProfile/SubjectProfilePage';
+import ProtectedRoute from './components/ProtectedRoute';
 setupIonicReact();
 
 const App: React.FC = () => (
@@ -76,52 +75,21 @@ const App: React.FC = () => (
         </Route>
         
         {/* Main App Routes */}
-        <Route exact path="/home">
-          <HomePage />
-        </Route>
-        <Route exact path="/agreement">
-          <Agreement />
-        </Route>
-        <Route exact path="/pre-information">
-          <PreInformation />
-        </Route>
-        <Route exact path="/select-assessment">
-          <SelectAssessment />
-        </Route>
-        <Route exact path="/image-assessment">
-          <ImageAssessment />
-        </Route>
-        <Route exact path="/voice-assessment">
-          <VoiceAssessment />
-        </Route>
-        <Route exact path="/personal-information">
-          <PersonalInformationPage />
-        </Route>
-        <Route exact path="/health-information">
-          <HealthInformation />
-        </Route>
-        <Route exact path="/pre-diagnosis">
-          <PreDiagnosisPage />
-        </Route>
-        <Route exact path="/nhiss">
-          <NHISSPage />
-        </Route>
-        <Route exact path="/user-profile">
-          <UserProfilePage />
-        </Route>
-        <Route exact path="/consent"> {/* Add route for ConsentPage */}
-          <ConsentPage />
-        </Route>
-        <Route exact path="/subject-list"> {/* Add route for SubjectListPage */}
-          <SubjectListPage />
-        </Route>
-        <Route exact path="/result"> {/* Add route for ResultPage */}
-          <ResultPage />
-        </Route>
-        <Route exact path="/subject-profile/:id"> {/* Add route for SubjectProfilePage */}
-          <SubjectProfilePage />
-        </Route>
-
+        <ProtectedRoute exact path="/home" component={HomePage} />
+        <ProtectedRoute exact path="/agreement" component={Agreement} />
+        <ProtectedRoute exact path="/pre-information" component={PreInformation} />
+        <ProtectedRoute exact path="/select-assessment" component={SelectAssessment} />
+        <ProtectedRoute exact path="/image-assessment" component={ImageAssessment} />
+        <ProtectedRoute exact path="/voice-assessment" component={VoiceAssessment} />
+        <ProtectedRoute exact path="/personal-information" component={PersonalInformationPage} />
+        <ProtectedRoute exact path="/health-information" component={HealthInformation} />
+        <ProtectedRoute exact path="/pre-diagnosis" component={PreDiagnosisPage} />
+        <ProtectedRoute exact path="/nhiss" component={NHISSPage} />
+        <ProtectedRoute exact path="/user-profile" component={UserProfilePage} />
+        <ProtectedRoute exact path="/consent" component={ConsentPage} />
+        <ProtectedRoute exact path="/subject-list" component={SubjectListPage} />
+        <ProtectedRoute exact path="/result" component={ResultPage} />
+        <ProtectedRoute exact path="/subject-profile/:id" component={SubjectProfilePage} />
 
         {/* Catch-all Route */}
         <Route>

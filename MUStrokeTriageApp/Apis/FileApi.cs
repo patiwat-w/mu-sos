@@ -92,8 +92,8 @@ public static class FileApi
             {
                 Name = fileNameWithTimestamp,
                 FilePath = filePath,
-                SubjectId = subjectId == "SubjectUnknown" ? (int?)null : int.Parse(subjectId),
-                UserId = userId == "UserUnknown" ? (int?)null : int.Parse(userId),
+                SubjectId = subjectId == "Unknown" ? (int?)null : int.Parse(subjectId),
+                UserId = userId == "Unknown" ? (int?)null : int.Parse(userId),
                 FileType = documentType,
                 CreationTime = DateTime.UtcNow
             };

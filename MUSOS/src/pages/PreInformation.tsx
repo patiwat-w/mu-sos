@@ -43,7 +43,10 @@ const PreInformation: React.FC = () => {
       throw new Error('Please login to continue');
     }
     let formData = {
+      id: '', // Add appropriate value for id
       subjectId,
+      subjectName: '', // Add appropriate value for subjectName
+      hn,
       phoneNumber,
       onsetTime,
       lastSeenNormalTime,

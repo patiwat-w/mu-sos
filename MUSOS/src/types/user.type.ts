@@ -6,4 +6,5 @@ export interface IUser {
     localUserMappingId: number;
     phone?: string;
     role?: string;
+    token?: string;
   }
