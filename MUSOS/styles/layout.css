@@ -1,4 +1,3 @@
-
 .container {
   overflow: hidden !important; /* Added overflow: hidden; to .container */
 }
@@ -6,34 +5,26 @@
   --overflow: hidden !important;
   overflow: hidden !important;
   overflow-y: hidden !important;
-
 }
-html,body{
-
+html, body {
   overflow: hidden !important;
 }
 
 /* Styles for PC screens */
 @media (min-width: 1024px) {
-  html {
+  html, body {
+    display: flex;
     align-items: center;
     justify-content: center;
-    margin: auto !important;
+    margin: 0;
     height: 100vh;
-    padding-left: 25%;
     overflow: hidden !important;
   }
 
   body {
-    margin: 0;
     padding: 0;
     font-family: Arial, sans-serif;
-    height: 100vh;
-    display: flex;
-    justify-content: center;
     background-color: rgb(71, 28, 28) !important;
     max-width: 900px !important;
-   
-    overflow: hidden !important;
   }
 }

@@ -28,6 +28,15 @@ const firebaseConfig:any = {
     messagingSenderId: "150313635848",
     appId: "1:150313635848:web:56a9815baee346098641bd",
     measurementId: "G-Q4H9Z65B6W"
+  },
+  test: {
+    apiKey: "AIzaSyAtitAAbFhcTcOXmM49xUNOHH5iYp-wqy4",
+    authDomain: "musos-89802.firebaseapp.com",
+    projectId: "musos-89802",
+    storageBucket: "musos-89802.firebasestorage.app",
+    messagingSenderId: "579012407593",
+    appId: "1:579012407593:web:39280f65198035e9524738",
+    measurementId: "G-2R38FKQPBG"
   }
 };
 

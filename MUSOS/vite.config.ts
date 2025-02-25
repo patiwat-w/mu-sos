@@ -22,7 +22,7 @@ export default defineConfig({
   test: {
     globals: true,
     environment: 'jsdom',
-    setupFiles: './src/setupProxy.js',
+    setupFiles: './src/setupTests.js', // updated path
   },
   server: {
     proxy: {
