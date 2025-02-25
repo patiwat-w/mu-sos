@@ -1,5 +1,0 @@
-D:\MU\Sources\MUStrokeTriageApp\obj\Release\net9.0\PubTmp\Out\MUStrokeTriageApp.exe
-D:\MU\Sources\MUStrokeTriageApp\obj\Release\net9.0\PubTmp\Out\appsettings.Development.json
-D:\MU\Sources\MUStrokeTriageApp\obj\Release\net9.0\PubTmp\Out\appsettings.json
-D:\MU\Sources\MUStrokeTriageApp\obj\Release\net9.0\PubTmp\Out\MUStrokeTriageApp.dll
-D:\MU\Sources\MUStrokeTriageApp\obj\Release\net9.0\PubTmp\Out\MUStrokeTriageApp.pdb
