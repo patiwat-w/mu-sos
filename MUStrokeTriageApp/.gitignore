@@ -1,0 +1,11 @@
+# Ignore all files in UploadedFiles, published, publish, obj, and bin directories
+/UploadedFiles/*
+/published/*
+/publish/*
+/obj/*
+/bin/*
+/bin/Debug/*
+/bin/Release/*
+/dist/*
+/bin/Debug/net8.0/win-x64/MUStrokeTriageApp.dll
+/bin/Debug/net8.0/win-x64/MUStrokeTriageApp.pdb
