@@ -1,0 +1,30 @@
+:host {
+    --indicator-color: none !important;
+    --indicator-height: 100%;
+}
+.ion-activated {
+  background-color: #0a54ea !important;
+  color: #fcfafa;
+  --indicator-color: none !important;
+}
+
+.toggle-button-group .ion-activated {
+    --background: blue !important;
+    --color: white;
+    --indicator-color: none !important;
+}
+.toggle-button-group .ion-activated {
+    --background: blue !important;
+    --color: white;
+    --indicator-color: none !important;
+}
+
+.toggle-button-group .toggle-button[disabled] {
+  opacity: 1; /* Ensure the button looks normal */
+ /* pointer-events: none;  Prevent clicking */
+}
+
+.toggle-button.reset-color {
+  background-color: initial; /* Reset to default background color */
+  color: initial; /* Reset to default text color */
+}

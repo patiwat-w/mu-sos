@@ -19,8 +19,9 @@ import { useHistory, useParams } from 'react-router';
 import withStepIndicator from '../../../components/withStepIndicator';
 import { getSteps } from './stepsConfig';
 import HorizontalStepIndicator from '../../../components/HorizontalStepIndicator';
-import ToggleButtonGroup from '../../../components/ToggleButtonGroup';
+import ToggleButtonGroupDynamic from '../../../components/ToggleButtonGroupDynamic';
 import { ISubject } from '../../../types/subject.type';
+import { min } from 'date-fns';
 
 const HealthInformation: React.FC = () => {
     const [comorbidities, setComorbidities] = useState({
@@ -71,6 +72,16 @@ const HealthInformation: React.FC = () => {
 
     const steps = getSteps(subjectId);
 
+    const createOptions = (selectedValue: string) => [
+        { label: 'UN', value: 'UN', selected: selectedValue === 'UN' },
+        { label: 'Yes', value: 'Yes', selected: selectedValue === 'Yes' },
+        { label: 'No', value: 'No', selected: selectedValue === 'No' }
+        
+    ];
+
+    const titleStyle = { textAlign: 'center', marginTop: '16px', fontSize: '1.2rem' };
+    const labelStyle = { width: '150px', minWidth: '150px' };
+
     return (
         <IonPage>
             <IonHeader>
@@ -88,91 +99,91 @@ const HealthInformation: React.FC = () => {
             <IonContent className="ion-padding">
                 <HorizontalStepIndicator currentStep={2} totalSteps={steps.length} steps={steps} />
 
-                <IonTitle className="ion-text-center" style={{ marginTop: '16px' }}>Comorbidity</IonTitle>
+                <IonTitle style={titleStyle}>Comorbidity</IonTitle>
 
                 <IonItem>
-                    <IonLabel>Hypertension</IonLabel>
-                    <ToggleButtonGroup
-                        value={comorbidities.hypertension}
+                    <IonLabel style={labelStyle}>Hypertension</IonLabel>
+                    <ToggleButtonGroupDynamic
+                        options={createOptions(comorbidities.hypertension)}
                         onChange={(value) => handleComorbidityChange('hypertension', value)}
                     />
                 </IonItem>
 
                 <IonItem>
-                    <IonLabel>Diabetes mellitus</IonLabel>
-                    <ToggleButtonGroup
-                        value={comorbidities.diabetes}
+                    <IonLabel style={labelStyle}>Diabetes mellitus</IonLabel>
+                    <ToggleButtonGroupDynamic
+                        options={createOptions(comorbidities.diabetes)}
                         onChange={(value) => handleComorbidityChange('diabetes', value)}
                     />
                 </IonItem>
 
                 <IonItem>
-                    <IonLabel>Hyperlipidemia</IonLabel>
-                    <ToggleButtonGroup
-                        value={comorbidities.hyperlipidemia}
+                    <IonLabel style={labelStyle}>Hyperlipidemia</IonLabel>
+                    <ToggleButtonGroupDynamic
+                        options={createOptions(comorbidities.hyperlipidemia)}
                         onChange={(value) => handleComorbidityChange('hyperlipidemia', value)}
                     />
                 </IonItem>
 
                 <IonItem>
-                    <IonLabel>Heart disease</IonLabel>
-                    <ToggleButtonGroup
-                        value={comorbidities.heartDisease}
+                    <IonLabel style={labelStyle}>Heart disease</IonLabel>
+                    <ToggleButtonGroupDynamic
+                        options={createOptions(comorbidities.heartDisease)}
                         onChange={(value) => handleComorbidityChange('heartDisease', value)}
                     />
                 </IonItem>
 
                 <IonItem>
-                    <IonLabel>Previous Stroke or TIA</IonLabel>
-                    <ToggleButtonGroup
-                        value={comorbidities.previousStroke}
+                    <IonLabel style={labelStyle}>Previous Stroke or TIA</IonLabel>
+                    <ToggleButtonGroupDynamic
+                        options={createOptions(comorbidities.previousStroke)}
                         onChange={(value) => handleComorbidityChange('previousStroke', value)}
                     />
                 </IonItem>
 
-                <IonTitle className="ion-text-center" style={{ marginTop: '16px' }}>Current Symptoms and Signs</IonTitle>
+                <IonTitle style={titleStyle}>Current Symptoms and Signs</IonTitle>
 
                 <IonItem>
-                    <IonLabel>Speech difficulties</IonLabel>
-                    <ToggleButtonGroup
-                        value={symptoms.speechDifficulties}
+                    <IonLabel style={labelStyle}>Speech difficulties</IonLabel>
+                    <ToggleButtonGroupDynamic
+                        options={createOptions(symptoms.speechDifficulties)}
                         onChange={(value) => handleSymptomChange('speechDifficulties', value)}
                     />
                 </IonItem>
 
                 <IonItem>
-                    <IonLabel>Facial drooping</IonLabel>
-                    <ToggleButtonGroup
-                        value={symptoms.facialDrooping}
+                    <IonLabel style={labelStyle}>Facial drooping</IonLabel>
+                    <ToggleButtonGroupDynamic
+                        options={createOptions(symptoms.facialDrooping)}
                         onChange={(value) => handleSymptomChange('facialDrooping', value)}
                     />
                 </IonItem>
 
                 <IonItem>
-                    <IonLabel>Visual problems</IonLabel>
-                    <ToggleButtonGroup
-                        value={symptoms.visualProblems}
+                    <IonLabel style={labelStyle}>Visual problems</IonLabel>
+                    <ToggleButtonGroupDynamic
+                        options={createOptions(symptoms.visualProblems)}
                         onChange={(value) => handleSymptomChange('visualProblems', value)}
                     />
                 </IonItem>
 
-                <IonTitle className="ion-text-center" style={{ marginTop: '16px' }}>Arm/Leg Weakness</IonTitle>
+                <IonTitle style={titleStyle}>Arm/Leg Weakness</IonTitle>
 
                 <IonRow>
                     <IonCol>
                         <IonItem>
-                            <IonLabel>Arm.Lt</IonLabel>
-                            <ToggleButtonGroup
-                                value={symptoms.armLt}
+                            <IonLabel style={labelStyle}>Arm.Lt</IonLabel>
+                            <ToggleButtonGroupDynamic
+                                options={createOptions(symptoms.armLt)}
                                 onChange={(value) => handleSymptomChange('armLt', value)}
                             />
                         </IonItem>
                     </IonCol>
                     <IonCol>
                         <IonItem>
-                            <IonLabel>Arm.Rt</IonLabel>
-                            <ToggleButtonGroup
-                                value={symptoms.armRt}
+                            <IonLabel style={labelStyle}>Arm.Rt</IonLabel>
+                            <ToggleButtonGroupDynamic
+                                options={createOptions(symptoms.armRt)}
                                 onChange={(value) => handleSymptomChange('armRt', value)}
                             />
                         </IonItem>
@@ -182,25 +193,25 @@ const HealthInformation: React.FC = () => {
                 <IonRow>
                     <IonCol>
                         <IonItem>
-                            <IonLabel>Leg.Lt</IonLabel>
-                            <ToggleButtonGroup
-                                value={symptoms.legLt}
+                            <IonLabel style={labelStyle}>Leg.Lt</IonLabel>
+                            <ToggleButtonGroupDynamic
+                                options={createOptions(symptoms.legLt)}
                                 onChange={(value) => handleSymptomChange('legLt', value)}
                             />
                         </IonItem>
                     </IonCol>
                     <IonCol>
                         <IonItem>
-                            <IonLabel>Leg.Rt</IonLabel>
-                            <ToggleButtonGroup
-                                value={symptoms.legRt}
+                            <IonLabel style={labelStyle}>Leg.Rt</IonLabel>
+                            <ToggleButtonGroupDynamic
+                                options={createOptions(symptoms.legRt)}
                                 onChange={(value) => handleSymptomChange('legRt', value)}
                             />
                         </IonItem>
                     </IonCol>
                 </IonRow>
 
-                <IonTitle className="ion-text-center" style={{ marginTop: '16px' }}>NHISS and Pre mRS</IonTitle>
+                <IonTitle style={titleStyle}>NHISS and Pre mRS</IonTitle>
 
                 <IonItem>
                     <IonLabel>NHISS (max 42)</IonLabel>

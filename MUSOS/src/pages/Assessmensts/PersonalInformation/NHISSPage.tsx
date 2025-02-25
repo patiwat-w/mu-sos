@@ -22,18 +22,18 @@ const NHISSPage: React.FC = () => {
     const [scores, setScores] = useState<{ [key: string]: number | "UN" }>({});
 
     const nhissItems = [
-        { id: "1A", label: "Consciousness", options: [0, 1, 2, 3] },
-        { id: "1B", label: "Question", options: [0, 1, 2] },
-        { id: "1C", label: "Commands", options: [0, 1, 2] },
-        { id: "2", label: "Gaze", options: [0, 1, 2] },
-        { id: "3", label: "Visual field", options: [0, 1, 2, 3] },
-        { id: "4", label: "Facial Palsy", options: [0, 1, 2, 3] },
-        { id: "5L", label: "Arm Strength - Left", options: [0, 1, 2, 3, 4, "UN"] },
-        { id: "5R", label: "Arm Strength - Right", options: [0, 1, 2, 3, 4, "UN"] },
-        { id: "6L", label: "Leg Strength - Left", options: [0, 1, 2, 3, 4, "UN"] },
-        { id: "6R", label: "Leg Strength - Right", options: [0, 1, 2, 3, 4, "UN"] },
-        { id: "7", label: "Ataxia", options: [0, 1, 2, "UN"] },
-        { id: "8", label: "Sensory", options: [0, 1, 2] },
+        { id: "1A", label: "Consciousness", options: ["UN",0, 1, 2, 3],value:"UN" },
+        { id: "1B", label: "Question", options: ["UN",0, 1, 2] },
+        { id: "1C", label: "Commands", options: ["UN",0, 1, 2] },
+        { id: "2", label: "Gaze", options: ["UN",0, 1, 2] },
+        { id: "3", label: "Visual field", options: ["UN",0, 1, 2, 3] },
+        { id: "4", label: "Facial Palsy", options: ["UN",0, 1, 2, 3] },
+        { id: "5L", label: "Arm Strength - Left", options: ["UN",0, 1, 2, 3, 4 ] },
+        { id: "5R", label: "Arm Strength - Right", options: ["UN",0, 1, 2, 3, 4 ] },
+        { id: "6L", label: "Leg Strength - Left", options: ["UN",0, 1, 2, 3, 4 ] },
+        { id: "6R", label: "Leg Strength - Right", options: ["UN",0, 1, 2, 3, 4] },
+        { id: "7", label: "Ataxia", options: ["UN",0, 1, 2]},
+        { id: "8", label: "Sensory", options: ["UN",0, 1, 2]},
     ];
 
     const handleScoreChange = (id: string, value: number | "UN") => {
@@ -85,6 +85,7 @@ const NHISSPage: React.FC = () => {
                                     selected: scores[item.id] === option
                                 }))}
                                 onChange={(value) => handleScoreChange(item.id, value === "UN" ? "UN" : Number(value))}
+                                maxOptions={6} // Set maxOptions to 6
                             />
                         </IonRow>
                     </IonGrid>
