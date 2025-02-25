@@ -16,7 +16,11 @@ import {
     IonFooter
 } from '@ionic/react';
 import { home, personCircle, save, closeCircle, create } from 'ionicons/icons';
-import { useHistory } from 'react-router';
+import { useHistory, useParams } from 'react-router';
+import withStepIndicator from '../../../components/withStepIndicator';
+import { getSteps } from './stepsConfig';
+import HorizontalStepIndicator from '../../../components/HorizontalStepIndicator';
+import { ISubject } from '../../../types/subject.type';
 
 const HealthInformation: React.FC = () => {
     const [comorbidities, setComorbidities] = useState({
@@ -41,6 +45,8 @@ const HealthInformation: React.FC = () => {
     const [preMrs, setPreMrs] = useState('');
 
     const history = useHistory();
+      const { subjectId } = useParams<{ subjectId: string }>();
+      const [subject, setSubject] = useState<ISubject | null>(null);
 
     const toggleComorbidity = (key: keyof typeof comorbidities) => {
         setComorbidities({ ...comorbidities, [key]: !comorbidities[key] });
@@ -63,6 +69,8 @@ const HealthInformation: React.FC = () => {
         history.push('/nhiss');
     }
 
+    const steps = getSteps(subjectId);
+
     return (
         <IonPage>
             <IonHeader>
@@ -78,6 +86,8 @@ const HealthInformation: React.FC = () => {
             </IonHeader>
 
             <IonContent className="ion-padding">
+            <HorizontalStepIndicator currentStep={2} totalSteps={steps.length} steps={steps} />
+
                 <IonTitle className="ion-text-center" style={{ marginTop: '16px' }}>Comorbidity</IonTitle>
 
                 <IonItem>
@@ -266,5 +276,7 @@ const HealthInformation: React.FC = () => {
         </IonPage>
     );
 };
+
+
 
 export default HealthInformation;

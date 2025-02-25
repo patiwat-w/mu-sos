@@ -1,0 +1,12 @@
+.step {
+  text-align: center;
+  padding: 10px;
+  border-bottom: 2px solid #ccc;
+  transition: border-color 0.3s;
+}
+
+.step.active {
+  border-bottom: 2px solid #007bff;
+  font-weight: bold;
+  color: #007bff;
+}

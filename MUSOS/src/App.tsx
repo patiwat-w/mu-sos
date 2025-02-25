@@ -80,8 +80,7 @@ const App: React.FC = () => (
         <ProtectedRoute exact path="/agreement" component={Agreement} />
         <ProtectedRoute exact path="/pre-information" component={PreInformation} />
 
-        <ProtectedRoute exact path="/personal-information" component={PersonalInformationPage} />
-        <ProtectedRoute exact path="/health-information" component={HealthInformation} />
+        
         
         <ProtectedRoute exact path="/nhiss" component={NHISSPage} />
         <ProtectedRoute exact path="/user-profile" component={UserProfilePage} />
@@ -93,6 +92,8 @@ const App: React.FC = () => (
         <ProtectedRoute exact path="/image-assessment/:subjectId" component={ImageAssessment} />
         <ProtectedRoute exact path="/voice-assessment/:subjectId" component={VoiceAssessment} />
         <ProtectedRoute exact path="/pre-diagnosis/:subjectId" component={PreDiagnosisPage} />
+        <ProtectedRoute exact path="/personal-information/:subjectId" component={PersonalInformationPage} />
+        <ProtectedRoute exact path="/health-information/:subjectId" component={HealthInformation} />
         <ProtectedRoute exact path="/result/:subjectId" component={ResultPage} />
         {/* Catch-all Route */}
         <Route>

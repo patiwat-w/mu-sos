@@ -1,18 +1,28 @@
 import React from 'react';
-import { IonButton, IonIcon, IonLabel } from '@ionic/react';
-import { checkmarkCircle } from 'ionicons/icons';
+import { IonButton } from '@ionic/react';
 
 interface AssessmentButtonProps {
   label: string;
   status: string;
   onClick: () => void;
+  disabled?: boolean;
 }
 
-const AssessmentButton: React.FC<AssessmentButtonProps> = ({ label, status, onClick }) => {
+const AssessmentButton: React.FC<AssessmentButtonProps> = ({ label, status, onClick, disabled }) => {
   return (
-    <IonButton className="responsive-button" onClick={onClick} style={{ display: 'block', position: 'relative' }}>
-      <IonLabel className="icon-text">{label}</IonLabel>
-      {status === 'done' && <IonIcon icon={checkmarkCircle} style={{ color: 'green', position: 'absolute', bottom: '5px', right: '5px' }} />}
+    <IonButton
+      onClick={onClick}
+      disabled={disabled}
+      style={{
+        width: '100%',
+        backgroundColor: disabled ? '#d3d3d3' : '#3880ff',
+        color: 'white',
+        opacity: disabled ? 0.5 : 1,
+        cursor: disabled ? 'not-allowed' : 'pointer',
+        marginBottom: '10px',
+      }}
+    >
+      {label} - {status}
     </IonButton>
   );
 };

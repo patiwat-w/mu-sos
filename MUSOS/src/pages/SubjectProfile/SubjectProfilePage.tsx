@@ -46,6 +46,7 @@ const SubjectProfilePage: React.FC = () => {
         result: 'normal',
     });
     const [isEditing, setIsEditing] = useState<boolean>(false);
+    const [currentStep, setCurrentStep] = useState<number>(1);
 
     const toggleEdit = () => {
         setIsEditing(!isEditing);
@@ -68,22 +69,22 @@ const SubjectProfilePage: React.FC = () => {
     }, [id]);
 
     const handleImageClick = () => {
-        setMenuStatus({ ...menuStatus, image: 'done' });
+        setMenuStatus({ ...menuStatus, image: 'in-progress' });
         history.push('/image-assessment/' + id);
     };
 
     const handleVoiceClick = () => {
-        setMenuStatus({ ...menuStatus, voice: 'done' });
+        setMenuStatus({ ...menuStatus, voice: 'in-progress' });
         history.push('/voice-assessment/' + id);
     };
 
     const handleInfoClick = () => {
-        setMenuStatus({ ...menuStatus, info: 'done' });
+        setMenuStatus({ ...menuStatus, info: 'in-progress' });
         history.push('/personal-information/' + id);
     };
 
     const handleResultClick = () => {
-        setMenuStatus({ ...menuStatus, result: 'done' });
+        setMenuStatus({ ...menuStatus, result: 'in-progress' });
         history.push('/result/' + id);
     };
 
@@ -95,17 +96,32 @@ const SubjectProfilePage: React.FC = () => {
         // Submit logic here
     }
 
+    const handleNextStep = () => {
+        setCurrentStep((prevStep) => prevStep + 1);
+    };
+
+    const handlePreviousStep = () => {
+        setCurrentStep((prevStep) => prevStep - 1);
+    };
+
     const formatDateTime = (dateString: string | null) => {
         if (!dateString) return '';
         const date = new Date(dateString);
-        return format(date, 'dd MMMM yyyy HH:mm', { locale: th });
+        return format(date, 'dd MMMM yyyy HH:mm');
     };
 
     const formatTime = (timeString: string | null) => {
         if (!timeString) return '';
         const date = new Date(timeString);
-        return format(date, 'HH:mm', { locale: th });
+        return format(date, 'HH:mm');
     };
+
+    const steps = [
+        { label: 'Face', status: menuStatus.image, onClick: handleImageClick },
+        { label: 'Voice', status: menuStatus.voice, onClick: handleVoiceClick },
+        { label: 'Info', status: menuStatus.info, onClick: handleInfoClick },
+        { label: 'Pre-Result', status: menuStatus.result, onClick: handleResultClick },
+    ];
 
     return (
         <IonPage>
@@ -120,7 +136,7 @@ const SubjectProfilePage: React.FC = () => {
                     <IonLabel>{subject?.phoneNumber}</IonLabel> */}
 
                     {/* Form Card */}
-                    <IonCard>
+                    <IonCard  style={{ width: '100%' }}>
                         <IonCardHeader>
                             <IonTitle>Subject Information</IonTitle>
                             <IonButton onClick={toggleEdit} style={{ position: 'absolute', top: '10px', right: '10px' }}>
@@ -128,7 +144,7 @@ const SubjectProfilePage: React.FC = () => {
                             </IonButton>
                         </IonCardHeader>
                         <IonCardContent>
-                            <IonGrid>
+                            <IonGrid style={{ width: '100%' }}>
                                 <IonRow>
                                     <IonCol size="12" size-md="6">
                                         <IonItem>
@@ -162,14 +178,13 @@ const SubjectProfilePage: React.FC = () => {
                                         <IonItem>
                                             <IonLabel position="stacked" style={{ textAlign: 'left' }}>Onset Time</IonLabel>
                                             <IonInput
-                                                value={formatTime(subject?.onsetTime)}
+                                                value={formatTime(subject?.onsetTime ?? null)}
                                                 placeholder="Onset Time"
                                                 readonly
                                                 onClick={() => isEditing && setShowOnsetPicker(true)}
                                                 style={{ textAlign: 'right' }}
                                                 disabled={!isEditing}
                                             />
-                                            {/* <IonIcon icon={calendar} slot="end" onClick={() => isEditing && setShowOnsetPicker(true)} /> */}
                                         </IonItem>
                                         <IonModal isOpen={showOnsetPicker}>
                                             <IonDatetime
@@ -191,7 +206,6 @@ const SubjectProfilePage: React.FC = () => {
                                                 style={{ textAlign: 'right' }}
                                                 disabled={!isEditing}
                                             />
-                                            {/* <IonIcon icon={calendar} slot="end" onClick={() => isEditing && setShowLastSeenPicker(true)} /> */}
                                         </IonItem>
                                         <IonModal isOpen={showLastSeenPicker}>
                                             <IonDatetime
@@ -224,51 +238,37 @@ const SubjectProfilePage: React.FC = () => {
                 {/* Content based on selected segment */}
                 <IonCard>
                     <IonCardHeader>
-                        <IonTitle>Select Collection Type </IonTitle>
+                        <IonTitle>Select Collection Type</IonTitle>
                     </IonCardHeader>
                     <IonCardContent>
                         <IonGrid>
-                            <IonRow>
-                                <IonCol size="6" className="ion-text-center"> {/* Keep ion-text-center for overall alignment */}
-                                    <div style={{ display: 'flex', justifyContent: 'center' }}> {/* Center the button */}
-                                        <AssessmentButton
-                                            label="Face"
-                                            status={menuStatus.image}
-                                            onClick={handleImageClick}
-                                        />
-                                    </div>
-                                </IonCol>
-                                <IonCol size="6" className="ion-text-center"> {/* Keep ion-text-center */}
-                                    <div style={{ display: 'flex', justifyContent: 'center' }}> {/* Center the button */}
-                                        <AssessmentButton
-                                            label="Voice"
-                                            status={menuStatus.voice}
-                                            onClick={handleVoiceClick}
-                                        />
-                                    </div>
-                                </IonCol>
-                            </IonRow>
-                            <IonRow>
-                                <IonCol size="6" className="ion-text-center"> {/* Keep ion-text-center */}
-                                    <div style={{ display: 'flex', justifyContent: 'center' }}> {/* Center the button */}
-                                        <AssessmentButton
-                                            label="Info"
-                                            status={menuStatus.info}
-                                            onClick={handleInfoClick}
-                                        />
-                                    </div>
-                                </IonCol>
-                                <IonCol size="6" className="ion-text-center"> {/* Keep ion-text-center */}
-                                    <div style={{ display: 'flex', justifyContent: 'center' }}> {/* Center the button */}
-                                        <AssessmentButton
-                                            label="Pre-Result"
-                                            status={menuStatus.result}
-                                            onClick={handleResultClick}
-                                        />
-                                    </div>
-                                </IonCol>
-                            </IonRow>
+                            {steps.map((step, index) => (
+                                <IonRow key={index} style={{ alignItems: 'center', marginBottom: '20px' }}>
+                                    <IonCol size="2" className="ion-text-center">
+                                        <div style={{ width: '20px', height: '20px', borderRadius: '50%', backgroundColor: currentStep === index + 1 ? 'blue' : 'gray', margin: '0 auto' }}></div>
+                                        {index < steps.length - 1 && (
+                                            <div style={{ width: '2px', height: '40px', backgroundColor: 'gray', margin: '0 auto' }}></div>
+                                        )}
+                                    </IonCol>
+                                    <IonCol size="10">
+                                        <div style={{ opacity: currentStep === index + 1 ? 1 : 0.5 }}>
+                                            <AssessmentButton
+                                                label={step.label}
+                                                status={step.status}
+                                                onClick={step.onClick}
+                                                disabled={currentStep !== index + 1}
+                                            />
+                                        </div>
+                                    </IonCol>
+                                </IonRow>
+                            ))}
                         </IonGrid>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '20px' }}>
+                            <IonButton onClick={handlePreviousStep} disabled={currentStep === 1}>Previous</IonButton>
+                            {currentStep < steps.length && (
+                                <IonButton onClick={handleNextStep}>Next</IonButton>
+                            )}
+                        </div>
                     </IonCardContent>
                 </IonCard>
             </IonContent>

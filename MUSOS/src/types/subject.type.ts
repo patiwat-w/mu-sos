@@ -12,5 +12,9 @@ export interface ISubject {
   modifiedBy: string;
   stateCode: number;
   subjectName: string;
+  email: string;
   hn: string;
+  age: string;
+  gender: string;
+  notes: string;
 }

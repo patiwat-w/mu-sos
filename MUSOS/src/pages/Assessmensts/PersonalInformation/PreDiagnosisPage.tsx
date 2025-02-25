@@ -13,20 +13,37 @@ import {
     IonFooter
 } from '@ionic/react';
 import { home, personCircle, save, closeCircle } from 'ionicons/icons';
-import { useHistory } from 'react-router';
+import { useHistory, useParams } from 'react-router';
 import { apiSubjectDataService } from '../../../services/apiSubjectDataService';
-
+import withStepIndicator from '../../../components/withStepIndicator';
+import { ISubject } from '../../../types/subject.type';
+import { getSteps } from './stepsConfig';
+import HorizontalStepIndicator from '../../../components/HorizontalStepIndicator';
 
 const PreDiagnosisPage: React.FC = () => {
      const history = useHistory();
+       const { subjectId } = useParams<{ subjectId: string }>();
+       const [subject, setSubject] = useState<ISubject | null>(null);
 
      // Add state for form data
-    const [formData, setFormData] = useState({
-        name: '',
+    const [formData, setFormData] = useState<ISubject>({
+        subjectId: '',
+        subjectName: '',
         email: '',
+        phoneNumber: '',
         age: '',
         gender: '',
-        notes: ''
+        onsetTime: '',
+        lastSeenNormalTime: '',
+        notes: '',
+        firstName: '',
+        lastName: '',
+        createdDate: new Date().toISOString(),
+        modifiedDate: new Date().toISOString(),
+        createdBy: '',
+        modifiedBy: '',
+        stateCode: 1,
+        hn: ''
     });
     
      async function handleSave(event: any): Promise<void> {
@@ -49,7 +66,7 @@ const PreDiagnosisPage: React.FC = () => {
     function handleCancel(event: any): void {
         history.push('/select-assessment');
     }
-
+    const steps = getSteps(subjectId);
     return (
         <IonPage>
             <IonHeader>
@@ -65,6 +82,8 @@ const PreDiagnosisPage: React.FC = () => {
             </IonHeader>
 
             <IonContent className="ion-padding">
+            <HorizontalStepIndicator currentStep={3} totalSteps={steps.length} steps={steps} />
+
                 <IonTextarea
                     placeholder="Neurologist or Physician or Stroke Nurse input pre-diagnosis"
                     rows={10}
@@ -125,5 +144,7 @@ const PreDiagnosisPage: React.FC = () => {
         </IonPage>
     );
 };
+
+
 
 export default PreDiagnosisPage;
