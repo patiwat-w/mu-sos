@@ -5,19 +5,17 @@ import {
     IonToolbar,
     IonTitle,
     IonContent,
-    IonItem,
-    IonLabel,
     IonButton,
     IonIcon,
     IonRow,
     IonCol,
     IonFooter,
-    IonGrid,
-    IonSegment,
-    IonSegmentButton
+    IonGrid
 } from '@ionic/react';
 import { home, personCircle, save, closeCircle, helpCircle } from 'ionicons/icons';
 import { useHistory } from 'react-router';
+import ToggleButtonGroupDynamic from '../../../components/ToggleButtonGroupDynamic';
+import './NHISSPage.css';
 
 const NHISSPage: React.FC = () => {
     const history = useHistory();
@@ -69,34 +67,28 @@ const NHISSPage: React.FC = () => {
             </IonHeader>
 
             <IonContent className="ion-padding">
-            {nhissItems.map((item) => (
-  <IonGrid key={item.id} className="nhiss-item">
-    {/* Label อยู่บรรทัดแรก */}
-    <IonRow>
-      <IonCol size="12">
-        <strong>{item.id} {item.label}</strong>
-      </IonCol>
-    </IonRow>
+                {nhissItems.map((item, index) => (
+                    <IonGrid key={item.id} className={index % 2 === 0 ? 'even-row' : 'odd-row'}>
+                        {/* Label อยู่บรรทัดแรก */}
+                        <IonRow>
+                            <IonCol size="12" className="label-col">
+                                <strong>{item.id} {item.label}</strong>
+                            </IonCol>
+                        </IonRow>
 
-    {/* ปุ่มตัวเลือกอยู่บรรทัดที่สอง */}
-    <IonRow className="button-group">
-      {item.options.map((option) => (
-        <IonCol key={option} size="auto">
-          <IonButton
-            expand="block"
-            fill={scores[item.id] === option ? "solid" : "outline"}
-            onClick={() => handleScoreChange(item.id, option)}
-            className="option-button"
-          >
-            {option}
-          </IonButton>
-        </IonCol>
-      ))}
-    </IonRow>
-  </IonGrid>
-))}
-
-
+                        {/* ปุ่มตัวเลือกอยู่บรรทัดที่สอง */}
+                        <IonRow className="button-group">
+                            <ToggleButtonGroupDynamic
+                                options={item.options.map(option => ({
+                                    label: option.toString(),
+                                    value: option.toString(),
+                                    selected: scores[item.id] === option
+                                }))}
+                                onChange={(value) => handleScoreChange(item.id, value === "UN" ? "UN" : Number(value))}
+                            />
+                        </IonRow>
+                    </IonGrid>
+                ))}
             </IonContent>
 
             <IonFooter>

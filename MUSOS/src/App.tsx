@@ -61,7 +61,7 @@ import './theme/variables.css';
 import './theme/global.css';
 import SubjectProfilePage from './pages/SubjectProfile/SubjectProfilePage';
 import ProtectedRoute from './components/ProtectedRoute';
-setupIonicReact();
+setupIonicReact({ mode: 'ios' });
 
 const App: React.FC = () => (
   <IonApp className="app-container">

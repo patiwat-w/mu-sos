@@ -8,7 +8,6 @@ import {
     IonItem,
     IonLabel,
     IonButton,
-    IonToggle,
     IonInput,
     IonIcon,
     IonCol,
@@ -20,40 +19,41 @@ import { useHistory, useParams } from 'react-router';
 import withStepIndicator from '../../../components/withStepIndicator';
 import { getSteps } from './stepsConfig';
 import HorizontalStepIndicator from '../../../components/HorizontalStepIndicator';
+import ToggleButtonGroup from '../../../components/ToggleButtonGroup';
 import { ISubject } from '../../../types/subject.type';
 
 const HealthInformation: React.FC = () => {
     const [comorbidities, setComorbidities] = useState({
-        hypertension: false,
-        diabetes: true,
-        hyperlipidemia: false,
-        heartDisease: false,
-        previousStroke: true,
+        hypertension: 'Default',
+        diabetes: 'Yes',
+        hyperlipidemia: 'Default',
+        heartDisease: 'Default',
+        previousStroke: 'Yes',
     });
 
     const [symptoms, setSymptoms] = useState({
-        speechDifficulties: false,
-        facialDrooping: true,
-        visualProblems: false,
-        armLt: true,
-        armRt: false,
-        legLt: false,
-        legRt: true,
+        speechDifficulties: 'Default',
+        facialDrooping: 'Yes',
+        visualProblems: 'Default',
+        armLt: 'Yes',
+        armRt: 'Default',
+        legLt: 'Default',
+        legRt: 'Yes',
     });
 
     const [nhiss, setNhiss] = useState('');
     const [preMrs, setPreMrs] = useState('');
 
     const history = useHistory();
-      const { subjectId } = useParams<{ subjectId: string }>();
-      const [subject, setSubject] = useState<ISubject | null>(null);
+    const { subjectId } = useParams<{ subjectId: string }>();
+    const [subject, setSubject] = useState<ISubject | null>(null);
 
-    const toggleComorbidity = (key: keyof typeof comorbidities) => {
-        setComorbidities({ ...comorbidities, [key]: !comorbidities[key] });
+    const handleComorbidityChange = (key: keyof typeof comorbidities, value: string) => {
+        setComorbidities({ ...comorbidities, [key]: value });
     };
 
-    const toggleSymptom = (key: keyof typeof symptoms) => {
-        setSymptoms({ ...symptoms, [key]: !symptoms[key] });
+    const handleSymptomChange = (key: keyof typeof symptoms, value: string) => {
+        setSymptoms({ ...symptoms, [key]: value });
     };
 
     function handleSave(event: any): void {
@@ -86,74 +86,74 @@ const HealthInformation: React.FC = () => {
             </IonHeader>
 
             <IonContent className="ion-padding">
-            <HorizontalStepIndicator currentStep={2} totalSteps={steps.length} steps={steps} />
+                <HorizontalStepIndicator currentStep={2} totalSteps={steps.length} steps={steps} />
 
                 <IonTitle className="ion-text-center" style={{ marginTop: '16px' }}>Comorbidity</IonTitle>
 
                 <IonItem>
                     <IonLabel>Hypertension</IonLabel>
-                    <IonToggle
-                        checked={comorbidities.hypertension}
-                        onIonChange={() => toggleComorbidity('hypertension')}
-                    ></IonToggle>
+                    <ToggleButtonGroup
+                        value={comorbidities.hypertension}
+                        onChange={(value) => handleComorbidityChange('hypertension', value)}
+                    />
                 </IonItem>
 
                 <IonItem>
                     <IonLabel>Diabetes mellitus</IonLabel>
-                    <IonToggle
-                        checked={comorbidities.diabetes}
-                        onIonChange={() => toggleComorbidity('diabetes')}
-                    ></IonToggle>
+                    <ToggleButtonGroup
+                        value={comorbidities.diabetes}
+                        onChange={(value) => handleComorbidityChange('diabetes', value)}
+                    />
                 </IonItem>
 
                 <IonItem>
                     <IonLabel>Hyperlipidemia</IonLabel>
-                    <IonToggle
-                        checked={comorbidities.hyperlipidemia}
-                        onIonChange={() => toggleComorbidity('hyperlipidemia')}
-                    ></IonToggle>
+                    <ToggleButtonGroup
+                        value={comorbidities.hyperlipidemia}
+                        onChange={(value) => handleComorbidityChange('hyperlipidemia', value)}
+                    />
                 </IonItem>
 
                 <IonItem>
                     <IonLabel>Heart disease</IonLabel>
-                    <IonToggle
-                        checked={comorbidities.heartDisease}
-                        onIonChange={() => toggleComorbidity('heartDisease')}
-                    ></IonToggle>
+                    <ToggleButtonGroup
+                        value={comorbidities.heartDisease}
+                        onChange={(value) => handleComorbidityChange('heartDisease', value)}
+                    />
                 </IonItem>
 
                 <IonItem>
                     <IonLabel>Previous Stroke or TIA</IonLabel>
-                    <IonToggle
-                        checked={comorbidities.previousStroke}
-                        onIonChange={() => toggleComorbidity('previousStroke')}
-                    ></IonToggle>
+                    <ToggleButtonGroup
+                        value={comorbidities.previousStroke}
+                        onChange={(value) => handleComorbidityChange('previousStroke', value)}
+                    />
                 </IonItem>
 
                 <IonTitle className="ion-text-center" style={{ marginTop: '16px' }}>Current Symptoms and Signs</IonTitle>
 
                 <IonItem>
                     <IonLabel>Speech difficulties</IonLabel>
-                    <IonToggle
-                        checked={symptoms.speechDifficulties}
-                        onIonChange={() => toggleSymptom('speechDifficulties')}
-                    ></IonToggle>
+                    <ToggleButtonGroup
+                        value={symptoms.speechDifficulties}
+                        onChange={(value) => handleSymptomChange('speechDifficulties', value)}
+                    />
                 </IonItem>
 
                 <IonItem>
                     <IonLabel>Facial drooping</IonLabel>
-                    <IonToggle
-                        checked={symptoms.facialDrooping}
-                        onIonChange={() => toggleSymptom('facialDrooping')}
-                    ></IonToggle>
+                    <ToggleButtonGroup
+                        value={symptoms.facialDrooping}
+                        onChange={(value) => handleSymptomChange('facialDrooping', value)}
+                    />
                 </IonItem>
 
                 <IonItem>
                     <IonLabel>Visual problems</IonLabel>
-                    <IonToggle
-                        checked={symptoms.visualProblems}
-                        onIonChange={() => toggleSymptom('visualProblems')}
-                    ></IonToggle>
+                    <ToggleButtonGroup
+                        value={symptoms.visualProblems}
+                        onChange={(value) => handleSymptomChange('visualProblems', value)}
+                    />
                 </IonItem>
 
                 <IonTitle className="ion-text-center" style={{ marginTop: '16px' }}>Arm/Leg Weakness</IonTitle>
@@ -162,19 +162,19 @@ const HealthInformation: React.FC = () => {
                     <IonCol>
                         <IonItem>
                             <IonLabel>Arm.Lt</IonLabel>
-                            <IonToggle
-                                checked={symptoms.armLt}
-                                onIonChange={() => toggleSymptom('armLt')}
-                            ></IonToggle>
+                            <ToggleButtonGroup
+                                value={symptoms.armLt}
+                                onChange={(value) => handleSymptomChange('armLt', value)}
+                            />
                         </IonItem>
                     </IonCol>
                     <IonCol>
                         <IonItem>
                             <IonLabel>Arm.Rt</IonLabel>
-                            <IonToggle
-                                checked={symptoms.armRt}
-                                onIonChange={() => toggleSymptom('armRt')}
-                            ></IonToggle>
+                            <ToggleButtonGroup
+                                value={symptoms.armRt}
+                                onChange={(value) => handleSymptomChange('armRt', value)}
+                            />
                         </IonItem>
                     </IonCol>
                 </IonRow>
@@ -183,19 +183,19 @@ const HealthInformation: React.FC = () => {
                     <IonCol>
                         <IonItem>
                             <IonLabel>Leg.Lt</IonLabel>
-                            <IonToggle
-                                checked={symptoms.legLt}
-                                onIonChange={() => toggleSymptom('legLt')}
-                            ></IonToggle>
+                            <ToggleButtonGroup
+                                value={symptoms.legLt}
+                                onChange={(value) => handleSymptomChange('legLt', value)}
+                            />
                         </IonItem>
                     </IonCol>
                     <IonCol>
                         <IonItem>
                             <IonLabel>Leg.Rt</IonLabel>
-                            <IonToggle
-                                checked={symptoms.legRt}
-                                onIonChange={() => toggleSymptom('legRt')}
-                            ></IonToggle>
+                            <ToggleButtonGroup
+                                value={symptoms.legRt}
+                                onChange={(value) => handleSymptomChange('legRt', value)}
+                            />
                         </IonItem>
                     </IonCol>
                 </IonRow>
@@ -276,7 +276,5 @@ const HealthInformation: React.FC = () => {
         </IonPage>
     );
 };
-
-
 
 export default HealthInformation;

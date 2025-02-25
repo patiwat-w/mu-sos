@@ -1,0 +1,19 @@
+.label-col {
+  text-align: left;
+}
+
+.button-group {
+  margin-top: 8px;
+}
+
+.option-button {
+  margin: 4px 0;
+}
+
+.even-row {
+  background-color: #f9f9f9;
+}
+
+.odd-row {
+  background-color: #ffffff;
+}
