@@ -3,3 +3,9 @@ MUStrokeTriageApp/published/*
 MUStrokeTriageApp/publish/*
 MUStrokeTriageApp/obj/*
 MUStrokeTriageApp/bin/*
+MUStrokeTriageApp/bin/Debug/*
+MUStrokeTriageApp/bin/Release/*
+MUSOS/dist/*
+MUStrokeTriageApp/bin/Debug/net8.0/win-x64/MUStrokeTriageApp.dll
+MUStrokeTriageApp/bin/Debug/net8.0/win-x64/MUStrokeTriageApp.dll
+MUStrokeTriageApp/bin/Debug/net8.0/win-x64/MUStrokeTriageApp.pdb
