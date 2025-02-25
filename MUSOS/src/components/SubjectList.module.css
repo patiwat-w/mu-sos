@@ -1,0 +1,53 @@
+.ionItem {
+    padding: 15px;
+    border-radius: 12px;
+    margin-bottom: 10px;
+    border: 1px solid #e0e0e0;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s, box-shadow 0.2s;
+    background-color: #ffffff;
+}
+
+.odd {
+    background-color: #f9f9f9 !important;
+}
+
+.even {
+    background-color: #ffffff !important;
+}
+
+.ionItem:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(5, 23, 220, 0.2);
+}
+
+.ionLabel {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    background-color: transparent !important; /* ทำให้พื้นหลังโปร่งใส */
+    padding: 0; /* ลบ padding หากมี */
+}
+
+.ionLabel h2 {
+    font-size: 1.2em;
+    font-weight: bold;
+    margin: 0;
+    color: #333; /* สีข้อความ */
+}
+
+.ionLabel p {
+    font-size: 0.9em;
+    color: #666; /* สีข้อความรอง */
+    margin: 0;
+}
+
+.label {
+    font-weight: bold;
+    color: #333;
+}
+
+.value {
+    color: #666;
+    margin-left: 5px;
+}

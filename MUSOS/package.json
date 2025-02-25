@@ -68,7 +68,7 @@
     "@types/react": "^18.0.27",
     "@types/react-dom": "^18.0.10",
     "@types/string-similarity": "^4.0.2",
-    "@vitejs/plugin-legacy": "^5.0.0",
+    "@vitejs/plugin-legacy": "^6.0.2",
     "@vitejs/plugin-react": "^4.3.4",
     "cypress": "^13.5.0",
     "eslint-plugin-react": "^7.32.2",
@@ -76,8 +76,10 @@
     "jsdom": "^22.1.0",
     "terser": "^5.4.0",
     "typescript": "^5.1.6",
-    "vite": "^5.4.14",
-    "vitest": "^0.34.6"
+    "vite": "^6.2.0",
+    "vitest": "^3.0.7",
+    "webpack-cli": "^6.0.1",
+    "webpack-dev-server": "^5.2.0"
   },
   "description": "An Ionic project"
 }

@@ -70,11 +70,15 @@ const HomePage: React.FC = () => {
     
           {/* Profile Card */}
           <div className="profile-card">
-            <IonAvatar>
-              <img src={photoUrl || 'default-profile-image.jpg'} alt="Profile" />
-            </IonAvatar>
-            <IonLabel>{user?.displayName || 'Guest User'}</IonLabel>
-            <IonLabel>{user?.email || ''} | {user?.location || 'User'}</IonLabel>
+            <div className="profile-header">
+              <IonAvatar>
+                <img src={photoUrl || 'default-profile-image.jpg'} alt="Profile" />
+              </IonAvatar>
+              <div className="profile-info">
+                <IonLabel className="profile-name">{user?.displayName || 'Patiwat Wisedsukol'}</IonLabel>
+                <IonLabel className="profile-email-location"> {user?.location || 'Researcher'}</IonLabel>
+              </div>
+            </div>
     
             <IonGrid>
               <IonRow>

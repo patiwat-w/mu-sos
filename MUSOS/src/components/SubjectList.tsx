@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { apiSubjectDataService } from '../services/apiSubjectDataService';
-import { IonContent, IonList, IonItem, IonLabel, IonInfiniteScroll, IonInfiniteScrollContent, IonSpinner } from '@ionic/react';
+import { IonContent, IonList, IonItem, IonLabel } from '@ionic/react';
 import { ISubject } from '../types/subject.type';
 import { useHistory } from 'react-router-dom';
 import { format } from 'date-fns-tz';
 import { th } from 'date-fns/locale';
+import styles from './SubjectList.module.css'; // นำเข้า CSS Modules
 
 interface SubjectListProps {
     subjects?: ISubject[];
@@ -54,33 +55,24 @@ const SubjectList: React.FC<SubjectListProps> = () => {
     return (
         <IonContent>
             <IonList>
-                {subjects.map((subject, index) => (
-                    <IonItem key={index} onClick={() => handleItemClick(subject)}>
-                        <IonLabel>
-                            <h2>{subject.id}</h2>
-                            <p>{subject.subjectName}</p>
-                            <p>{subject.phoneNumber}</p>
-                            <p>{subject.hn}</p>
-                            <p>{formatDate(subject.createdDate)}: {subject.createdBy}</p>
+                {subjects.slice().reverse().map((subject, index) => (
+                    <IonItem 
+                        key={index} 
+                        onClick={() => handleItemClick(subject)}
+                        className={`${styles.ionItem} ${index % 2 === 0 ? styles.even : styles.odd}`} // ใช้ CSS Modules
+                    >
+                        <IonLabel className={styles.ionLabel}>
+                            <h2><span className={styles.label}>ID:</span> <span className={styles.value}>{subject.id}</span></h2>
+                            <p><span className={styles.label}>Subject Name:</span> <span className={styles.value}>{subject.subjectName}</span></p>
+                            
+                            <p><span className={styles.label}>HN:</span> <span className={styles.value}>{subject.hn}</span></p>
+                            <p><span className={styles.label}>Phone Number:</span> <span className={styles.value}>{subject.phoneNumber}</span></p>
+                            <p><span className={styles.label}>Created Date:</span> <span className={styles.value}>{formatDate(subject.createdDate)}</span></p>
+                            <p><span className={styles.label}>Created By:</span> <span className={styles.value}>{subject.createdBy}</span></p>
                         </IonLabel>
                     </IonItem>
                 ))}
             </IonList>
-            {/* <IonInfiniteScroll
-                onIonInfinite={(ev) => {
-                    fetchMoreData();
-                    (ev.target as HTMLIonInfiniteScrollElement).complete();
-                }}
-                threshold="100px"
-                disabled={isInfiniteDisabled}
-            >
-                <IonInfiniteScrollContent
-                    loadingSpinner="bubbles"
-                    loadingText="Loading more subjects..."
-                >
-                    {isInfiniteDisabled && <IonSpinner />}
-                </IonInfiniteScrollContent>
-            </IonInfiniteScroll> */}
         </IonContent>
     );
 };
