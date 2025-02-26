@@ -26,11 +26,16 @@ public static class ApiExtensions
         UserAuthenticationMethodApi.Map(app);
     }
 
-    //FileApi
+    // FileApi
     public static void MapFileApi(this IEndpointRouteBuilder app)
     {
         FileApi.Map(app);
     }
 
-  
+    // SubjectHealthInfoApi
+    public static void MapSubjectHealthInfoApi(this IEndpointRouteBuilder app)
+    {
+        var logger = app.ServiceProvider.GetRequiredService<ILogger<Program>>();
+        SubjectHealthInfoApi.Map(app, logger);
+    }
 }

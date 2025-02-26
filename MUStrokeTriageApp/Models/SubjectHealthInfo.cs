@@ -1,17 +1,23 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Routing;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
+using System.Threading.Tasks;
 
 [Table("SubjectHealthInfo")]
 public class SubjectHealthInfoModel {
     [Key]
     [Column("Id")]
-    public int? Id { get; set; } // if null, it's a new record
+    public int Id { get; set; } // if null, it's a new record
 
     //FK
     [Column("SubjectId")]
     [Required]
-    public int? SubjectId { get; set; }
+    public int SubjectId { get; set; }
 
     // Comorbidities
     [Column("Comorbidities_Hypertension")]
