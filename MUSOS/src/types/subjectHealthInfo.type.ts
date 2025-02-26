@@ -1,0 +1,33 @@
+export interface ISubjectHealthInfo {
+  id: number;
+  subjectId: number;
+  comorbidities_Hypertension: boolean;
+  comorbidities_Diabetes: boolean;
+  comorbidities_Hyperlipidemia: boolean;
+  comorbidities_HeartDisease: boolean;
+  comorbidities_PreviousStroke: boolean;
+  symptoms_SpeechDifficulties: boolean;
+  symptoms_FacialDrooping: boolean;
+  symptoms_VisualProblems: boolean;
+  symptoms_ArmLt: boolean;
+  symptoms_ArmRt: boolean;
+  symptoms_LegLt: boolean;
+  symptoms_LegRt: boolean;
+  nhisS_Consciousness: number;
+  nhisS_Question: number;
+  nhisS_Commands: number;
+  nhisS_Gaze: number;
+  nhisS_VisualField: number;
+  nhisS_FacialPalsy: number;
+  nhisS_ArmStrengthLeft: number;
+  nhisS_ArmStrengthRight: number;
+  nhisS_LegStrengthLeft: number;
+  nhisS_LegStrengthRight: number;
+  nhisS_Ataxia: number;
+  nhisS_Sensory: number;
+  createdDate: string;
+  modifiedDate: string;
+  createdBy: string;
+  modifiedBy: string;
+  stateCode: number;
+}
