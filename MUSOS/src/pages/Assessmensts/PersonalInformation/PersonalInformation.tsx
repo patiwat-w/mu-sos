@@ -22,13 +22,15 @@ import {
   IonSegment,
   IonSegmentButton
 } from '@ionic/react';
-import { save, closeCircle, lockClosed, eye,calendar } from 'ionicons/icons';
+import { save, closeCircle, lockClosed, eye,calendar, arrowDown, arrowUp } from 'ionicons/icons';
 import Header from '../../../components/Header';
 import { useHistory, useParams } from 'react-router-dom';
 import { ISubject } from '../../../types/subject.type';
 import { subjectInfoManagementService } from '../../../services/subjectInfoManagementService';
 import HorizontalStepIndicator from '../../../components/HorizontalStepIndicator';
 import { getSteps } from './stepsConfig';
+import { da } from 'date-fns/locale';
+import { addYears } from 'date-fns';
 
 const PersonalInformationPage: React.FC = () => {
   const { subjectId } = useParams<{ subjectId: string }>();
@@ -41,6 +43,10 @@ const PersonalInformationPage: React.FC = () => {
   const [onsetTime, setOnsetTime] = useState('');
   const [lastSeenTime, setLastSeenTime] = useState('');
   const [age, setAge] = useState('');
+
+  const [showModal, setShowModal] = useState(false); // State สำหรับควบคุมการแสดง Modal
+  const [showOnsetModal, setShowOnsetModal] = useState(false); // State for Onset Time modal
+  const [showLastSeenModal, setShowLastSeenModal] = useState(false); // State for Last Seen Time modal
 
   const history = useHistory();
 
@@ -92,6 +98,14 @@ const PersonalInformationPage: React.FC = () => {
     return Math.abs(ageDate.getUTCFullYear() - 1970).toString();
   };
 
+  const incrementAge = () => {
+    setAge((prevAge) => (prevAge ? (parseInt(prevAge) + 1).toString() : '1'));
+  };
+
+  const decrementAge = () => {
+    setAge((prevAge) => (prevAge && parseInt(prevAge) > 0 ? (parseInt(prevAge) - 1).toString() : '0'));
+  };
+
   const buttonStyle = {
     width: '70px',
     height: '70px',
@@ -107,128 +121,155 @@ const PersonalInformationPage: React.FC = () => {
     '--background': 'rgba(255, 255, 255, 0.0)',
   };
 
+
+
   return (
     <IonPage>
       <Header title="Subject Information" />
       <IonContent className="ion-padding">
         <HorizontalStepIndicator currentStep={1} totalSteps={steps.length} steps={steps} />
-        <IonDatetimeButton datetime="dobPicker"  ></IonDatetimeButton>
         <IonList>
         <IonItem>
+          <IonLabel style={{ minWidth: '100px' }}>Subject ID</IonLabel>
           <IonInput
-            labelPlacement="stacked"
-            label="Subject ID"
             placeholder="Subject ID"
             readonly
             value={subject?.id || ''}
+            style={{ maxWidth:'350px' ,height: '40px',flex: '1', backgroundColor: '#f8f8f8' , justifyContent: 'flex-end' }}
+            fill="solid"
           >
-            <IonIcon slot="start" icon={lockClosed} aria-hidden="true"></IonIcon>
+            <IonIcon slot="end" icon={lockClosed} aria-hidden="true"></IonIcon>
           </IonInput>
         </IonItem>
 
-        <IonItem onClick={() => setShowDOBPicker(true)}>
-          <IonInput
-            labelPlacement="stacked"
-            label="Date of Birth (dd/mm/yyyy)"
-            value={dob}
-            readonly
-            placeholder="Select Date"
-          >
-            <IonIcon slot="start" icon={calendar} aria-hidden="true"></IonIcon>
-          </IonInput>
-        </IonItem>
-        
-        <IonModal 
-          isOpen={showDOBPicker} 
-          onDidDismiss={() => setShowDOBPicker(false)} 
-          className="date-picker-modal"
-          style={modalStyle}
-        >
+        <IonItem onClick={() => setShowModal(true)}>
+          <IonLabel>Date of Birth</IonLabel>
           <IonDatetime
-            id='dobPicker'
+            id="dobPicker"
             value={dob}
-            presentation="date" 
+            presentation="date"
             preferWheel={true}
+            style={{ height: '40px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+            onIonChange={(e) => {
+              const selectedDate = Array.isArray(e.detail.value) ? e.detail.value[0] : e.detail.value || '';
+              setDob(selectedDate);
+              setShowModal(false);
+            }}
+          />
+        </IonItem>
+
+        <IonModal style={modalStyle} isOpen={showModal} onDidDismiss={() => setShowModal(false)}>
+          <IonDatetime
+            id="modalDobPicker"
+            value={dob}
+            presentation="date"
+            preferWheel={true}
+            title="Select Date of Birth"
+            onIonChange={(e) => {
+              const selectedDate = Array.isArray(e.detail.value) ? e.detail.value[0] : e.detail.value || '';
+              setDob(selectedDate);
+              setShowModal(false);
+            }}
             showDefaultButtons={true}
-            onIonChange={(e) => setDob(Array.isArray(e.detail.value) ? e.detail.value[0] : e.detail.value || '')}
-          ></IonDatetime>
+          />
         </IonModal>
 
         <IonItem>
+        <IonLabel style={{ minWidth: '100px' }}>Age (yy year old)</IonLabel>
           <IonInput
             labelPlacement="stacked"
-            label="Age (yy year old)"
+           
             value={age}
-            readonly
+       
             placeholder="Automatically calculated"
+          
+            style={{ padding:"10px",maxWidth:'280px' ,height: '40px',flex: '1', backgroundColor: '#f8f8f8' , justifyContent: 'flex-end' }}
+            fill="solid"
           >
-            <IonIcon slot="start" icon={calendar} aria-hidden="true"></IonIcon>
+            {/* <IonIcon slot="start" icon={arrowDown} aria-hidden="true"></IonIcon>
+            <IonIcon slot="start" icon={arrowUp} aria-hidden="true"></IonIcon> */}
           </IonInput>
+          <IonButton fill="clear" onClick={decrementAge}>
+            <IonIcon slot="icon-only" icon={arrowDown} aria-hidden="true"></IonIcon>
+          </IonButton>
+          <IonButton fill="clear" onClick={incrementAge}>
+            <IonIcon slot="icon-only" icon={arrowUp} aria-hidden="true"></IonIcon>
+          </IonButton>
         </IonItem>
 
         <IonItem>
           <IonLabel>Gender</IonLabel>
-          <IonSegment value={gender} onIonChange={(e) => setGender(e.detail.value!)}>
-            <IonSegmentButton value="Male">
-              <IonLabel>Male</IonLabel>
+          <IonSegment
+            value={gender}
+            onIonChange={(e) => setGender(e.detail.value as string)}
+            style={{ maxWidth:'350px' ,height: '40px', display: 'flex', alignItems: 'center', justifyContent: 'flex-end' }} // Align to the right
+          >
+            <IonSegmentButton value="Unspecified" style={{ flex: '1' }}>
+              <IonLabel>ไม่ระบุ</IonLabel>
             </IonSegmentButton>
-            <IonSegmentButton value="Female">
-              <IonLabel>Female</IonLabel>
+            <IonSegmentButton value="Male" style={{ flex: '1' }}>
+              <IonLabel>เพศชาย</IonLabel>
+            </IonSegmentButton>
+            <IonSegmentButton value="Female" style={{ flex: '1' }}>
+              <IonLabel>เพศหญิง</IonLabel>
             </IonSegmentButton>
           </IonSegment>
         </IonItem>
 
-        <IonItem  onClick={() => setShowOnsetPicker(true)}>
-          <IonInput
-            labelPlacement="stacked"
-            label="Onset Time"
+        <IonItem onClick={() => setShowOnsetModal(true)}>
+          <IonLabel>Onset Time</IonLabel>
+          <IonDatetime
+            id="onsetPicker"
             value={onsetTime}
-            readonly
-            placeholder="Select Time"
-          >
-            <IonIcon slot="start" icon={calendar} aria-hidden="true"></IonIcon>
-          </IonInput>
+            presentation="date-time"
+            preferWheel={true}
+            style={{ width:'50%' ,height: '40px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+          />
         </IonItem>
 
-        <IonModal 
-          isOpen={showOnsetPicker} 
-          onDidDismiss={() => setShowOnsetPicker(false)} 
-          className="time-picker-modal"
-          style={modalStyle}
-        >
+        <IonModal style={modalStyle} isOpen={showOnsetModal} onDidDismiss={() => setShowOnsetModal(false)}>
           <IonDatetime
-            presentation="time"
+            id="modalOnsetPicker"
             value={onsetTime}
-            onIonChange={(e) => setOnsetTime(Array.isArray(e.detail.value) ? e.detail.value[0] : e.detail.value || '')}
-          ></IonDatetime>
-          <IonButton onClick={() => setShowOnsetPicker(false)}>Done</IonButton>
+           presentation="date-time"
+            preferWheel={true}
+            title="Select Onset Time"
+            onIonChange={(e) => {
+              const selectedTime = Array.isArray(e.detail.value) ? e.detail.value[0] : e.detail.value || '';
+              setOnsetTime(selectedTime);
+              setShowOnsetModal(false);
+            }}
+            showDefaultButtons={true}
+          />
         </IonModal>
 
-        <IonItem  onClick={() => setShowLastSeenPicker(true)}>
-          <IonInput
-            labelPlacement="stacked"
-            label="Last Seen Normal Time"
+        <IonItem onClick={() => setShowLastSeenModal(true)}>
+          <IonLabel>Last Seen Normal Time</IonLabel>
+          <IonDatetime
+            id="lastSeenPicker"
             value={lastSeenTime}
-            readonly
-            placeholder="Select Time"
-          >
-            <IonIcon slot="start" icon={calendar} aria-hidden="true"></IonIcon>
-          </IonInput>
+           presentation="date-time"
+            preferWheel={true}
+            style={{ width:'50%' ,height: '40px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+          />
         </IonItem>
+
+        <IonModal style={modalStyle} isOpen={showLastSeenModal} onDidDismiss={() => setShowLastSeenModal(false)}>
+          <IonDatetime
+            id="modalLastSeenPicker"
+            value={lastSeenTime}
+           presentation="date-time"
+            preferWheel={true}
+            title="Select Last Seen Normal Time"
+            onIonChange={(e) => {
+              const selectedTime = Array.isArray(e.detail.value) ? e.detail.value[0] : e.detail.value || '';
+              setLastSeenTime(selectedTime);
+              setShowLastSeenModal(false);
+            }}
+            showDefaultButtons={true}
+          />
+        </IonModal>
         </IonList>
-        <IonModal 
-          isOpen={showLastSeenPicker} 
-          onDidDismiss={() => setShowLastSeenPicker(false)} 
-          className="time-picker-modal"
-          style={modalStyle}
-        >
-          <IonDatetime
-            presentation="time"
-            value={lastSeenTime}
-            onIonChange={(e) => setLastSeenTime(Array.isArray(e.detail.value) ? e.detail.value[0] : e.detail.value || '')}
-          ></IonDatetime>
-          <IonButton onClick={() => setShowLastSeenPicker(false)}>Done</IonButton>
-        </IonModal>
 
         <IonRow className="ion-justify-content-center ion-align-items-center">
           <IonCol size="auto" className="ion-text-center">
