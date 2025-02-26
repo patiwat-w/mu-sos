@@ -66,7 +66,7 @@ const SubjectList: React.FC<SubjectListProps> = () => {
         <IonContent>
             <IonList>
                 {subjects.slice().reverse().map((subject, index) => (
-                    <IonItem 
+                    <IonItem  button
                         key={index} 
                         onClick={() => handleItemClick(subject)}
                         className={`${styles.ionItem} ${index % 2 === 0 ? styles.even : styles.odd}`} // ใช้ CSS Modules
