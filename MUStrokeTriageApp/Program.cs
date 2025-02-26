@@ -63,6 +63,7 @@ app.MapSubjectApi();
 app.MapUserApi();
 app.MapUserAuthenticationMethodApi();
 app.MapFileApi();
+app.MapSubjectHealthInfoApi();
 
 // ย้าย MapFallbackToFile ไว้หลังสุด
 app.MapFallbackToFile("index.html");

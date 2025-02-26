@@ -139,7 +139,7 @@ const SubjectProfilePage: React.FC = () => {
                     <IonCard  style={{ width: '100%' }}>
                         <IonCardHeader>
                             <IonTitle>Subject Information</IonTitle>
-                            <IonButton onClick={toggleEdit} style={{ position: 'absolute', top: '10px', right: '10px' }}>
+                            <IonButton onClick={handleInfoClick} style={{ position: 'absolute', top: '10px', right: '10px' }}>
                                 {isEditing ? 'Save' : 'Edit'}
                             </IonButton>
                         </IonCardHeader>
