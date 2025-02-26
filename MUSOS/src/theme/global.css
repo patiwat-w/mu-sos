@@ -75,7 +75,14 @@
 
 }
 
-
+.date-picker-modal .datetime-container,
+.time-picker-modal .datetime-container {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+ 
+}
 
 /* Styles for PC screens */
 @media (min-width: 1024px) {

@@ -11,7 +11,21 @@ import {
 } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
 import { ellipse, square, triangle } from 'ionicons/icons';
-
+import LoginPage from './pages/LoginPage';
+import HomePage from './pages/HomePage';
+import Agreement from './pages/Agreement';
+import PreInformation from './pages/PreInformation';
+import SelectAssessment from './pages/Assessmensts/SelectAssessment/SelectAssessment';
+import ImageAssessment from './pages/Assessmensts/ImageAssessment/ImageAssessment';
+import VoiceAssessment from './pages/Assessmensts/VoiceAssessment/VoiceAssessment';
+import PersonalInformationPage from './pages/Assessmensts/PersonalInformation/PersonalInformation';
+import HealthInformation from './pages/Assessmensts/PersonalInformation/HealthInformation';
+import PreDiagnosisPage from './pages/Assessmensts/PersonalInformation/PreDiagnosisPage';
+import NHISSPage from './pages/Assessmensts/PersonalInformation/NHISSPage';
+import UserProfilePage from './pages/UserProfile';
+import ConsentPage from './pages/Consent/ConsentPage'; // Import ConsentPage
+import SubjectListPage from './pages/SubjectList/SubjectListPage'; // Import SubjectListPage
+import ResultPage from './pages/Result/ResultPage'; // Import ResultPage
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
@@ -29,33 +43,10 @@ import '@ionic/react/css/text-transformation.css';
 import '@ionic/react/css/flex-utils.css';
 import '@ionic/react/css/display.css';
 
-import LoginPage from './pages/LoginPage';
-import HomePage from './pages/HomePage';
-import Agreement from './pages/Agreement';
-import PreInformation from './pages/PreInformation';
-import SelectAssessment from './pages/Assessmensts/SelectAssessment/SelectAssessment';
-import ImageAssessment from './pages/Assessmensts/ImageAssessment/ImageAssessment';
-import VoiceAssessment from './pages/Assessmensts/VoiceAssessment/VoiceAssessment';
-import PersonalInformationPage from './pages/Assessmensts/PersonalInformation/PersonalInformation';
-import HealthInformation from './pages/Assessmensts/PersonalInformation/HealthInformation';
-import PreDiagnosisPage from './pages/Assessmensts/PersonalInformation/PreDiagnosisPage';
-import NHISSPage from './pages/Assessmensts/PersonalInformation/NHISSPage';
-import UserProfilePage from './pages/UserProfile';
-import ConsentPage from './pages/Consent/ConsentPage'; // Import ConsentPage
-import SubjectListPage from './pages/SubjectList/SubjectListPage'; // Import SubjectListPage
-import ResultPage from './pages/Result/ResultPage'; // Import ResultPage
-/**
- * Ionic Dark Mode
- * -----------------------------------------------------
- * For more info, please see:
- * https://ionicframework.com/docs/theming/dark-mode
- */
 
-/*  import '@ionic/react/css/palettes/dark.class.css';   
-
- /*import '@ionic/react/css/palettes/dark.always.css';*/
-/* import '@ionic/react/css/palettes/dark.system.css'; */
-/*import '@ionic/react/css/palettes/high-contrast.class.css'; */
+// import '@ionic/react/css/palettes/dark.always.css';
+import '@ionic/react/css/palettes/dark.class.css';
+//import '@ionic/react/css/palettes/dark.system.css';
 /* Theme variables */
 import './theme/variables.css';
 import './theme/global.css';

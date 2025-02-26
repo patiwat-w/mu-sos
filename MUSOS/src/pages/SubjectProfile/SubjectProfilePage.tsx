@@ -20,7 +20,7 @@ import { createOutline, locationOutline, mailOutline, callOutline, cameraOutline
 import { personCircle, settings, helpCircle, addCircle, logOutOutline, addCircleOutline } from 'ionicons/icons';
 import { useHistory, useParams } from 'react-router-dom';
 import Header from '../../components/Header';
-import { apiSubjectDataService } from '../../services/apiSubjectDataService';
+import { subjectInfoManagementService } from '../../services/subjectInfoManagementService';
 import { ISubject } from '../../types/subject.type';
 import SelectAssessment from '../Assessmensts/SelectAssessment/SelectAssessment';
 import AssessmentButton from '../../components/AssessmentButton';
@@ -58,7 +58,7 @@ const SubjectProfilePage: React.FC = () => {
     useEffect(() => {
         const fetchSubject = async () => {
             try {
-                const data = await apiSubjectDataService.getData(id);
+                const data = await subjectInfoManagementService.getData(id);
                 setSubject(data);
             } catch (error) {
                 console.error('Error fetching subject data:', error);

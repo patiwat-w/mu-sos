@@ -15,6 +15,7 @@ export interface ISubject {
   email: string;
   hn: string;
   age: string;
+  dateOfBirth: string;
   gender: string;
   notes: string;
 }

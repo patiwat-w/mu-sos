@@ -6,6 +6,7 @@ import { useHistory } from 'react-router-dom';
 import { format } from 'date-fns-tz';
 import { th } from 'date-fns/locale';
 import styles from './SubjectList.module.css'; // นำเข้า CSS Modules
+import { subjectInfoManagementService } from '../services/subjectInfoManagementService'; // Import the service
 
 interface SubjectListProps {
     subjects?: ISubject[];
@@ -45,11 +46,20 @@ const SubjectList: React.FC<SubjectListProps> = () => {
         return <div>Error: {error}</div>;
     }
 
-    const handleItemClick = (subject: ISubject) => {
-        history.push({
-            pathname: '/subject-profile/' + subject.id,
-            state: { subject }
-        });
+    const handleItemClick = async (subject: ISubject) => {
+        try {
+            if (subject.id) {
+                await subjectInfoManagementService.fetchData(subject.id); // Load subject from the service
+            } else {
+                console.error('Subject ID is undefined');
+            }
+            history.push({
+                pathname: '/subject-profile/' + subject.id,
+                state: { subject }
+            });
+        } catch (error) {
+            console.error('Error loading subject:', error);
+        }
     };
 
     return (

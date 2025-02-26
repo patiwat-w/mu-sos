@@ -62,6 +62,28 @@ class SubjectInfoManagementService {
     }
     return subjectHealthInfo;
   }
+
+  // Load subject from API and store in temporary storage
+  async fetchData(subjectId: string): Promise<void> {
+    const response = await apiSubjectDataService.getData(subjectId);
+    console.log(response);
+    if (response.ok) {
+      const subject = await response.json();
+      sessionStorageService.setItem(this.tempKeyPrefix + subject.id, subject, this.token);
+    } else {
+      throw new Error('Failed to load subject');
+    }
+  }
+
+  // Get data from sessionStorageService or fetch if not found
+  async getData(subjectId: string): Promise<ISubject> {
+    let subject = sessionStorageService.getItem<ISubject>(this.tempKeyPrefix + subjectId, this.token);
+    if (!subject) {
+      await this.fetchData(subjectId);
+      subject = sessionStorageService.getItem<ISubject>(this.tempKeyPrefix + subjectId, this.token);
+    }
+    return subject || {} as ISubject;
+  }
 }
 
 export const subjectInfoManagementService = new SubjectInfoManagementService();

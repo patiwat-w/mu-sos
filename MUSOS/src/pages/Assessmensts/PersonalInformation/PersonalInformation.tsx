@@ -14,14 +14,14 @@ import {
   IonIcon,
   IonCol,
   IonRow,
-  IonPage
+  IonPage,
+  IonDatetimeButton
 } from '@ionic/react';
 import { save, closeCircle } from 'ionicons/icons';
 import Header from '../../../components/Header';
 import { useHistory, useParams } from 'react-router-dom';
 import { ISubject } from '../../../types/subject.type';
-import { apiSubjectDataService } from '../../../services/apiSubjectDataService';
-import withStepIndicator from '../../../components/withStepIndicator';
+import { subjectInfoManagementService } from '../../../services/subjectInfoManagementService';
 import HorizontalStepIndicator from '../../../components/HorizontalStepIndicator';
 import { getSteps } from './stepsConfig';
 
@@ -38,11 +38,22 @@ const PersonalInformationPage: React.FC = () => {
 
   const history = useHistory();
 
+  const formatDate = (dateString: string) => {
+    if (!dateString) return '';
+    const date = new Date(dateString);
+    if (isNaN(date.getTime())) return '';
+    return date.toISOString().split('T')[0]; // Returns date in YYYY-MM-DD format
+  };
+
   useEffect(() => {
     const fetchSubject = async () => {
       try {
-        const data = await apiSubjectDataService.getData(subjectId);
+        const data = await subjectInfoManagementService.getData(subjectId);
         setSubject(data);
+        setDob(formatDate(data.dateOfBirth || ''));
+        setOnsetTime(data.onsetTime || '');
+        setLastSeenTime(data.lastSeenNormalTime || '');
+        setGender(data.gender || 'Male');
       } catch (error) {
         console.error('Error fetching subject data:', error);
       }
@@ -62,6 +73,30 @@ const PersonalInformationPage: React.FC = () => {
 
   const steps = getSteps(subjectId);
 
+  const calculateAge = (dob: string) => {
+    if (!dob) return '';
+    const birthDate = new Date(dob);
+    if (isNaN(birthDate.getTime())) return '';
+    const ageDifMs = Date.now() - birthDate.getTime();
+    const ageDate = new Date(ageDifMs);
+    return Math.abs(ageDate.getUTCFullYear() - 1970);
+  };
+
+  const buttonStyle = {
+    width: '70px',
+    height: '70px',
+    borderRadius: '50%',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    fontSize: '1rem',
+    boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)',
+  };
+
+  const modalStyle = {
+    '--background': 'rgba(255, 255, 255, 0.0)',
+  };
+
   return (
     <IonApp>
       <IonPage>
@@ -70,29 +105,47 @@ const PersonalInformationPage: React.FC = () => {
         </IonHeader>
         <IonContent className="ion-padding">
         <HorizontalStepIndicator currentStep={1} totalSteps={steps.length} steps={steps} />
-
+        <IonDatetimeButton datetime="dobPicker"  ></IonDatetimeButton>
           <IonItem>
             <IonLabel position="stacked">Subject ID</IonLabel>
-            <IonInput placeholder="Enter Subject ID" style={{ border: '1px solid #ccc', borderRadius: '4px', padding: '8px', width: '100%' }}></IonInput>
+            <IonInput
+              value={subject?.id || ''}
+              readonly
+              placeholder="Enter Subject ID"
+              style={{ border: '1px solid #ccc', borderRadius: '4px', padding: '8px', width: '100%' }}
+            ></IonInput>
           </IonItem>
 
           <IonItem button onClick={() => setShowDOBPicker(true)}>
             <IonLabel position="stacked">Date of Birth (dd/mm/yyyy)</IonLabel>
             <IonInput value={dob} readonly placeholder="Select Date" style={{ border: '1px solid #ccc', borderRadius: '4px', padding: '8px', width: '100%' }}></IonInput>
           </IonItem>
-
-          <IonModal isOpen={showDOBPicker} onDidDismiss={() => setShowDOBPicker(false)}>
+          
+          <IonModal 
+          isOpen={showDOBPicker} 
+          onDidDismiss={() => setShowDOBPicker(false)} 
+          className="date-picker-modal"
+          style={modalStyle}
+          >
             <IonDatetime
-              //displayFormat="DD/MM/YYYY"
-              value={dob}
+              id='dobPicker'
+               value="2023-11-02T01:22:00"
+              //preferWheel={true}
+              presentation="date-time"
+             // value={dob}
+              showDefaultButtons={true}
               onIonChange={(e) => setDob(Array.isArray(e.detail.value) ? e.detail.value[0] : e.detail.value || '')}
             ></IonDatetime>
-            <IonButton onClick={() => setShowDOBPicker(false)}>Done</IonButton>
           </IonModal>
 
           <IonItem>
             <IonLabel position="stacked">Age (yy year old)</IonLabel>
-            <IonInput readonly placeholder="Automatically calculated" style={{ border: '1px solid #ccc', borderRadius: '4px', padding: '8px', width: '100%' }}></IonInput>
+            <IonInput
+              value={subject ? calculateAge(subject.dateOfBirth) : ''}
+              readonly
+              placeholder="Automatically calculated"
+              style={{ border: '1px solid #ccc', borderRadius: '4px', padding: '8px', width: '100%' }}
+            ></IonInput>
           </IonItem>
 
           <IonItem>
@@ -109,9 +162,14 @@ const PersonalInformationPage: React.FC = () => {
             <IonInput value={onsetTime} readonly placeholder="Select Time" style={{ border: '1px solid #ccc', borderRadius: '4px', padding: '8px', width: '100%' }}></IonInput>
           </IonItem>
 
-          <IonModal isOpen={showOnsetPicker} onDidDismiss={() => setShowOnsetPicker(false)}>
+          <IonModal 
+            isOpen={showOnsetPicker} 
+            onDidDismiss={() => setShowOnsetPicker(false)} 
+            className="time-picker-modal"
+            style={modalStyle}
+          >
             <IonDatetime
-              //displayFormat="HH:mm"
+              presentation="time"
               value={onsetTime}
               onIonChange={(e) => setOnsetTime(Array.isArray(e.detail.value) ? e.detail.value[0] : e.detail.value || '')}
             ></IonDatetime>
@@ -123,9 +181,14 @@ const PersonalInformationPage: React.FC = () => {
             <IonInput value={lastSeenTime} readonly placeholder="Select Time" style={{ border: '1px solid #ccc', borderRadius: '4px', padding: '8px', width: '100%' }}></IonInput>
           </IonItem>
 
-          <IonModal isOpen={showLastSeenPicker} onDidDismiss={() => setShowLastSeenPicker(false)}>
+          <IonModal 
+            isOpen={showLastSeenPicker} 
+            onDidDismiss={() => setShowLastSeenPicker(false)} 
+            className="time-picker-modal"
+            style={modalStyle}
+          >
             <IonDatetime
-              //displayFormat="HH:mm"
+               presentation="time"
               value={lastSeenTime}
               onIonChange={(e) => setLastSeenTime(Array.isArray(e.detail.value) ? e.detail.value[0] : e.detail.value || '')}
             ></IonDatetime>
@@ -136,18 +199,7 @@ const PersonalInformationPage: React.FC = () => {
             <IonCol size="auto" className="ion-text-center">
               <IonButton
                 fill="clear"
-                style={{
-                  width: '70px',
-                  height: '70px',
-                  borderRadius: '50%',
-                  backgroundColor: '#ff4444',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  fontSize: '1rem',
-                  boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)',
-                  color: 'white',
-                }}
+                style={{ ...buttonStyle, backgroundColor: '#ff4444', color: 'white' }}
               >
                 <IonIcon icon={closeCircle} />
               </IonButton>
@@ -157,18 +209,7 @@ const PersonalInformationPage: React.FC = () => {
             <IonCol size="auto" className="ion-text-center">
               <IonButton
                 fill="clear"
-                style={{
-                  width: '70px',
-                  height: '70px',
-                  borderRadius: '50%',
-                  backgroundColor: '#0bcb71',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  fontSize: '1rem',
-                  boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)',
-                  color: 'black',
-                }}
+                style={{ ...buttonStyle, backgroundColor: '#0bcb71', color: 'black' }}
                 onClick={handleSave}
               >
                 <IonIcon icon={save} />
@@ -191,3 +232,4 @@ const PersonalInformationPage: React.FC = () => {
 };
 
 export default PersonalInformationPage;
+
