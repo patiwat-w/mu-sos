@@ -1,4 +1,3 @@
-import { b } from 'vitest/dist/reporters-5f784f42';
 import { IUser } from '../types/user.type';
 import Cookies from 'js-cookie';
 
