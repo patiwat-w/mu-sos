@@ -285,6 +285,7 @@ const VoiceAssessment: React.FC = () => {
       const source = audioContext.createBufferSource();
       source.buffer = decodedData;
       source.connect(analyser);
+      source.start(0);
       
       const bufferLength = analyser.frequencyBinCount;
       const dataArray = new Float32Array(bufferLength);
@@ -294,10 +295,83 @@ const VoiceAssessment: React.FC = () => {
       
       setFrequencyData(Array.from(dataArray));
       setIsAudioReady(true);
+  
+      // Calculate average frequency
+      const average = dataArray.reduce((a, b) => a + b, 0) / dataArray.length;
+      return average;
       
     } catch (error) {
       console.error('Error analyzing frequency:', error);
+      return null;
     }
+  };
+
+  // Function to get microphone information
+  const getMicrophoneInfo = async () => {
+    try {
+      const devices = await navigator.mediaDevices.enumerateDevices();
+      const audioInputDevices = devices.filter(device => device.kind === 'audioinput');
+      const selectedDevice = audioInputDevices[0]; // Select the first audio input device
+      const stream = await navigator.mediaDevices.getUserMedia({ audio: { deviceId: selectedDevice.deviceId } });
+      const audioContext = new AudioContext();
+      const source = audioContext.createMediaStreamSource(stream);
+      const analyser = audioContext.createAnalyser();
+      source.connect(analyser);
+
+      const sampleRate = audioContext.sampleRate;
+      const channelCount = source.channelCount;
+
+      // Calculate volume
+      const volume = await getVolume(analyser);
+
+      // Get audio quality and bit depth
+      const audioQuality = getAudioQuality(sampleRate);
+      const bitDepth = getBitDepth();
+
+      console.log('Microphone info:', selectedDevice);
+      return {
+        label: selectedDevice.label,
+        deviceId: selectedDevice.deviceId,
+        groupId: selectedDevice.groupId,
+        kind: selectedDevice.kind,
+        sampleRate: sampleRate,
+        channelCount: channelCount,
+        volume: volume,
+        audioQuality: audioQuality,
+        bitDepth: bitDepth,
+        usedForRecording: true
+      };
+    } catch (error) {
+      console.error('Error getting microphone info:', error);
+      return null;
+    }
+  };
+
+  const getVolume = async (analyser: AnalyserNode) => {
+    const dataArray = new Uint8Array(analyser.fftSize);
+    analyser.getByteTimeDomainData(dataArray);
+    let sum = 0;
+    for (let i = 0; i < dataArray.length; i++) {
+      const value = dataArray[i] / 128 - 1;
+      sum += value * value;
+    }
+    const rms = Math.sqrt(sum / dataArray.length);
+    return rms;
+  };
+
+  const getAudioQuality = (sampleRate: number) => {
+    if (sampleRate >= 44100) {
+      return 'High';
+    } else if (sampleRate >= 22050) {
+      return 'Medium';
+    } else {
+      return 'Low';
+    }
+  };
+
+  const getBitDepth = () => {
+    // Assuming standard bit depth for web audio
+    return 16;
   };
 
   // Effect to handle transcript changes
@@ -337,16 +411,23 @@ const VoiceAssessment: React.FC = () => {
         let fileName = file.name;
         let fileType = "audio/wav";
         let fileExtension = "wav";
+
+        const microphoneInfo = await getMicrophoneInfo();
         // unique expectedLog
         let uniqueExpectedLog = expectedLog.filter((entry, index, self) =>
           index === self.findIndex((t) => (
             t.word === entry.word
           ))  
         );
+
+        // Analyze frequency and get average
+        const frequencyAverage = await analyzeAudioFrequency(audioBlob);
+
         let voiceLog = {
           expectedLog: uniqueExpectedLog,
           spokenLog: log,
-          
+          deviceInfo: microphoneInfo,
+          frequencyAverage: frequencyAverage
         }
       
         let fileInfo = JSON.stringify(voiceLog);
