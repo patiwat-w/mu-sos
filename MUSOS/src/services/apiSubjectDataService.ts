@@ -111,7 +111,7 @@ export const apiSubjectDataService = {
       throw new Error(errorMessage);
     }
 
-    return response.json();
+    return response;
   },
   getList: async () => {
      let requestGuid = generateGUID();

@@ -52,7 +52,7 @@ export const apiSubjectHealthInfoService = {
       throw new Error(errorMessage);
     }
 
-    return response.json();
+    return response;
   },
   getData: async (id: string) => {
     let requestGuid = generateGUID();
@@ -90,7 +90,7 @@ export const apiSubjectHealthInfoService = {
       throw new Error(errorMessage);
     }
 
-    return response.json();
+    return response;
   },
   getList: async () => {
     let requestGuid = generateGUID();
@@ -128,7 +128,7 @@ export const apiSubjectHealthInfoService = {
       throw new Error(errorMessage);
     }
 
-    return response.json();
+    return response;
   },
   updateData: async (id: string, data: ISubjectHealthInfo) => {
     let requestGuid = generateGUID();
@@ -167,7 +167,7 @@ export const apiSubjectHealthInfoService = {
       throw new Error(errorMessage);
     }
 
-    return response.json();
+    return response;
   },
   deleteData: async (id: string) => {
     let requestGuid = generateGUID();
@@ -205,6 +205,6 @@ export const apiSubjectHealthInfoService = {
       throw new Error(errorMessage);
     }
 
-    return response.json();
+    return response;
   },
 };

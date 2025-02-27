@@ -22,6 +22,7 @@ import HorizontalStepIndicator from '../../../components/HorizontalStepIndicator
 import ToggleButtonGroupDynamic from '../../../components/ToggleButtonGroupDynamic';
 import { ISubject } from '../../../types/subject.type';
 import { min } from 'date-fns';
+import Header from '../../../components/Header';
 
 const HealthInformation: React.FC = () => {
     const [comorbidities, setComorbidities] = useState({
@@ -84,7 +85,8 @@ const HealthInformation: React.FC = () => {
 
     return (
         <IonPage>
-            <IonHeader>
+            <Header title="Health Information" />
+            {/* <IonHeader>
                 <IonToolbar>
                     <IonButton slot="start" fill="clear" routerLink="/home">
                         <IonIcon icon={home} />
@@ -94,7 +96,7 @@ const HealthInformation: React.FC = () => {
                         <IonIcon icon={personCircle} />
                     </IonButton>
                 </IonToolbar>
-            </IonHeader>
+            </IonHeader> */}
 
             <IonContent className="ion-padding">
                 <HorizontalStepIndicator currentStep={2} totalSteps={steps.length} steps={steps} />

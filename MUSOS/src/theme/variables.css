@@ -3,15 +3,52 @@ http://ionicframework.com/docs/theming/ */
 
 ion-item {
     --inner-padding: 10px;
-    font-size: 16px;
+     font-size: 1rem !important; /* ปรับขนาดตัวอักษรใน ion-item */
 }
 
 ion-footer {
     background-color: transparent;
-    font-size: 14px;
+    font-size: 0.8em; 
     color: #666; /* ปรับสีตัวอักษรใน footer ให้อ่านง่าย */
 }
+ion-picker-column-options , ion-picker-column,ion-picker {
+    font-size: 0.7rem; /* ปรับขนาดตัวอักษรใน Picker */
+}
 
+.picker-opts {
+    font-size: 0.7rem !important; /* ปรับขนาดตัวอักษรใน Picker */
+}
+
+
+.small-font {
+    font-size: 0.8rem !important;
+  }
+
+
+  ion-datetime {
+    -background: rgb(245, 235, 247);
+    /* -
+    --background-rgb: 245, 235, 247;
+    --wheel-highlight-background: rgb(218, 216, 255);
+    --wheel-highlight-border-radius: 48px;
+    --wheel-fade-background-rgb: 245, 235, 247;
+     */
+     --font-size: 11px !important;
+    font-size: 11px !important;
+  } 
+
+  
+   ion-datetime::part(wheel-item) {
+    /* color: rgb(255, 66, 97); */
+    --font-size: 11px !important;
+    font-size: 11px !important;
+  } 
+  
+   ion-datetime::part(wheel-item active) {
+    /* color: rgb(128, 30, 171); */
+    --font-size: 11px !important;
+    font-size: 11px !important;
+  } 
 :root {
     /* กำหนดโทนสีหลัก */
     --primary-color: #1877F2; /* สีน้ำเงิน Facebook */
@@ -60,7 +97,7 @@ ion-footer {
 
 body {
     padding: var(--ion-padding-vertical) var(--ion-padding-horizontal);
-    font-size: var(--ion-font-size-base);
+    font-size: 1rem; /* ปรับขนาดตัวอักษรให้เล็กลง */
     width: var(--ion-display-width);
     color: var(--text-color); /* ใช้สีตัวอักษรหลัก */
 }

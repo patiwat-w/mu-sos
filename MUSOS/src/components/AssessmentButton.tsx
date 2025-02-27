@@ -22,7 +22,7 @@ const AssessmentButton: React.FC<AssessmentButtonProps> = ({ label, status, onCl
         marginBottom: '10px',
       }}
     >
-      {label} - {status}
+      {label}
     </IonButton>
   );
 };

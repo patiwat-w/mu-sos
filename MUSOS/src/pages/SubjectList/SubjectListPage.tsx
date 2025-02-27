@@ -16,7 +16,7 @@ import {
 import Header from '../../components/Header';
 import { apiSubjectDataService } from '../../services/apiSubjectDataService'; // Import the service
 import { ISubject } from '../../types/subject.type';
-
+import { subjectInfoManagementService } from '../../services/subjectInfoManagementService'; // Import the service
 
 const SubjectListPage: React.FC = () => {
   const [subjects, setSubjects] = useState<ISubject[]>([]);
@@ -40,11 +40,20 @@ const SubjectListPage: React.FC = () => {
     }
   };
  
-  const handleItemClick = (subject: ISubject) => {
-    history.push({
-      pathname: '/select-assessment',
-      state: { subject }
-    });
+  const handleItemClick = async (subject: ISubject) => {
+    try {
+      if (subject.id) {
+        await subjectInfoManagementService.fetchData(subject.id); // Load subject from the service
+      } else {
+        console.error('Subject ID is undefined');
+      }
+      history.push({
+        pathname: '/subject-profile/' + subject.id,
+        state: { subject }
+      });
+    } catch (error) {
+      console.error('Error loading subject:', error);
+    }
   };
 
   return (

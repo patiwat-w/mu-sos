@@ -15,13 +15,38 @@ import {
   IonCard,
   IonCardHeader,
   IonCardTitle,
-  IonCardContent
+  IonCardContent,
+  IonItem
 } from '@ionic/react';
 import { mic, play, cog, playCircle } from 'ionicons/icons';
 import * as stringSimilarity from 'string-similarity';
 import Header from '../../../components/Header';
 import FrequencyDisplay from '../../../components/FrequencyDisplay';
+import SubjectProfileHeader from '../../../components/SubjectProfileHeader';
+import { useParams } from 'react-router';
+import { ISubject } from '../../../types/subject.type';
 const wordsToSay = ["แมงมุม", "ทับทิม", "ฟื้นฟู", "ขอบคุณ", "รื่นเริง", "ใบบัวบก"];
+
+interface SpeechRecognition extends EventTarget {
+  continuous: boolean;
+  interimResults: boolean;
+  lang: string;
+  start(): void;
+  stop(): void;
+  onresult: (event: SpeechRecognitionEvent) => void;
+  onerror: (event: Event) => void;
+  onend: () => void;
+}
+
+interface SpeechRecognitionEvent extends Event {
+  resultIndex: number;
+  results: {
+    isFinal: boolean;
+    [key: number]: {
+      transcript: string;
+    };
+  }[];
+}
 
 // Style Constants
 const buttonStyle = {
@@ -84,7 +109,8 @@ const VoiceAssessment: React.FC = () => {
   const audioChunksRef = useRef<Blob[]>([]);
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const similarityThreshold = 0.7;
-
+  const { subjectId } = useParams<{ subjectId: string }>();
+  const [subject, setSubject] = useState<ISubject | null>(null);
   // Function to start showing words
   const startShowingWords = () => {
     setCurrentWordIndex(0);
@@ -178,7 +204,7 @@ const VoiceAssessment: React.FC = () => {
         }
       };
 
-      recognition.onerror = (event) => {
+      recognition.onerror = (event: any) => {
         console.error('Speech recognition error', event);
         setError('Error during speech recognition.');
       };
@@ -295,6 +321,8 @@ const VoiceAssessment: React.FC = () => {
 
   return (
     <IonPage style={{ backgroundColor: '#f5f5f5' }}>
+       
+
       <IonLoading isOpen={loading} message="กรุณาอ่านข้อความที่ปรากฏ" />
       <IonAlert
         isOpen={showAlert}
@@ -302,11 +330,20 @@ const VoiceAssessment: React.FC = () => {
         buttons={[{ text: 'OK', handler: () => setShowAlert(false) }]}
         onDidDismiss={() => setShowAlert(false)}
       />
-      <Header title="Voice Assessment" />
-      <IonContent className="ion-padding">
-        <div style={{ textAlign: 'center' }}>
+      {/* <Header title="Voice Assessment" /> */}
+      {/* <IonContent className="ion-padding"> */}
+      <Header title="Speech Assessment" />
+      <IonContent fullscreen>
+      <SubjectProfileHeader 
+                    subjectId={subjectId}
+                    subject={subject} 
+                    selectedSegment={"Speech"}
+                />
+                   <IonItem><IonTitle > กรุณากด 'เริ่ม' และอ่านคำที่ปรากฏ โดยคำที่ปรากฏจะเปลี่ยนทุก 2 วินาที</IonTitle></IonItem>
+
+        {/* <div style={{ textAlign: 'center' }}>
           <h3>กรุณากด 'เริ่ม' และอ่านคำที่ปรากฏ โดยคำที่ปรากฏจะเปลี่ยนทุก 2 วินาที</h3>
-        </div>
+        </div> */}
         <div style={wordDisplayAreaStyle}>
           {currentWordIndex < wordsToSay.length ? wordsToSay[currentWordIndex] : "All words completed!"}
         </div>

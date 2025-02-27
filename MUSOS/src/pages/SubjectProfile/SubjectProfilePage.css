@@ -1,0 +1,11 @@
+.full-height {
+    display: flex;
+   
+    height: 100%;
+}
+
+.ion-card-content-full-height {
+    flex: 1;
+    display: flex;
+  
+}

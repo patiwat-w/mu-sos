@@ -6,6 +6,7 @@ import { useHistory } from 'react-router-dom';
 import { format } from 'date-fns-tz';
 import { th } from 'date-fns/locale';
 import styles from './SubjectList.module.css'; // นำเข้า CSS Modules
+import { subjectInfoManagementService } from '../services/subjectInfoManagementService'; // Import the service
 
 interface SubjectListProps {
     subjects?: ISubject[];
@@ -45,18 +46,27 @@ const SubjectList: React.FC<SubjectListProps> = () => {
         return <div>Error: {error}</div>;
     }
 
-    const handleItemClick = (subject: ISubject) => {
-        history.push({
-            pathname: '/subject-profile/' + subject.id,
-            state: { subject }
-        });
+    const handleItemClick = async (subject: ISubject) => {
+        try {
+            if (subject.id) {
+                await subjectInfoManagementService.fetchData(subject.id); // Load subject from the service
+            } else {
+                console.error('Subject ID is undefined');
+            }
+            history.push({
+                pathname: '/personal-information/' + subject.id,
+                state: { subject }
+            });
+        } catch (error) {
+            console.error('Error loading subject:', error);
+        }
     };
 
     return (
         <IonContent>
             <IonList>
                 {subjects.slice().reverse().map((subject, index) => (
-                    <IonItem 
+                    <IonItem  button
                         key={index} 
                         onClick={() => handleItemClick(subject)}
                         className={`${styles.ionItem} ${index % 2 === 0 ? styles.even : styles.odd}`} // ใช้ CSS Modules
