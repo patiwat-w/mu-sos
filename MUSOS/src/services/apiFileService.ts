@@ -63,12 +63,22 @@ async function makeRequest(url: string, method: string, body?: any, isFormData: 
 }
 
 export const apiFileService = {
-  uploadFile: async (file: File, subjectId: number, userId: number, documentType: number) => {
+  uploadFile: async (file: File, 
+    subjectId: number, 
+    userId: number, 
+    fileCategory: string,
+    fileType:string,
+    fileName:string,
+    fileExtension:string) => {
     const formData = new FormData();
     formData.append('file', file);
     formData.append('SubjectId', subjectId.toString());
     formData.append('UserId', userId.toString());
-    formData.append('DocumentType', documentType.toString());
+    formData.append('FileCategory', fileCategory.toString());
+    formData.append('FileType', fileType.toString());
+    formData.append('FileName', fileName.toString());
+    formData.append('FileExtension', fileExtension.toString());
+  
 
     const response = await makeRequest(`${API_URL}/file/upload`, 'POST', formData, true);
     return response;

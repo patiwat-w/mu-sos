@@ -9,5 +9,8 @@ export interface IFile {
   userId: number;
   subjectId: number;
   fileType: string;
+  fileName : string;
+  fileExtension : string;
   documentType: string;
+  fileCategory: string;
 }

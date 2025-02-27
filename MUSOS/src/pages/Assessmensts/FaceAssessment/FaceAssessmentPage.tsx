@@ -83,10 +83,20 @@ const FaceAssessmentPage: React.FC = () => {
         const blob = await base64Response.blob();
         //const subjectId = 1; // Replace with actual subject ID
         const userId = 1; // Replace with actual user ID
-        const documentType = 1; // Replace with actual document type
         // conver blob to File binaly
-        let file = new File([blob], "filename", { type: "image/png" });
-        const response = await apiFileService.uploadFile(file, Number(subjectId), userId, documentType);
+        let file = new File([blob], "face_image.png", { type: "image/png" });
+        let fileName = file.name;
+        let fileType = "image/png";
+        let fileExtension = "png";
+        const response = await apiFileService.uploadFile(
+          file, 
+          Number(subjectId), 
+          Number(userId), 
+          'Face',
+          fileType,
+          fileName,
+          fileExtension
+        );
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
         }

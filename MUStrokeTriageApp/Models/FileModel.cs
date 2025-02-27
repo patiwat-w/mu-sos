@@ -43,4 +43,14 @@ public class FileModel
 
     [Column("FileType")]
     public string? FileType { get; set; }
+
+    [Column("FileExtension")]
+    public string? fileExtension { get; set; }
+
+    [Column("FileName")]
+    public string? fileName { get; set; }
+    
+    [Column("FileCategory")]
+    public string? FileCategory { get; set; }
+ 
 }

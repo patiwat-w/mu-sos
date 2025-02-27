@@ -49,7 +49,7 @@ public static class FileApi
         /// Uploads a file.
         /// </summary>
         /// <param name="context">The HTTP context.</param>
-        uploadApi.MapPost("/upload", async (HttpContext context, DataContext db) =>
+        _ = uploadApi.MapPost("/upload", async (HttpContext context, DataContext db) =>
         {
             var request = context.Request;
 
@@ -62,8 +62,11 @@ public static class FileApi
 
             var form = await request.ReadFormAsync();
             var file = form.Files["file"];
+            var fileName = form["FileName"].FirstOrDefault() ?? "Unknown";
+            var fileType = form["fileType"].FirstOrDefault() ?? "Unknown";
+            var fileExtension = form["fileExtension"].FirstOrDefault() ?? "Unknown";
             var subjectId = form["SubjectId"].FirstOrDefault() ?? "Unknown";
-            var documentType = form["DocumentType"].FirstOrDefault() ?? "Unknown";
+            var fileCategory = form["FileCategory"].FirstOrDefault() ?? "Unknown";
             var userId = form["UserId"].FirstOrDefault() ?? "Unknown";
 
             if (file == null)
@@ -73,7 +76,7 @@ public static class FileApi
                 return;
             }
 
-            var uploadsFolder = Path.Combine(rootUploadFolder, $"User{userId}", $"Subject{subjectId}", documentType);
+            var uploadsFolder = Path.Combine(rootUploadFolder, $"User{userId}", $"Subject{subjectId}", fileCategory);
             if (!Directory.Exists(uploadsFolder))
             {
                 Directory.CreateDirectory(uploadsFolder);
@@ -91,10 +94,14 @@ public static class FileApi
             var fileModel = new FileModel
             {
                 Name = fileNameWithTimestamp,
+                fileName = fileName,
+                fileExtension = fileExtension,
                 FilePath = filePath,
                 SubjectId = subjectId == "Unknown" ? (int?)null : int.Parse(subjectId),
                 UserId = userId == "Unknown" ? (int?)null : int.Parse(userId),
-                FileType = documentType,
+                FileType = fileType,
+                FileCategory = fileCategory,
+                Length = file.Length,
                 CreationTime = DateTime.UtcNow
             };
 
