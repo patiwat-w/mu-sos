@@ -433,11 +433,11 @@ function handleNhiss(event: any): void {
         </IonItem>
     </IonCol>
 </IonRow>
+<IonItem><IonTitle >NHISS and Pre mRS</IonTitle></IonItem>
 
-<IonTitle style={titleStyle}>NHISS and Pre mRS</IonTitle>
 
 <IonItem>
-    <IonLabel>NHISS (max 42)</IonLabel>
+    <IonLabel style={labelStyle}>NHISS (max 42)</IonLabel>
     <IonInput
         value={nhiss}
         onIonChange={(e) => setNhiss(e.detail.value!)}
@@ -450,7 +450,7 @@ function handleNhiss(event: any): void {
 </IonItem>
 
 <IonItem>
-    <IonLabel>Pre mRS</IonLabel>
+    <IonLabel style={labelStyle}>Pre mRS</IonLabel>
     <IonInput
         value={preMrs}
         onIonChange={(e) => setPreMrs(e.detail.value!)}
