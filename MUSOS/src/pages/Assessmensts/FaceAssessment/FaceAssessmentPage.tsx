@@ -337,7 +337,7 @@ const FaceAssessmentPage: React.FC = () => {
               handler: () => {
                 //history.push('/voice-assessment/'+subjectId); // Redirect to VoiceAssessment page
                 // back to subject profile page
-                history.push('/subject-profile/'+subjectId);
+                history.push('/aim-assessment/'+subjectId);
 
               }
             }

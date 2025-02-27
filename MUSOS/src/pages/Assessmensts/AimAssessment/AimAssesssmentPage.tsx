@@ -77,15 +77,23 @@ const AimAssessmentPage: React.FC = () => {
     setLoading(true);
     setUploadMessage('');
     try {
-      if (photo) {
-        const base64Response = await fetch(photo);
+      if (recordedVideoUrl) {
+        const base64Response = await fetch(recordedVideoUrl);
         const blob = await base64Response.blob();
-        //const subjectId = 1; // Replace with actual subject ID
         const userId = 1; // Replace with actual user ID
-        const documentType = 2; // Replace with actual document type
-        // conver blob to File binaly
-        let file = new File([blob], "filename", { type: "image/png" });
-        const response = await apiFileService.uploadFile(file, Number(subjectId), userId, documentType);
+        let file = new File([blob], "aim_video.webm", { type: "video/webm" });
+        let fileName = file.name;
+        let fileType = "video/webm";
+        let fileExtension = "webm";
+        const response = await apiFileService.uploadFile(
+          file, 
+          Number(subjectId), 
+          Number(userId), 
+          'Aim',
+          fileType,
+          fileName,
+          fileExtension
+        );
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
         }
@@ -93,7 +101,7 @@ const AimAssessmentPage: React.FC = () => {
         setUploadMessage('Upload Data Completed');
         setShowAlert(true); // Show alert
       } else {
-        setUploadMessage('No photo to upload');
+        setUploadMessage('No video to upload');
       }
     } catch (error) {
       setUploadMessage('Error uploading data');
@@ -327,7 +335,7 @@ const AimAssessmentPage: React.FC = () => {
               handler: () => {
                 //history.push('/voice-assessment/'+subjectId); // Redirect to VoiceAssessment page
                 // back to subject profile page
-                history.push('/subject-profile/'+subjectId);
+                history.push('/voice-assessment/'+subjectId);
 
               }
             }

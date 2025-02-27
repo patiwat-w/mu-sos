@@ -16,6 +16,10 @@ const SubjectProfileHeader: React.FC<SubjectProfileHeaderProps> = ({ subjectId,s
 
     const onSegmentChange = (value: string) => {
         const id = subjectId || paramSubjectId; // Use subjectId from props or URL
+        if (!id) {
+            console.error('Subject ID is null');
+            return;
+        }
         switch (value) {
             case 'Subject':
                 history.push('/personal-information/' +  id);
