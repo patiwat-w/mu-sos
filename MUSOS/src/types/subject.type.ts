@@ -18,4 +18,5 @@ export interface ISubject {
   dateOfBirth: string;
   gender: string;
   notes: string;
+  photoUrl: string;
 }

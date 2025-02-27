@@ -20,7 +20,8 @@ import {
   IonFooter,
   IonList,
   IonSegment,
-  IonSegmentButton
+  IonSegmentButton,
+  IonGrid // Add IonGrid
 } from '@ionic/react';
 import { save, closeCircle, lockClosed, eye,calendar, arrowDown, arrowUp } from 'ionicons/icons';
 import Header from '../../../components/Header';
@@ -31,8 +32,13 @@ import HorizontalStepIndicator from '../../../components/HorizontalStepIndicator
 import { getSteps } from './stepsConfig';
 import { da } from 'date-fns/locale';
 import { addYears } from 'date-fns';
+import SubjectProfileHeader from '../../../components/SubjectProfileHeader';
 
-const PersonalInformationPage: React.FC = () => {
+interface PersonalInformationPageProps {
+    className?: string;
+}
+
+const PersonalInformationPage: React.FC<PersonalInformationPageProps> = ({ className }) => {
   const { subjectId } = useParams<{ subjectId: string }>();
   const [subject, setSubject] = useState<ISubject | null>(null);
   const [gender, setGender] = useState('Male');
@@ -123,41 +129,125 @@ const PersonalInformationPage: React.FC = () => {
 
 
 
+  function handleSegmentChange(value: string): void {
+    throw new Error('Function not implemented.');
+  }
+
   return (
     <IonPage>
-      <Header title="Subject Information" />
-      <IonContent className="ion-padding">
-        <HorizontalStepIndicator currentStep={1} totalSteps={steps.length} steps={steps} />
-        <IonList>
-        <IonItem>
-          <IonLabel style={{ minWidth: '100px' }}>Subject ID</IonLabel>
-          <IonInput
-            placeholder="Subject ID"
-            readonly
-            value={subject?.id || ''}
-            style={{ maxWidth:'350px' ,height: '40px',flex: '1', backgroundColor: '#f8f8f8' , justifyContent: 'flex-end' }}
-            fill="solid"
-          >
-            <IonIcon slot="end" icon={lockClosed} aria-hidden="true"></IonIcon>
-          </IonInput>
-        </IonItem>
-
-        <IonItem onClick={() => setShowModal(true)}>
-          <IonLabel>Date of Birth</IonLabel>
-          <IonDatetime
-            id="dobPicker"
-            value={dob}
-            presentation="date"
-            preferWheel={true}
-            style={{ height: '40px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
-            onIonChange={(e) => {
-              const selectedDate = Array.isArray(e.detail.value) ? e.detail.value[0] : e.detail.value || '';
-              setDob(selectedDate);
-              setShowModal(false);
-            }}
-          />
-        </IonItem>
-
+      <Header title="Subject Info" />
+      <IonContent fullscreen>
+      <SubjectProfileHeader 
+                    subject={subject} 
+                    selectedSegment={"Subject"}
+                />
+        <IonGrid>
+          <IonRow>
+            <IonCol size="12">
+              <IonItem>
+                <IonLabel style={{ minWidth: '100px' }}>Subject ID</IonLabel>
+                <IonInput
+                  placeholder="Subject ID"
+                  readonly
+                  value={subject?.id || ''}
+                  style={{ maxWidth:'350px' ,height: '40px',flex: '1', backgroundColor: '#f8f8f8' , justifyContent: 'flex-end' }}
+                  fill="solid"
+                >
+                  <IonIcon slot="end" icon={lockClosed} aria-hidden="true"></IonIcon>
+                </IonInput>
+              </IonItem>
+            </IonCol>
+          </IonRow>
+          <IonRow>
+            <IonCol size="12">
+              <IonItem onClick={() => setShowModal(true)}>
+                <IonLabel>Date of Birth</IonLabel>
+                <IonDatetime
+                  id="dobPicker"
+                  value={dob}
+                  presentation="date"
+                  preferWheel={true}
+                  style={{ height: '40px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+                  onIonChange={(e) => {
+                    const selectedDate = Array.isArray(e.detail.value) ? e.detail.value[0] : e.detail.value || '';
+                    setDob(selectedDate);
+                    setShowModal(false);
+                  }}
+                />
+              </IonItem>
+            </IonCol>
+          </IonRow>
+          <IonRow>
+            <IonCol size="12">
+              <IonItem>
+                <IonLabel style={{ minWidth: '100px' }}>Age (yy year old)</IonLabel>
+                <IonInput
+                  labelPlacement="stacked"
+                  value={age}
+                  placeholder="Automatically calculated"
+                  style={{ padding:"10px",maxWidth:'280px' ,height: '40px',flex: '1', backgroundColor: '#f8f8f8' , justifyContent: 'flex-end' }}
+                  fill="solid"
+                />
+                <IonButton fill="clear" onClick={decrementAge}>
+                  <IonIcon slot="icon-only" icon={arrowDown} aria-hidden="true"></IonIcon>
+                </IonButton>
+                <IonButton fill="clear" onClick={incrementAge}>
+                  <IonIcon slot="icon-only" icon={arrowUp} aria-hidden="true"></IonIcon>
+                </IonButton>
+              </IonItem>
+            </IonCol>
+          </IonRow>
+          <IonRow>
+            <IonCol size="12">
+              <IonItem>
+                <IonLabel>Gender</IonLabel>
+                <IonSegment
+                  value={gender}
+                  onIonChange={(e) => setGender(e.detail.value as string)}
+                  style={{ maxWidth:'350px' ,height: '40px', display: 'flex', alignItems: 'center', justifyContent: 'flex-end' }}
+                >
+                  <IonSegmentButton value="Unspecified" style={{ flex: '1' }}>
+                    <IonLabel>ไม่ระบุ</IonLabel>
+                  </IonSegmentButton>
+                  <IonSegmentButton value="Male" style={{ flex: '1' }}>
+                    <IonLabel>เพศชาย</IonLabel>
+                  </IonSegmentButton>
+                  <IonSegmentButton value="Female" style={{ flex: '1' }}>
+                    <IonLabel>เพศหญิง</IonLabel>
+                  </IonSegmentButton>
+                </IonSegment>
+              </IonItem>
+            </IonCol>
+          </IonRow>
+          <IonRow>
+            <IonCol size="12">
+              <IonItem onClick={() => setShowOnsetModal(true)}>
+                <IonLabel>Onset Time</IonLabel>
+                <IonDatetime
+                  id="onsetPicker"
+                  value={onsetTime}
+                  presentation="date-time"
+                  preferWheel={true}
+                  style={{ width:'50%' ,height: '40px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+                />
+              </IonItem>
+            </IonCol>
+          </IonRow>
+          <IonRow>
+            <IonCol size="12">
+              <IonItem onClick={() => setShowLastSeenModal(true)}>
+                <IonLabel>Last Seen Normal Time</IonLabel>
+                <IonDatetime
+                  id="lastSeenPicker"
+                  value={lastSeenTime}
+                  presentation="date-time"
+                  preferWheel={true}
+                  style={{ width:'50%' ,height: '40px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+                />
+              </IonItem>
+            </IonCol>
+          </IonRow>
+        </IonGrid>
         <IonModal style={modalStyle} isOpen={showModal} onDidDismiss={() => setShowModal(false)}>
           <IonDatetime
             id="modalDobPicker"
@@ -173,65 +263,11 @@ const PersonalInformationPage: React.FC = () => {
             showDefaultButtons={true}
           />
         </IonModal>
-
-        <IonItem>
-        <IonLabel style={{ minWidth: '100px' }}>Age (yy year old)</IonLabel>
-          <IonInput
-            labelPlacement="stacked"
-           
-            value={age}
-       
-            placeholder="Automatically calculated"
-          
-            style={{ padding:"10px",maxWidth:'280px' ,height: '40px',flex: '1', backgroundColor: '#f8f8f8' , justifyContent: 'flex-end' }}
-            fill="solid"
-          >
-            {/* <IonIcon slot="start" icon={arrowDown} aria-hidden="true"></IonIcon>
-            <IonIcon slot="start" icon={arrowUp} aria-hidden="true"></IonIcon> */}
-          </IonInput>
-          <IonButton fill="clear" onClick={decrementAge}>
-            <IonIcon slot="icon-only" icon={arrowDown} aria-hidden="true"></IonIcon>
-          </IonButton>
-          <IonButton fill="clear" onClick={incrementAge}>
-            <IonIcon slot="icon-only" icon={arrowUp} aria-hidden="true"></IonIcon>
-          </IonButton>
-        </IonItem>
-
-        <IonItem>
-          <IonLabel>Gender</IonLabel>
-          <IonSegment
-            value={gender}
-            onIonChange={(e) => setGender(e.detail.value as string)}
-            style={{ maxWidth:'350px' ,height: '40px', display: 'flex', alignItems: 'center', justifyContent: 'flex-end' }} // Align to the right
-          >
-            <IonSegmentButton value="Unspecified" style={{ flex: '1' }}>
-              <IonLabel>ไม่ระบุ</IonLabel>
-            </IonSegmentButton>
-            <IonSegmentButton value="Male" style={{ flex: '1' }}>
-              <IonLabel>เพศชาย</IonLabel>
-            </IonSegmentButton>
-            <IonSegmentButton value="Female" style={{ flex: '1' }}>
-              <IonLabel>เพศหญิง</IonLabel>
-            </IonSegmentButton>
-          </IonSegment>
-        </IonItem>
-
-        <IonItem onClick={() => setShowOnsetModal(true)}>
-          <IonLabel>Onset Time</IonLabel>
-          <IonDatetime
-            id="onsetPicker"
-            value={onsetTime}
-            presentation="date-time"
-            preferWheel={true}
-            style={{ width:'50%' ,height: '40px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
-          />
-        </IonItem>
-
         <IonModal style={modalStyle} isOpen={showOnsetModal} onDidDismiss={() => setShowOnsetModal(false)}>
           <IonDatetime
             id="modalOnsetPicker"
             value={onsetTime}
-           presentation="date-time"
+            presentation="date-time"
             preferWheel={true}
             title="Select Onset Time"
             onIonChange={(e) => {
@@ -242,23 +278,11 @@ const PersonalInformationPage: React.FC = () => {
             showDefaultButtons={true}
           />
         </IonModal>
-
-        <IonItem onClick={() => setShowLastSeenModal(true)}>
-          <IonLabel>Last Seen Normal Time</IonLabel>
-          <IonDatetime
-            id="lastSeenPicker"
-            value={lastSeenTime}
-           presentation="date-time"
-            preferWheel={true}
-            style={{ width:'50%' ,height: '40px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
-          />
-        </IonItem>
-
         <IonModal style={modalStyle} isOpen={showLastSeenModal} onDidDismiss={() => setShowLastSeenModal(false)}>
           <IonDatetime
             id="modalLastSeenPicker"
             value={lastSeenTime}
-           presentation="date-time"
+            presentation="date-time"
             preferWheel={true}
             title="Select Last Seen Normal Time"
             onIonChange={(e) => {
@@ -269,8 +293,6 @@ const PersonalInformationPage: React.FC = () => {
             showDefaultButtons={true}
           />
         </IonModal>
-        </IonList>
-
         <IonRow className="ion-justify-content-center ion-align-items-center">
           <IonCol size="auto" className="ion-text-center">
             <IonButton
@@ -294,17 +316,10 @@ const PersonalInformationPage: React.FC = () => {
           </IonCol>
         </IonRow>
 
-        <IonFooter style={{ backgroundColor: '#f8f8f8', padding: '10px', textAlign: 'center' }}>
-          <IonNote className="ion-margin-top">
-            <p><strong>Note</strong></p>
-            <ul style={{ listStyleType: 'disc', paddingLeft: '20px', textAlign: 'left' }}>
-              <li style={{ marginBottom: '5px' }}>If you input "Date of Birth," then "Age" will automatically calculate.</li>
-              <li style={{ marginBottom: '5px' }}>Required either "Onset Time" or "Last Seen Normal Time" or both times.</li>
-            </ul>
-          </IonNote>
-        </IonFooter>
+
       </IonContent>
     </IonPage>
+
   );
 };
 

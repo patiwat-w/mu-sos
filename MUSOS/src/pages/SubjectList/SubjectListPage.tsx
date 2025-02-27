@@ -43,7 +43,7 @@ const SubjectListPage: React.FC = () => {
   const handleItemClick = async (subject: ISubject) => {
     try {
       if (subject.id) {
-        await subjectInfoManagementService.loadSubject(subject.id); // Load subject from the service
+        await subjectInfoManagementService.fetchData(subject.id); // Load subject from the service
       } else {
         console.error('Subject ID is undefined');
       }

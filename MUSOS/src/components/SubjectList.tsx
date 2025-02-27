@@ -54,7 +54,7 @@ const SubjectList: React.FC<SubjectListProps> = () => {
                 console.error('Subject ID is undefined');
             }
             history.push({
-                pathname: '/subject-profile/' + subject.id,
+                pathname: '/personal-information/' + subject.id,
                 state: { subject }
             });
         } catch (error) {
