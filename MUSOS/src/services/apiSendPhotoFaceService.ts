@@ -19,7 +19,7 @@ export const apiSendPhotoFaceService = {
   // return response
   postData: async (blob: any) => {
 
-    const user = userSessionService.getSession();
+    const user = await userSessionService.getSession();
     if (!user) {
       //throw new Error('No active user session');
       // go to login page
@@ -30,7 +30,7 @@ export const apiSendPhotoFaceService = {
    //alert(JSON.stringify(user));
     // get guid
     let requestGuid  = generateGUID();
-    let user_id = user.localUserMappingId;
+    let user_id = user.localUserMappingId || 0;
     // send form data binary
     const formData = new FormData();
     //formData.append('image', data.image);

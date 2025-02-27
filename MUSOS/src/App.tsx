@@ -52,6 +52,8 @@ import './theme/variables.css';
 import './theme/global.css';
 import SubjectProfilePage from './pages/SubjectProfile/SubjectProfilePage';
 import ProtectedRoute from './components/ProtectedRoute';
+import FaceAssessmentPage from './pages/Assessmensts/FaceAssessment/FaceAssessmentPage';
+import AimAssessmentPage from './pages/Assessmensts/AimAssessment/AimAssesssmentPage';
 setupIonicReact({ mode: 'ios' });
 
 const App: React.FC = () => (
@@ -81,6 +83,10 @@ const App: React.FC = () => (
         <ProtectedRoute exact path="/subject-profile/:id" component={SubjectProfilePage} />
         <ProtectedRoute exact path="/select-assessment/:subjectId" component={SelectAssessment} />
         <ProtectedRoute exact path="/image-assessment/:subjectId" component={ImageAssessment} />
+        <ProtectedRoute exact path="/face-assessment/:subjectId" component={FaceAssessmentPage} />
+        <ProtectedRoute exact path="/aim-assessment/:subjectId" component={AimAssessmentPage} />
+        
+        
         <ProtectedRoute exact path="/voice-assessment/:subjectId" component={VoiceAssessment} />
         <ProtectedRoute exact path="/pre-diagnosis/:subjectId" component={PreDiagnosisPage} />
         <ProtectedRoute exact path="/personal-information/:subjectId" component={PersonalInformationPage} />

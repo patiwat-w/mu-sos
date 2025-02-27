@@ -184,6 +184,7 @@ function handleNhiss(event: any): void {
       <Header title="Subject Info" />
       <IonContent fullscreen>
       <SubjectProfileHeader 
+                    subjectId={subjectId}
                     subject={subject} 
                     selectedSegment={"Subject"}
                 />
