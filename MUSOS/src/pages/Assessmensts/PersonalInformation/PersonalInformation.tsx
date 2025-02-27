@@ -21,9 +21,10 @@ import {
   IonList,
   IonSegment,
   IonSegmentButton,
-  IonGrid // Add IonGrid
+  IonGrid, // Add IonGrid
+  IonTitle
 } from '@ionic/react';
-import { save, closeCircle, lockClosed, eye,calendar, arrowDown, arrowUp } from 'ionicons/icons';
+import { save, closeCircle, lockClosed, eye,calendar, arrowDown, arrowUp, create } from 'ionicons/icons';
 import Header from '../../../components/Header';
 import { useHistory, useParams } from 'react-router-dom';
 import { ISubject } from '../../../types/subject.type';
@@ -33,6 +34,7 @@ import { getSteps } from './stepsConfig';
 import { da } from 'date-fns/locale';
 import { addYears } from 'date-fns';
 import SubjectProfileHeader from '../../../components/SubjectProfileHeader';
+import ToggleButtonGroupDynamic from '../../../components/ToggleButtonGroupDynamic';
 
 interface PersonalInformationPageProps {
     className?: string;
@@ -55,6 +57,28 @@ const PersonalInformationPage: React.FC<PersonalInformationPageProps> = ({ class
   const [showLastSeenModal, setShowLastSeenModal] = useState(false); // State for Last Seen Time modal
 
   const history = useHistory();
+    const [comorbidities, setComorbidities] = useState({
+        hypertension: 'Default',
+        diabetes: 'Yes',
+        hyperlipidemia: 'Default',
+        heartDisease: 'Default',
+        previousStroke: 'Yes',
+    });
+
+    const [symptoms, setSymptoms] = useState({
+        speechDifficulties: 'Default',
+        facialDrooping: 'Yes',
+        visualProblems: 'Default',
+        armLt: 'Yes',
+        armRt: 'Default',
+        legLt: 'Default',
+        legRt: 'Yes',
+    });
+
+  
+
+  const [nhiss, setNhiss] = useState('');
+  const [preMrs, setPreMrs] = useState('');
 
   const formatDate = (dateString: string) => {
     if (!dateString) return '';
@@ -129,9 +153,31 @@ const PersonalInformationPage: React.FC<PersonalInformationPageProps> = ({ class
 
 
 
+
+    const createOptions = (selectedValue: string) => [
+        { label: 'UN', value: 'UN', selected: selectedValue === 'UN' },
+        { label: 'Yes', value: 'Yes', selected: selectedValue === 'Yes' },
+        { label: 'No', value: 'No', selected: selectedValue === 'No' }
+        
+    ];
+
+    const titleStyle = { textAlign: 'center', marginTop: '16px', fontSize: '1.2rem' };
+    const labelStyle = { width: '150px', minWidth: '150px' };
+
   function handleSegmentChange(value: string): void {
     throw new Error('Function not implemented.');
   }
+  const handleComorbidityChange = (key: keyof typeof comorbidities, value: string) => {
+    setComorbidities({ ...comorbidities, [key]: value });
+};
+
+const handleSymptomChange = (key: keyof typeof symptoms, value: string) => {
+    setSymptoms({ ...symptoms, [key]: value });
+};
+function handleNhiss(event: any): void {
+  // Add navigation logic here
+  history.push('/nhiss');
+}
 
   return (
     <IonPage>
@@ -141,6 +187,7 @@ const PersonalInformationPage: React.FC<PersonalInformationPageProps> = ({ class
                     subject={subject} 
                     selectedSegment={"Subject"}
                 />
+                   <IonItem><IonTitle >Personal Info</IonTitle></IonItem>
         <IonGrid>
           <IonRow>
             <IonCol size="12">
@@ -168,6 +215,7 @@ const PersonalInformationPage: React.FC<PersonalInformationPageProps> = ({ class
                   presentation="date"
                   preferWheel={true}
                   style={{ height: '40px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+                  className="small-font" // Add class for font size
                   onIonChange={(e) => {
                     const selectedDate = Array.isArray(e.detail.value) ? e.detail.value[0] : e.detail.value || '';
                     setDob(selectedDate);
@@ -221,14 +269,15 @@ const PersonalInformationPage: React.FC<PersonalInformationPageProps> = ({ class
           </IonRow>
           <IonRow>
             <IonCol size="12">
-              <IonItem onClick={() => setShowOnsetModal(true)}>
-                <IonLabel>Onset Time</IonLabel>
+              <IonItem onClick={() => setShowOnsetModal(true)}  style={{ fontSize: '0.5em' }} >
+                <IonLabel  >Onset Time</IonLabel>
                 <IonDatetime
                   id="onsetPicker"
                   value={onsetTime}
                   presentation="date-time"
                   preferWheel={true}
-                  style={{ width:'50%' ,height: '40px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+                  style={{ width:'50%' ,maxWidth:'280px' ,height: '40px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+                  className="small-font" // Add class for font size
                 />
               </IonItem>
             </IonCol>
@@ -243,6 +292,7 @@ const PersonalInformationPage: React.FC<PersonalInformationPageProps> = ({ class
                   presentation="date-time"
                   preferWheel={true}
                   style={{ width:'50%' ,height: '40px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+                  className="small-font" // Add class for font size
                 />
               </IonItem>
             </IonCol>
@@ -255,6 +305,7 @@ const PersonalInformationPage: React.FC<PersonalInformationPageProps> = ({ class
             presentation="date"
             preferWheel={true}
             title="Select Date of Birth"
+            className="small-font" // Add class for font size
             onIonChange={(e) => {
               const selectedDate = Array.isArray(e.detail.value) ? e.detail.value[0] : e.detail.value || '';
               setDob(selectedDate);
@@ -270,6 +321,7 @@ const PersonalInformationPage: React.FC<PersonalInformationPageProps> = ({ class
             presentation="date-time"
             preferWheel={true}
             title="Select Onset Time"
+            className="small-font" // Add class for font size
             onIonChange={(e) => {
               const selectedTime = Array.isArray(e.detail.value) ? e.detail.value[0] : e.detail.value || '';
               setOnsetTime(selectedTime);
@@ -285,6 +337,7 @@ const PersonalInformationPage: React.FC<PersonalInformationPageProps> = ({ class
             presentation="date-time"
             preferWheel={true}
             title="Select Last Seen Normal Time"
+            className="small-font" // Add class for font size
             onIonChange={(e) => {
               const selectedTime = Array.isArray(e.detail.value) ? e.detail.value[0] : e.detail.value || '';
               setLastSeenTime(selectedTime);
@@ -293,35 +346,175 @@ const PersonalInformationPage: React.FC<PersonalInformationPageProps> = ({ class
             showDefaultButtons={true}
           />
         </IonModal>
-        <IonRow className="ion-justify-content-center ion-align-items-center">
-          <IonCol size="auto" className="ion-text-center">
-            <IonButton
-              fill="clear"
-              style={{ ...buttonStyle, backgroundColor: '#ff4444', color: 'white' }}
-            >
-              <IonIcon icon={closeCircle} />
-            </IonButton>
-            <p style={{ fontSize: '0.9rem', marginTop: '8px', color: '#555' }}>Cancel</p>
-          </IonCol>
+        
+    
+       
+        <IonItem><IonTitle >Comorbidity</IonTitle></IonItem>
+<IonItem>
+    <IonLabel style={labelStyle}>Hypertension</IonLabel>
+    <ToggleButtonGroupDynamic
+        options={createOptions(comorbidities.hypertension)}
+        onChange={(value) => handleComorbidityChange('hypertension', value)}
+    />
+</IonItem>
 
-          <IonCol size="auto" className="ion-text-center">
-            <IonButton
-              fill="clear"
-              style={{ ...buttonStyle, backgroundColor: '#0bcb71', color: 'black' }}
-              onClick={handleSave}
-            >
-              <IonIcon icon={save} />
-            </IonButton>
-            <p style={{ fontSize: '0.9rem', marginTop: '8px', color: '#555' }}>Save</p>
-          </IonCol>
-        </IonRow>
+<IonItem>
+    <IonLabel style={labelStyle}>Diabetes mellitus</IonLabel>
+    <ToggleButtonGroupDynamic
+        options={createOptions(comorbidities.diabetes)}
+        onChange={(value) => handleComorbidityChange('diabetes', value)}
+    />
+</IonItem>
 
+<IonItem>
+    <IonLabel style={labelStyle}>Hyperlipidemia</IonLabel>
+    <ToggleButtonGroupDynamic
+        options={createOptions(comorbidities.hyperlipidemia)}
+        onChange={(value) => handleComorbidityChange('hyperlipidemia', value)}
+    />
+</IonItem>
+
+<IonItem>
+    <IonLabel style={labelStyle}>Heart disease</IonLabel>
+    <ToggleButtonGroupDynamic
+        options={createOptions(comorbidities.heartDisease)}
+        onChange={(value) => handleComorbidityChange('heartDisease', value)}
+    />
+</IonItem>
+
+<IonItem>
+    <IonLabel style={labelStyle}>Previous Stroke or TIA</IonLabel>
+    <ToggleButtonGroupDynamic
+        options={createOptions(comorbidities.previousStroke)}
+        onChange={(value) => handleComorbidityChange('previousStroke', value)}
+    />
+</IonItem>
+<IonItem><IonTitle >Current Symptoms and Signs</IonTitle></IonItem>
+
+
+<IonItem>
+    <IonLabel style={labelStyle}>Speech difficulties</IonLabel>
+    <ToggleButtonGroupDynamic
+        options={createOptions(symptoms.speechDifficulties)}
+        onChange={(value) => handleSymptomChange('speechDifficulties', value)}
+    />
+</IonItem>
+
+<IonItem>
+    <IonLabel style={labelStyle}>Facial drooping</IonLabel>
+    <ToggleButtonGroupDynamic
+        options={createOptions(symptoms.facialDrooping)}
+        onChange={(value) => handleSymptomChange('facialDrooping', value)}
+    />
+</IonItem>
+
+<IonItem>
+    <IonLabel style={labelStyle}>Visual problems</IonLabel>
+    <ToggleButtonGroupDynamic
+        options={createOptions(symptoms.visualProblems)}
+        onChange={(value) => handleSymptomChange('visualProblems', value)}
+    />
+</IonItem>
+
+<IonTitle style={titleStyle}>Arm/Leg Weakness</IonTitle>
+
+<IonRow>
+    <IonCol>
+        <IonItem>
+            <IonLabel style={labelStyle}>Arm.Lt</IonLabel>
+            <ToggleButtonGroupDynamic
+                options={createOptions(symptoms.armLt)}
+                onChange={(value) => handleSymptomChange('armLt', value)}
+            />
+        </IonItem>
+    </IonCol>
+    <IonCol>
+        <IonItem>
+            <IonLabel style={labelStyle}>Arm.Rt</IonLabel>
+            <ToggleButtonGroupDynamic
+                options={createOptions(symptoms.armRt)}
+                onChange={(value) => handleSymptomChange('armRt', value)}
+            />
+        </IonItem>
+    </IonCol>
+</IonRow>
+
+<IonRow>
+    <IonCol>
+        <IonItem>
+            <IonLabel style={labelStyle}>Leg.Lt</IonLabel>
+            <ToggleButtonGroupDynamic
+                options={createOptions(symptoms.legLt)}
+                onChange={(value) => handleSymptomChange('legLt', value)}
+            />
+        </IonItem>
+    </IonCol>
+    <IonCol>
+        <IonItem>
+            <IonLabel style={labelStyle}>Leg.Rt</IonLabel>
+            <ToggleButtonGroupDynamic
+                options={createOptions(symptoms.legRt)}
+                onChange={(value) => handleSymptomChange('legRt', value)}
+            />
+        </IonItem>
+    </IonCol>
+</IonRow>
+
+<IonTitle style={titleStyle}>NHISS and Pre mRS</IonTitle>
+
+<IonItem>
+    <IonLabel>NHISS (max 42)</IonLabel>
+    <IonInput
+        value={nhiss}
+        onIonChange={(e) => setNhiss(e.detail.value!)}
+        placeholder="max 42"
+        style={{ border: '1px solid #ccc', borderRadius: '4px', padding: '8px' }}
+    ></IonInput>
+    <IonButton fill="clear" onClick={handleNhiss}>
+        <IonIcon icon={create} />
+    </IonButton>
+</IonItem>
+
+<IonItem>
+    <IonLabel>Pre mRS</IonLabel>
+    <IonInput
+        value={preMrs}
+        onIonChange={(e) => setPreMrs(e.detail.value!)}
+        placeholder=""
+        style={{ border: '1px solid #ccc', borderRadius: '4px', padding: '8px' }}
+    ></IonInput>
+</IonItem>
 
       </IonContent>
+      <IonFooter>
+
+<IonRow className="ion-justify-content-center ion-align-items-center">
+  <IonCol size="auto" className="ion-text-center">
+    <IonButton
+      fill="clear"
+      style={{ ...buttonStyle, backgroundColor: '#ff4444', color: 'white' }}
+    >
+      <IonIcon icon={closeCircle} />
+    </IonButton>
+    <p style={{ fontSize: '0.9rem', marginTop: '8px', color: '#555' }}>Cancel</p>
+  </IonCol>
+
+  <IonCol size="auto" className="ion-text-center">
+    <IonButton
+      fill="clear"
+      style={{ ...buttonStyle, backgroundColor: '#0bcb71', color: 'black' }}
+      onClick={handleSave}
+    >
+      <IonIcon icon={save} />
+    </IonButton>
+    <p style={{ fontSize: '0.9rem', marginTop: '8px', color: '#555' }}>Save</p>
+  </IonCol>
+</IonRow>
+
+</IonFooter>
     </IonPage>
 
   );
 };
 
 export default PersonalInformationPage;
-
