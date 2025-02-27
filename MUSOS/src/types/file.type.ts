@@ -13,4 +13,5 @@ export interface IFile {
   fileExtension : string;
   documentType: string;
   fileCategory: string;
+  fileInfo: string;
 }

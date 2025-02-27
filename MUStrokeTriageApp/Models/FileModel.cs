@@ -33,7 +33,7 @@ public class FileModel
     [Required]
     [MaxLength(1000)]
     [Column("FilePath")]
-    public string FilePath { get; set; }
+    public string? FilePath { get; set; }
 
     [Column("UserId")]
     public int? UserId { get; set; }
@@ -45,12 +45,16 @@ public class FileModel
     public string? FileType { get; set; }
 
     [Column("FileExtension")]
-    public string? fileExtension { get; set; }
+    public string? FileExtension { get; set; }
 
     [Column("FileName")]
-    public string? fileName { get; set; }
+    public string? FileName { get; set; }
     
     [Column("FileCategory")]
     public string? FileCategory { get; set; }
+
+    [Column("FileInfo")]
+    public string? FileInfo { get; set; }
+    
  
 }

@@ -69,7 +69,8 @@ export const apiFileService = {
     fileCategory: string,
     fileType:string,
     fileName:string,
-    fileExtension:string) => {
+    fileExtension:string,
+    fileInfo?:string ) => {
     const formData = new FormData();
     formData.append('file', file);
     formData.append('SubjectId', subjectId.toString());
@@ -78,6 +79,11 @@ export const apiFileService = {
     formData.append('FileType', fileType.toString());
     formData.append('FileName', fileName.toString());
     formData.append('FileExtension', fileExtension.toString());
+    if (fileInfo) {
+      formData.append('FileInfo', fileInfo.toString());
+    }else{
+      formData.append('FileInfo', '');
+    }
   
 
     const response = await makeRequest(`${API_URL}/file/upload`, 'POST', formData, true);

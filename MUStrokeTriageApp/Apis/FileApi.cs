@@ -67,6 +67,7 @@ public static class FileApi
             var fileExtension = form["fileExtension"].FirstOrDefault() ?? "Unknown";
             var subjectId = form["SubjectId"].FirstOrDefault() ?? "Unknown";
             var fileCategory = form["FileCategory"].FirstOrDefault() ?? "Unknown";
+            var fileInfo = form["FileInfo"].FirstOrDefault() ?? "Unknown";
             var userId = form["UserId"].FirstOrDefault() ?? "Unknown";
 
             if (file == null)
@@ -94,15 +95,16 @@ public static class FileApi
             var fileModel = new FileModel
             {
                 Name = fileNameWithTimestamp,
-                fileName = fileName,
-                fileExtension = fileExtension,
+                FileName = fileName,
+                FileExtension = fileExtension,
                 FilePath = filePath,
                 SubjectId = subjectId == "Unknown" ? (int?)null : int.Parse(subjectId),
                 UserId = userId == "Unknown" ? (int?)null : int.Parse(userId),
                 FileType = fileType,
                 FileCategory = fileCategory,
                 Length = file.Length,
-                CreationTime = DateTime.UtcNow
+                CreationTime = DateTime.UtcNow,
+                FileInfo = fileInfo
             };
 
             db.Files.Add(fileModel);

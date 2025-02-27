@@ -16,15 +16,17 @@ import {
   IonCardHeader,
   IonCardTitle,
   IonCardContent,
-  IonItem
+  IonItem,
+  IonSpinner
 } from '@ionic/react';
-import { mic, play, cog, playCircle } from 'ionicons/icons';
+import { mic, play, cog, playCircle, send } from 'ionicons/icons';
 import * as stringSimilarity from 'string-similarity';
 import Header from '../../../components/Header';
 import FrequencyDisplay from '../../../components/FrequencyDisplay';
 import SubjectProfileHeader from '../../../components/SubjectProfileHeader';
-import { useParams } from 'react-router';
 import { ISubject } from '../../../types/subject.type';
+import { apiFileService } from '../../../services/apiFileService';
+import { useHistory, useParams } from 'react-router-dom';
 const wordsToSay = ["แมงมุม", "ทับทิม", "ฟื้นฟู", "ขอบคุณ", "รื่นเริง", "ใบบัวบก"];
 
 interface SpeechRecognition extends EventTarget {
@@ -91,11 +93,14 @@ const audioPlayerAreaStyle = {
 
 
 const VoiceAssessment: React.FC = () => {
+  const history = useHistory();
   const [isRecording, setIsRecording] = useState(false);
   const [transcript, setTranscript] = useState('');
   const [audioUrl, setAudioUrl] = useState<string | null>(null);
   const [currentWordIndex, setCurrentWordIndex] = useState(0);
-  const [loading, setLoading] = useState(false);
+
+  const [loading, setLoading] = useState<boolean>(false); // State to track loading
+  const [uploadMessage, setUploadMessage] = useState<string>(''); // State to track upload message
   const [error, setError] = useState<string | null>(null);
   const [showAlert, setShowAlert] = useState(false);
   const [wordTimer, setWordTimer] = useState<NodeJS.Timeout | null>(null);
@@ -108,6 +113,7 @@ const VoiceAssessment: React.FC = () => {
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
   const audioChunksRef = useRef<Blob[]>([]);
   const audioRef = useRef<HTMLAudioElement | null>(null);
+  
   const similarityThreshold = 0.7;
   const { subjectId } = useParams<{ subjectId: string }>();
   const [subject, setSubject] = useState<ISubject | null>(null);
@@ -319,6 +325,57 @@ const VoiceAssessment: React.FC = () => {
     };
   }, [wordTimer]);
 
+  
+
+  const handleSubmit = async () => {
+    setLoading(true);
+    setUploadMessage('');
+    try {
+      if (audioBlob) {
+        const userId = 1; // Replace with actual user ID
+        let file = new File([audioBlob], "voice_audio.wav", { type: "audio/wav" });
+        let fileName = file.name;
+        let fileType = "audio/wav";
+        let fileExtension = "wav";
+        // unique expectedLog
+        let uniqueExpectedLog = expectedLog.filter((entry, index, self) =>
+          index === self.findIndex((t) => (
+            t.word === entry.word
+          ))  
+        );
+        let voiceLog = {
+          expectedLog: uniqueExpectedLog,
+          spokenLog: log,
+          
+        }
+      
+        let fileInfo = JSON.stringify(voiceLog);
+        const response = await apiFileService.uploadFile(
+          file, 
+          Number(subjectId), 
+          Number(userId), 
+          'Voice',
+          fileType,
+          fileName,
+          fileExtension,
+          fileInfo
+        );
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+  
+        setUploadMessage('Upload Data Completed');
+        setShowAlert(true); // Show alert
+      } else {
+        setUploadMessage('No audio to upload');
+      }
+    } catch (error) {
+      setUploadMessage('Error uploading data');
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <IonPage style={{ backgroundColor: '#f5f5f5' }}>
        
@@ -340,7 +397,48 @@ const VoiceAssessment: React.FC = () => {
                     selectedSegment={"Speech"}
                 />
                    <IonItem><IonTitle > กรุณากด 'เริ่ม' และอ่านคำที่ปรากฏ โดยคำที่ปรากฏจะเปลี่ยนทุก 2 วินาที</IonTitle></IonItem>
+ {/* Show loading spinner as overlay */}
+        {loading && (
+          <div style={{
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            width: '100%',
+            height: '100%',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            backgroundColor: 'rgba(0, 0, 0, 0.5)',
+            zIndex: 9999
+          }}>
+            <IonSpinner name="crescent" style={{ width: '100px', height: '100px', color: 'white' }} />
+          </div>
+        )}
+        {/* Show upload message */}
+        {uploadMessage && (
+          <div style={{ textAlign: 'center', marginBottom: '20px', color: 'green' }}>
+            {uploadMessage}
+          </div>
+        )}
+        {/* Show alert dialog */}
+        <IonAlert
+          isOpen={showAlert}
+          onDidDismiss={() => setShowAlert(false)}
+          header={'Upload Data Completed'}
+          message={'Click OK to continue'}
+          buttons={[
+            {
+              text: 'Ok',
+              handler: () => {
+                //history.push('/voice-assessment/'+subjectId); // Redirect to VoiceAssessment page
+                // back to subject profile page
+               
+                history.push('/result/'+subjectId);
 
+              }
+            }
+          ]}
+        />
         {/* <div style={{ textAlign: 'center' }}>
           <h3>กรุณากด 'เริ่ม' และอ่านคำที่ปรากฏ โดยคำที่ปรากฏจะเปลี่ยนทุก 2 วินาที</h3>
         </div> */}
@@ -404,6 +502,28 @@ const VoiceAssessment: React.FC = () => {
             </IonButton>
             <p style={{ fontSize: '0.9rem', marginTop: '8px', color: '#555555' }}>Play</p>
           </IonCol>
+
+          {/* ปุ่ม Submit */}
+                    <IonCol size="auto" className="ion-text-center">
+                      <IonButton
+                        fill="clear"
+                        style={{
+                          width: '70px',
+                          height: '70px',
+                          borderRadius: '50%',
+                          backgroundColor: '#2196F3', //  color for submit
+                          boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)',
+                          transition: 'transform 0.2s, box-shadow 0.2s',
+                        }}
+                        onMouseEnter={(e) => (e.currentTarget.style.transform = 'scale(1.1)')}
+                        onMouseLeave={(e) => (e.currentTarget.style.transform = 'scale(1)')}
+                        onClick={handleSubmit}
+                      >
+                        <IonIcon icon={send} style={{ fontSize: '32px', color: 'white' }} />
+                      </IonButton>
+                      <p style={{ marginTop: '8px', fontSize: '14px', color: '#9C27B0' }}>Submit</p>
+                    </IonCol>
+                    
         </IonRow>
         {error && <p style={{ color: '#FF5252', textAlign: 'center' }}>{error}</p>}
         <p style={{ textAlign: 'center', color: '#333333' }}>{transcript}</p>
