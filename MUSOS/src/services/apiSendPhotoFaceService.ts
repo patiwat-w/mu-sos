@@ -47,6 +47,14 @@ export const apiSendPhotoFaceService = {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
 
-    return response;
+    const headers = {
+      xAspNetVersion: response.headers.get('x-aspnet-version'),
+      xEyeDrift: response.headers.get('x-eye-drift'),
+      xEyesAligned: response.headers.get('x-eyes-aligned'),
+      xFaceSymmetric: response.headers.get('x-face-symmetric'),
+      xHeadTilt: response.headers.get('x-head-tilt')
+    };
+
+    return { response, headers };
   },
 };

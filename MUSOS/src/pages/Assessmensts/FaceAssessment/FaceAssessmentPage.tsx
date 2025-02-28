@@ -44,6 +44,12 @@ const FaceAssessmentPage: React.FC = () => {
   const [showOverlay, setShowOverlay] = useState<boolean>(true); // State to control overlay visibility
   const [activeButton, setActiveButton] = useState<string>('face'); // State to track active button
   const [isFrontCamera, setIsFrontCamera] = useState<boolean>(true); // State to track camera direction
+  const [showConfirmAlert, setShowConfirmAlert] = useState<boolean>(false);
+  const [confirmAlertMessage, setConfirmAlertMessage] = useState<string>('');
+  const [confirmCallback, setConfirmCallback] = useState<() => void>(() => {});
+  const [eyesStatus, setEyesStatus] = useState<string>(''); // State to track eyes status
+  const [faceStatus, setFaceStatus] = useState<string>(''); // State to track face status
+  const [headStatus, setHeadStatus] = useState<string>(''); // State to track head status
 
   useEffect(() => {
     // Access user camera
@@ -143,7 +149,7 @@ const FaceAssessmentPage: React.FC = () => {
     try {
       const base64Response = await fetch(imageDataUrl);
       const blob = await base64Response.blob();
-      const response = await apiSendPhotoFaceService.postData(blob);
+      const { response, headers } = await apiSendPhotoFaceService.postData(blob);
 
       if (!response.ok) {
         throw new Error(`HTTP error! Status: ${response.status}`);
@@ -152,7 +158,34 @@ const FaceAssessmentPage: React.FC = () => {
       const responseblob = await response.blob();
       const responseurl = URL.createObjectURL(responseblob);
       let base64String = await convertBlobToBase64(responseblob);
-      setPhoto(base64String);
+
+      const xAspNetVersion = headers.xAspNetVersion;
+      const xEyesAligned = headers.xEyesAligned;
+      const xFaceSymmetric = headers.xFaceSymmetric;
+      const xHeadTilt = headers.xHeadTilt;
+     
+      let alertMessage = '';
+      if (xEyesAligned !== '1') {
+        alertMessage += 'Eyes Not Aligned. ';
+      }
+      if (xFaceSymmetric !== '1') {
+        alertMessage += 'Face Not Symmetric. ';
+      }
+      if (xHeadTilt !== '0') {
+        alertMessage += 'Head Tilt Detected. ';
+      }
+
+      setEyesStatus(xEyesAligned === '1' ? 'Good' : 'Bad');
+      setFaceStatus(xFaceSymmetric === '1' ? 'Good' : 'Bad');
+      setHeadStatus(xHeadTilt === '0' ? 'Good' : 'Bad');
+
+      if (alertMessage) {
+        setConfirmAlertMessage(`${alertMessage} Do you want to use this photo?`);
+        setConfirmCallback(() => () => setPhoto(base64String));
+        setShowConfirmAlert(true);
+      } else {
+        setPhoto(base64String);
+      }
     } catch (error) {
       console.log('Error sending photo:', error);
     }
@@ -295,11 +328,13 @@ const FaceAssessmentPage: React.FC = () => {
          <Header title="Face Assessment" />
       <IonContent fullscreen>
       <SubjectProfileHeader 
-                    subjectId={subjectId}
-                    subject={subject} 
-                    selectedSegment={"Face"}
-                />
+          subjectId={subjectId}
+          subject={subject}
+          selectedSegment={"Face"} onSubmit={function (): void {
+            throw new Error('Function not implemented.');
+          } }                />
                    <IonItem><IonTitle > มองหน้าตรงเข้ากล้อง, ยิมยิงฟัน</IonTitle></IonItem>
+                   <IonItem><IonTitle >  Eyes: {eyesStatus} Face: {faceStatus} Head: {headStatus}</IonTitle></IonItem>
                    
     
         {/* Show loading spinner as overlay */}
@@ -341,6 +376,30 @@ const FaceAssessmentPage: React.FC = () => {
 
               }
             }
+          ]}
+        />
+        <IonAlert
+          isOpen={showConfirmAlert}
+          onDidDismiss={() => setShowConfirmAlert(false)}
+          header={'Photo Confirmation'}
+          message={confirmAlertMessage}
+          buttons={[
+            {
+              text: 'Cancel',
+              role: 'cancel',
+              handler: () => {
+                setPhoto(null);
+                setIsPhotoTaken(false);
+                setShowConfirmAlert(false);
+              },
+            },
+            {
+              text: 'OK',
+              handler: () => {
+                confirmCallback();
+                setShowConfirmAlert(false);
+              },
+            },
           ]}
         />
         {/* ปุ่ม Face และ Body */}
