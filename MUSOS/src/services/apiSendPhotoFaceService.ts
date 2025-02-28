@@ -55,6 +55,8 @@ export const apiSendPhotoFaceService = {
       xHeadTilt: response.headers.get('x-head-tilt')
     };
 
+    console.log(headers);
+
     return { response, headers };
   },
 };

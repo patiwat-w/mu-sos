@@ -50,6 +50,14 @@ const FaceAssessmentPage: React.FC = () => {
   const [eyesStatus, setEyesStatus] = useState<string>(''); // State to track eyes status
   const [faceStatus, setFaceStatus] = useState<string>(''); // State to track face status
   const [headStatus, setHeadStatus] = useState<string>(''); // State to track head status
+  const [autoDetectInterval, setAutoDetectInterval] = useState<NodeJS.Timeout | null>(null); // State to track auto-detect interval
+  const [showApiErrorAlert, setShowApiErrorAlert] = useState<boolean>(false); // State to track API error alert visibility
+  const [isAutoDetectPaused, setIsAutoDetectPaused] = useState<boolean>(false); // State to pause auto-detect
+  const [isPageActive, setIsPageActive] = useState<boolean>(true); // State to track if the page is active
+
+  const getStatusColor = (status: string) => {
+    return status === 'Good' ? 'green' : 'red';
+  };
 
   useEffect(() => {
     // Access user camera
@@ -71,14 +79,31 @@ const FaceAssessmentPage: React.FC = () => {
     drawFaceSilhouetteGuide();
     startCamera();
 
+    // Start auto-detect interval
+    const interval = setInterval(() => {
+      if (isPageActive && !isPhotoTaken && videoRef.current && canvasRef.current) {
+        const context = canvasRef.current.getContext('2d');
+        if (context) {
+          context.drawImage(videoRef.current, 0, 0, canvasRef.current.width, canvasRef.current.height);
+          const imageDataUrl = canvasRef.current.toDataURL('image/png');
+          sendPhoto(imageDataUrl, true); // Pass true to indicate auto-detection
+        }
+      }
+    }, 5000); // Adjust the interval to 10 seconds
+    setAutoDetectInterval(interval);
+
     return () => {
-      // Clean up camera stream
+      // Clean up camera stream and interval
       if (videoRef.current && videoRef.current.srcObject) {
         const tracks = (videoRef.current.srcObject as MediaStream).getTracks();
         tracks.forEach((track) => track.stop());
       }
+      if (autoDetectInterval) {
+        clearInterval(autoDetectInterval);
+      }
+      setIsPageActive(false); // Set page active to false on unmount
     };
-  }, [isFrontCamera]);
+  }, [isFrontCamera, isPhotoTaken, isPageActive]);
 
   const handleSubmit = async () => {
     setLoading(true);
@@ -135,6 +160,9 @@ const FaceAssessmentPage: React.FC = () => {
         const imageDataUrl = canvasRef.current.toDataURL('image/png');
         setPhoto(imageDataUrl);
         setIsPhotoTaken(true); // Set photo taken to true
+        if (autoDetectInterval) {
+          clearInterval(autoDetectInterval); // Stop auto-detect when photo is taken
+        }
         sendPhoto(imageDataUrl);
       }
     }
@@ -145,7 +173,9 @@ const FaceAssessmentPage: React.FC = () => {
     setIsPhotoTaken(false); // Set photo taken to false
   };
 
-  const sendPhoto = async (imageDataUrl: string) => {
+  const sendPhoto = async (imageDataUrl: string, isAutoDetect: boolean = false) => {
+    if (isAutoDetectPaused) return; // Stop sendPhoto if auto-detect is paused
+
     try {
       const base64Response = await fetch(imageDataUrl);
       const blob = await base64Response.blob();
@@ -165,29 +195,45 @@ const FaceAssessmentPage: React.FC = () => {
       const xHeadTilt = headers.xHeadTilt;
      
       let alertMessage = '';
-      if (xEyesAligned !== '1') {
+      let silhouetteColor = 'gray';
+
+      if (xEyesAligned != 'True') {
         alertMessage += 'Eyes Not Aligned. ';
       }
-      if (xFaceSymmetric !== '1') {
+      if (xFaceSymmetric != 'True') {
         alertMessage += 'Face Not Symmetric. ';
       }
-      if (xHeadTilt !== '0') {
+      if (xHeadTilt != 'True') {
         alertMessage += 'Head Tilt Detected. ';
       }
 
-      setEyesStatus(xEyesAligned === '1' ? 'Good' : 'Bad');
-      setFaceStatus(xFaceSymmetric === '1' ? 'Good' : 'Bad');
-      setHeadStatus(xHeadTilt === '0' ? 'Good' : 'Bad');
-
-      if (alertMessage) {
-        setConfirmAlertMessage(`${alertMessage} Do you want to use this photo?`);
-        setConfirmCallback(() => () => setPhoto(base64String));
-        setShowConfirmAlert(true);
+      if (xEyesAligned == 'True' && xFaceSymmetric == 'True' && xHeadTilt == 'True') {
+        silhouetteColor = 'green';
+      } else if (xEyesAligned != 'True' && xFaceSymmetric != 'True' && xHeadTilt != 'True') {
+        silhouetteColor = 'red';
       } else {
-        setPhoto(base64String);
+        silhouetteColor = 'yellow';
+      }
+
+      drawFaceSilhouetteGuide(silhouetteColor);
+     
+      setEyesStatus(xEyesAligned == 'True' ? 'Good' : 'Bad');
+      setFaceStatus(xFaceSymmetric == 'True' ? 'Good' : 'Bad');
+      setHeadStatus(xHeadTilt == 'True' ? 'Good' : 'Bad');
+
+      if (!isAutoDetect) {
+        if (alertMessage) {
+          setConfirmAlertMessage(`${alertMessage} Do you want to use this photo?`);
+          setConfirmCallback(() => () => setPhoto(base64String));
+          setShowConfirmAlert(true);
+        } else {
+          setPhoto(base64String);
+        }
       }
     } catch (error) {
       console.log('Error sending photo:', error);
+      setIsAutoDetectPaused(true); // Pause auto-detect
+      setShowApiErrorAlert(true); // Show API error alert
     }
   };
 
@@ -225,7 +271,7 @@ const FaceAssessmentPage: React.FC = () => {
     });
   };
 
-  function drawFaceSilhouetteGuide() {
+  function drawFaceSilhouetteGuide(color: string = 'gray') {
     const overlayCanvas = document.getElementById('overlayCanvas');
     const overlayCtx = (overlayCanvas as HTMLCanvasElement)?.getContext('2d');
     if (!overlayCanvas || !(overlayCanvas instanceof HTMLCanvasElement) || !overlayCtx) {
@@ -241,7 +287,7 @@ const FaceAssessmentPage: React.FC = () => {
     const maxOvalWidth = 60; // Adjust the width of the oval to fit a face
     const maxOvalHeight = 60; // Adjust the height of the oval to fit a face
     overlayCtx.ellipse(width / 2, height / 2, maxOvalWidth, maxOvalHeight, 0, 0, 3 * Math.PI);
-    overlayCtx.strokeStyle = 'rgba(0, 255, 0, 0.8)';
+    overlayCtx.strokeStyle = color;
     overlayCtx.lineWidth = 3;
     overlayCtx.stroke();
 
@@ -334,7 +380,13 @@ const FaceAssessmentPage: React.FC = () => {
             throw new Error('Function not implemented.');
           } }                />
                    <IonItem><IonTitle > มองหน้าตรงเข้ากล้อง, ยิมยิงฟัน</IonTitle></IonItem>
-                   <IonItem><IonTitle >  Eyes: {eyesStatus} Face: {faceStatus} Head: {headStatus}</IonTitle></IonItem>
+                   <IonItem>
+                     <IonTitle>
+                       Eyes: <span style={{ color: getStatusColor(eyesStatus) }}>{eyesStatus}</span> 
+                       Face: <span style={{ color: getStatusColor(faceStatus) }}>{faceStatus}</span> 
+                       Head: <span style={{ color: getStatusColor(headStatus) }}>{headStatus}</span>
+                     </IonTitle>
+                   </IonItem>
                    
     
         {/* Show loading spinner as overlay */}
@@ -401,6 +453,16 @@ const FaceAssessmentPage: React.FC = () => {
               },
             },
           ]}
+        />
+        <IonAlert
+          isOpen={showApiErrorAlert}
+          onDidDismiss={() => {
+            setShowApiErrorAlert(false);
+            setIsAutoDetectPaused(false); // Resume auto-detect
+          }}
+          header={'Error'}
+          message={'Face Detection API Error.'}
+          buttons={['OK']}
         />
         {/* ปุ่ม Face และ Body */}
         {/* <IonRow className="ion-justify-content-center ion-margin-bottom">
