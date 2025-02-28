@@ -12,23 +12,23 @@ const firebaseConfig:any = {
     measurementId: "G-2R38FKQPBG"
   },
   staging: {
-    apiKey: "AIzaSyAMNihG2u4EDu6GHOSD1hp2TsX1W2A75Aw",
-    authDomain: "msu-triage.firebaseapp.com",
-    projectId: "msu-triage",
-    storageBucket: "msu-triage.firebasestorage.app",
-    messagingSenderId: "150313635848",
-    appId: "1:150313635848:web:56a9815baee346098641bd",
-    measurementId: "G-Q4H9Z65B6W"
+    apiKey: "AIzaSyBogZIy_lnTnsKEK2JEDRgmeBU95A3cgAc",
+    authDomain: "msu-sos-triage.firebaseapp.com",
+    projectId: "msu-sos-triage",
+    storageBucket: "msu-sos-triage.firebasestorage.app",
+    messagingSenderId: "673546523240",
+    appId: "1:673546523240:web:0fe8b9655e0790a4cde1dd",
+    measurementId: "G-807LXTHFKH"
   },
   production: {
-    apiKey: "AIzaSyAMNihG2u4EDu6GHOSD1hp2TsX1W2A75Aw",
-    authDomain: "msu-triage.firebaseapp.com",
-    projectId: "msu-triage",
-    storageBucket: "msu-triage.firebasestorage.app",
-    messagingSenderId: "150313635848",
-    appId: "1:150313635848:web:56a9815baee346098641bd",
-    measurementId: "G-Q4H9Z65B6W"
-  },
+    apiKey: "AIzaSyBogZIy_lnTnsKEK2JEDRgmeBU95A3cgAc",
+    authDomain: "msu-sos-triage.firebaseapp.com",
+    projectId: "msu-sos-triage",
+    storageBucket: "msu-sos-triage.firebasestorage.app",
+    messagingSenderId: "673546523240",
+    appId: "1:673546523240:web:0fe8b9655e0790a4cde1dd",
+    measurementId: "G-807LXTHFKH"
+  },  
   test: {
     apiKey: "AIzaSyAtitAAbFhcTcOXmM49xUNOHH5iYp-wqy4",
     authDomain: "musos-89802.firebaseapp.com",
