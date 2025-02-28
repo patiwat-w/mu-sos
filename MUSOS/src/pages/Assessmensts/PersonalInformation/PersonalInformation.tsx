@@ -114,7 +114,7 @@ const PersonalInformationPage: React.FC<PersonalInformationPageProps> = ({ class
 
   const handleSave = () => {
     // Add your save logic here
-    history.push('/health-information');
+    history.push('/face-assessment/' + subjectId);
   };
 
   const steps = getSteps(subjectId);
@@ -137,13 +137,13 @@ const PersonalInformationPage: React.FC<PersonalInformationPageProps> = ({ class
   };
 
   const buttonStyle = {
-    width: '70px',
-    height: '70px',
+    width: '100px', // Further increased width
+    height: '50px', // Adjusted height
     borderRadius: '50%',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    fontSize: '1rem',
+    fontSize: '0.8rem', // Adjusted font size
     boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)',
   };
 
@@ -461,32 +461,30 @@ function handleNhiss(event: any): void {
 </IonItem>
 
       </IonContent>
-      <IonFooter>
+      <IonFooter style={{ backgroundColor: '#f0f0f0' }}> {/* Added background color */}
+        <IonRow className="ion-justify-content-center ion-align-items-center">
+          <IonCol size="auto" className="ion-text-center">
+            <IonButton
+              fill="clear"
+              style={{ ...buttonStyle, backgroundColor: '#ff4444', color: 'white' }}
+            >
+              <IonIcon icon={closeCircle} />
+            </IonButton>
+            <p style={{ fontSize: '0.8rem', marginTop: '8px', color: '#555' }}>Cancel</p> {/* Adjusted font size */}
+          </IonCol>
 
-<IonRow className="ion-justify-content-center ion-align-items-center">
-  <IonCol size="auto" className="ion-text-center">
-    <IonButton
-      fill="clear"
-      style={{ ...buttonStyle, backgroundColor: '#ff4444', color: 'white' }}
-    >
-      <IonIcon icon={closeCircle} />
-    </IonButton>
-    <p style={{ fontSize: '0.9rem', marginTop: '8px', color: '#555' }}>Cancel</p>
-  </IonCol>
-
-  <IonCol size="auto" className="ion-text-center">
-    <IonButton
-      fill="clear"
-      style={{ ...buttonStyle, backgroundColor: '#0bcb71', color: 'black' }}
-      onClick={handleSave}
-    >
-      <IonIcon icon={save} />
-    </IonButton>
-    <p style={{ fontSize: '0.9rem', marginTop: '8px', color: '#555' }}>Save</p>
-  </IonCol>
-</IonRow>
-
-</IonFooter>
+          <IonCol size="auto" className="ion-text-center">
+            <IonButton
+              fill="clear"
+              style={{ ...buttonStyle, backgroundColor: '#0bcb71', color: 'black' }}
+              onClick={handleSave}
+            >
+              <IonIcon icon={save} />
+            </IonButton>
+            <p style={{ fontSize: '0.8rem', marginTop: '8px', color: '#555' }}>Save</p> {/* Adjusted font size */}
+          </IonCol>
+        </IonRow>
+      </IonFooter>
     </IonPage>
 
   );
