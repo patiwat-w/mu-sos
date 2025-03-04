@@ -37,7 +37,7 @@ const PreInformation: React.FC = () => {
     setIsLoading(true);
     try {
       const user = await userSessionService.checkUserSession();
-      let formData = {
+      let formData: ISubject = {
         subjectId,
         subjectName: 'N/A', // Add appropriate value for subjectName
         hn,
@@ -48,9 +48,17 @@ const PreInformation: React.FC = () => {
         lastName: "",
         createdDate: new Date().toISOString(),
         modifiedDate: new Date().toISOString(),
-        createdBy: ""+user.displayName,
-        modifiedBy: ""+user.displayName,
-        stateCode: 0
+        createdBy: "" + user.displayName,
+        modifiedBy: "" + user.displayName,
+        stateCode: 0,
+        email: "", // Add appropriate value for email
+        age: "0", // Add appropriate value for age
+        dateOfBirth: "", // Add appropriate value for dateOfBirth
+        gender: "", // Add appropriate value for gender
+        address: "" // Add appropriate value for address
+        ,
+        notes: '',
+        photoUrl: ''
       };
       console.log('Submit:', formData);
       let response = await apiSubjectDataService.postData(formData);

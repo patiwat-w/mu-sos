@@ -19,7 +19,7 @@ export const apiSendVideoService = {
   // return response
   postData: async (blob: any) => {
 
-    const user = userSessionService.getSession();
+    const user = await userSessionService.getSession();
     if (!user) {
       //throw new Error('No active user session');
       // go to login page
@@ -50,7 +50,7 @@ export const apiSendVideoService = {
     return response;
   },
   postDataWithMetadata: async (blob: any, metadata: any) => {
-    const user = userSessionService.getSession();
+    const user = await userSessionService.getSession();
     if (!user) {
       window.location.href = '/login';
       throw new Error('Please login to continue');

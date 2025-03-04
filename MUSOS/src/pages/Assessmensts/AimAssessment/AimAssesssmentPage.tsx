@@ -140,7 +140,7 @@ const AimAssessmentPage: React.FC = () => {
     try {
       const base64Response = await fetch(imageDataUrl);
       const blob = await base64Response.blob();
-      const response = await apiSendPhotoFaceService.postData(blob);
+      const { response, headers } = await apiSendPhotoFaceService.postData(blob);
 
       if (!response.ok) {
         throw new Error(`HTTP error! Status: ${response.status}`);
@@ -293,10 +293,11 @@ const AimAssessmentPage: React.FC = () => {
          <Header title="Aim Assessment" />
       <IonContent fullscreen>
       <SubjectProfileHeader 
-                    subjectId={subjectId}
-                    subject={subject} 
-                    selectedSegment={"Aim"}
-                />
+          subjectId={subjectId}
+          subject={subject}
+          selectedSegment={"Aim"} onSubmit={function (): void {
+            throw new Error('Function not implemented.');
+          } }                />
                    <IonItem><IonTitle > ยกแขน 2 ข้าง คางไว้ 10 วินาที</IonTitle></IonItem>
                    
     

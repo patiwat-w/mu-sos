@@ -18,7 +18,7 @@ import TermsModal from '../components/TermsModal';
 import HeaderSection from '../components/LogoSection';
 import GoogleSignInButton from '../components/GoogleSignInButton';
 import FooterSection from '../components/FooterSection';
-import { al } from 'vitest/dist/reporters-5f784f42';
+
 
 const LoginPage: React.FC = () => {
   const history = useHistory();

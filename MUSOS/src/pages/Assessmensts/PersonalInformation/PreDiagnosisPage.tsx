@@ -43,7 +43,10 @@ const PreDiagnosisPage: React.FC = () => {
         createdBy: '',
         modifiedBy: '',
         stateCode: 1,
-        hn: ''
+        hn: '',
+        dateOfBirth: '',
+        photoUrl: '',
+        address: ''
     });
     
      async function handleSave(event: any): Promise<void> {

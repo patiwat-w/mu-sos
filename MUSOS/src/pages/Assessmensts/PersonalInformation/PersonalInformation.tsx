@@ -184,10 +184,11 @@ function handleNhiss(event: any): void {
       <Header title="Subject Info" />
       <IonContent fullscreen>
       <SubjectProfileHeader 
-                    subjectId={subjectId}
-                    subject={subject} 
-                    selectedSegment={"Subject"}
-                />
+          subjectId={subjectId}
+          subject={subject}
+          selectedSegment={"Subject"} onSubmit={function (): void {
+            throw new Error('Function not implemented.');
+          } }                />
                    <IonItem><IonTitle >Personal Info</IonTitle></IonItem>
         <IonItem>
           <IonLabel style={{ minWidth: '100px' }}>Subject ID</IonLabel>

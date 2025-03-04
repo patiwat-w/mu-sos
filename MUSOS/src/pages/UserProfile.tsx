@@ -31,21 +31,23 @@ const UserInformationPage: React.FC = () => {
 
     useEffect(() => {
 
-        const user = userSessionService.getSession();
-        if (!user) {
-          window.location.href = '/login';
-          throw new Error('Please login to continue');
-    
-        }
+        const fetchUser = async () => {
+            const user = await userSessionService.getSession();
+            if (!user) {
+                window.location.href = '/login';
+                throw new Error('Please login to continue');
+            }
 
-        if (user) {
-            setName(user.displayName ?? '');
-            setPhone(user.phone ?? '');
-            setRole(user.role ?? '');
-            setEmail(user.email ?? ''); // ตั้งค่า email
-           
-            setPhotoUrl(user.photoURL ?? ''); // ตั้งค่า photoUrl
-        }
+            if (user) {
+                setName(user.displayName ?? '');
+                setPhone(user.phone ?? '');
+                setRole(user.role ?? '');
+                setEmail(user.email ?? ''); // ตั้งค่า email
+                setPhotoUrl(user.photoURL ?? ''); // ตั้งค่า photoUrl
+            }
+        };
+
+        fetchUser();
 
     }, []);
 

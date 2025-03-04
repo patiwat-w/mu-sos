@@ -473,10 +473,11 @@ const VoiceAssessment: React.FC = () => {
       <Header title="Speech Assessment" />
       <IonContent fullscreen>
       <SubjectProfileHeader 
-                    subjectId={subjectId}
-                    subject={subject} 
-                    selectedSegment={"Speech"}
-                />
+          subjectId={subjectId}
+          subject={subject}
+          selectedSegment={"Speech"} onSubmit={function (): void {
+            throw new Error('Function not implemented.');
+          } }                />
                    <IonItem><IonTitle > กรุณากด 'เริ่ม' และอ่านคำที่ปรากฏ โดยคำที่ปรากฏจะเปลี่ยนทุก 2 วินาที</IonTitle></IonItem>
  {/* Show loading spinner as overlay */}
         {loading && (

@@ -9,10 +9,11 @@ const Header: React.FC<{ title: string }> = ({ title }) => {
   const [photoUrl, setPhotoUrl] = useState<string | null>(null); // เพิ่ม state สำหรับ photoUrl
 
   useEffect(() => {
-    const user = userSessionService.getSession();
-    if (user) {
-      setPhotoUrl(user.photoURL ?? null); // ตั้งค่า photoUrl
-    }
+    userSessionService.getSession().then(user => {
+      if (user) {
+        setPhotoUrl(user.photoURL ?? null); // ตั้งค่า photoUrl
+      }
+    });
   }, []);
 
   const handleHomeClick = () => {

@@ -19,4 +19,5 @@ export interface ISubject {
   gender: string;
   notes: string;
   photoUrl: string;
+  address: string;
 }

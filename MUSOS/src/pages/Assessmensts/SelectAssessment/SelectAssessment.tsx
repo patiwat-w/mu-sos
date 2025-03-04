@@ -28,10 +28,11 @@ const SelectAssessment: React.FC = () => {
   });
 
   useEffect(() => {
-    const user = userSessionService.getSession();
-    if (user) {
-      setPhotoUrl(user.photoURL ?? null);
-    }
+    userSessionService.getSession().then(user => {
+      if (user) {
+        setPhotoUrl(user.photoURL ?? null);
+      }
+    });
   }, []);
 
   const handleImageClick = () => {

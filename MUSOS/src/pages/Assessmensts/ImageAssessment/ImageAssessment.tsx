@@ -19,7 +19,6 @@ import { useHistory, useParams } from 'react-router-dom';
 import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
 import { apiSendPhotoFaceService } from '../../../services/apiSendPhotoFaceService';
 import { apiSendVideoService } from '../../../services/apiSendVideoService'
-import { al } from 'vitest/dist/reporters-5f784f42';
 import Header from '../../../components/Header'; // Import Header component
 import { apiFileService } from '../../../services/apiFileService';
 import AssessmentHeaderSection from '../AssessmentHeaderSection';
@@ -77,7 +76,10 @@ const ImageAssessment: React.FC = () => {
         const documentType = "FACE"; // Replace with actual document type
         // conver blob to File binaly
         let file = new File([blob], "filename", { type: "image/png" });
-        const response = await apiFileService.uploadFile(file, subjectId, userId, documentType);
+        const fileType = 'image/png'; // Replace with actual file type
+        const fileName = 'filename'; // Replace with actual file name
+        const fileExtension = 'png'; // Replace with actual file extension
+        const response = await apiFileService.uploadFile(file, subjectId, userId, documentType, fileType, fileName, fileExtension);
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
         }
@@ -124,7 +126,7 @@ const ImageAssessment: React.FC = () => {
     try {
       const base64Response = await fetch(imageDataUrl);
       const blob = await base64Response.blob();
-      const response = await apiSendPhotoFaceService.postData(blob);
+      const { response, headers } = await apiSendPhotoFaceService.postData(blob);
 
       if (!response.ok) {
         throw new Error(`HTTP error! Status: ${response.status}`);

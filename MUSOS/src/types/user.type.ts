@@ -7,4 +7,7 @@ export interface IUser {
     phone?: string;
     role?: string;
     token?: string;
+    address?: string;
+    birthDate?: string;
+    age?: string;
   }

@@ -15,7 +15,7 @@ function generateGUID() {
 }
 
 async function makeRequest(url: string, method: string, body?: any, isFormData: boolean = false) {
-  const user = userSessionService.getSession();
+  const user = await userSessionService.getSession();
   if (!user) {
     window.location.href = '/login';
     throw new Error('Please login to continue');

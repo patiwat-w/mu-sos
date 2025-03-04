@@ -81,8 +81,8 @@ const SubjectProfilePage: React.FC = () => {
         }
     };
 
-    function handleSubmit(event: any): void {
-        throw new Error('Function not implemented.');
+    function handleSubmit(): void {
+        console.log('Form submitted');
     }
 
     return (
@@ -94,7 +94,8 @@ const SubjectProfilePage: React.FC = () => {
                 <SubjectProfileHeader 
                     subject={subject} 
                     selectedSegment={selectedSegment}
-                   
+                    subjectId={id}
+                    onSubmit={handleSubmit}
                 />
 
 
