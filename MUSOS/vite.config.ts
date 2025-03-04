@@ -27,7 +27,9 @@ export default defineConfig({
   server: {
     proxy: {
       '/ai-service': {
-        target: 'https://msu-triage.egmu-research.org/service/proxy.ashx?http://192.168.10.3:5000', //https://msu-triage.egmu-research.org/service/proxy.ashx?
+        target: process.env.NODE_ENV === 'production' 
+          ? 'https://msu-triage.egmu-research.org/ai-service/proxy.ashx?http://192.168.10.3:5000'
+          : 'https://msu-triage.egmu-research.org/ai-service/proxy.ashx?http://192.168.10.3:5000',
         changeOrigin: true,
         secure: false,
         rewrite: (path) => {
