@@ -23,11 +23,6 @@ public static class FileApi
 
         var uploadApi = app.MapGroup("/file");
 
-        /// <summary>
-        /// Lists all files.
-        /// </summary>
-        /// <param name="db">The data context.</param>
-        /// <returns>A list of files.</returns>
         uploadApi.MapGet("/list", async (DataContext db) =>
         {
             try
@@ -45,11 +40,7 @@ public static class FileApi
             }
         });
 
-        /// <summary>
-        /// Uploads a file.
-        /// </summary>
-        /// <param name="context">The HTTP context.</param>
-        /// <param name="db">The data context.</param>
+
         _ = uploadApi.MapPost("/upload", async (HttpContext context, DataContext db) =>
         {
             var request = context.Request;

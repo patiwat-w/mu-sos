@@ -18,7 +18,7 @@ import TermsModal from '../components/TermsModal';
 import HeaderSection from '../components/LogoSection';
 import GoogleSignInButton from '../components/GoogleSignInButton';
 import FooterSection from '../components/FooterSection';
-
+import { a } from 'vitest/dist/chunks/suite.qtkXWc6R';
 
 const LoginPage: React.FC = () => {
   const history = useHistory();
@@ -74,8 +74,22 @@ const LoginPage: React.FC = () => {
           return;
         }
       } catch (error: any) {
-        console.error('Error submitting data:', error);
-        alert("Error submitting data");
+
+        if (error) {
+          try {
+            const errorJson = JSON.parse(error.message);
+            if (errorJson.type =="Custom/UserAuthenticationMethodNotFound") {
+          
+             alert("You email is not registered, Please contact admin.");
+              
+            }else{
+              alert(errorJson.detail);
+            }
+           
+          } catch (parseError) {
+            alert("Something went wrong, Please try again later.");
+          }
+        }
         return;
       }
     } catch (error) {

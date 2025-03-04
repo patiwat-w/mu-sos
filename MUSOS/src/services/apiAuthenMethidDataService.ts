@@ -1,7 +1,6 @@
 import { UserAuthenticationMethodModel } from '../types/authenMethod.type';
 import { userSessionService } from './UserSessionService';
 
-
 if (!import.meta.env.VITE_API_URL) {
   throw new Error('API_URL is not defined');
 }
@@ -15,8 +14,26 @@ function generateGUID() {
   });
 }
 
-function handleResponseError(response: Response) {
+async function handleResponseError(response: Response) {
   let errorMessage = '';
+
+  /** error response example
+   * {
+    "type": "Custom/UserAuthenticationMethodNotFound",
+    "title": "User Authentication Method not found",
+    "status": 404,
+    "detail": "User Authentication Method not found for the given email patiwat.wi@gmail.com please contact the administrator."
+}
+}
+   */
+
+  // Await the response JSON
+  const responseJson = await response.json();
+  console.log(responseJson);
+  if (responseJson.type && responseJson.type.startsWith('Custom/')) {
+    throw new Error(JSON.stringify(responseJson));
+  }
+
   switch (response.status) {
     case 400:
       errorMessage = 'Invalid Input. Please check your input.';
@@ -36,7 +53,7 @@ function handleResponseError(response: Response) {
     default:
       errorMessage = `Error: ${response.statusText}`;
   }
-  throw new Error(errorMessage);
+  throw new Error(JSON.stringify({ ...responseJson, message: errorMessage }));
 }
 
 async function fetchWithAuth(url: string, options: RequestInit) {
@@ -63,7 +80,7 @@ async function fetchWithAuth(url: string, options: RequestInit) {
   });
 
   if (!response.ok) {
-    handleResponseError(response);
+    await handleResponseError(response);
   }
 
   return response.json();

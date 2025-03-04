@@ -5,6 +5,7 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Net;
 
 public static class UserAuthenticationMethodApi
 {
@@ -16,6 +17,7 @@ public static class UserAuthenticationMethodApi
             try
             {
                 var query = db.Set<UserAuthenticationMethodModel>().AsQueryable();
+                var result = new List<UserAuthenticationMethodModel>();
 
                 if (!string.IsNullOrEmpty(provider))
                 {
@@ -27,15 +29,28 @@ public static class UserAuthenticationMethodApi
 
                 if (!string.IsNullOrEmpty(providerKey))
                 {
-                    query = query.Where(uam => uam.ProviderKey == providerKey);
+                    result = await query.Where(uam => uam.ProviderKey == providerKey).ToListAsync();
                 }
 
-                if (!string.IsNullOrEmpty(email))
+                // if result is  empty find by email
+                if (!result.Any() && !string.IsNullOrEmpty(email))
                 {
-                    query = query.Where(uam => uam.Email == email);
+                    result = await query.Where(uam => uam.Email == email).ToListAsync();
                 }
 
-                return Results.Ok(await query.ToListAsync());
+
+                //if not found retun Problem
+                if (!result.Any())
+                {
+                    return Results.Problem(
+                        detail:"User Authentication Method not found for the given email " + email + " please contact the administrator.", 
+                        statusCode: (int)HttpStatusCode.NotFound,
+                        title: "User Authentication Method not found",
+                        type: "Custom/UserAuthenticationMethodNotFound"
+                    );
+                }
+
+                return Results.Ok(result);
             }
             catch (Exception ex)
             {
