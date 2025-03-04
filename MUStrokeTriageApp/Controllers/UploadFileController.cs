@@ -22,7 +22,7 @@ namespace MUStrokeTriageApp.Controllers
         public class UploadFileRequest
         {
             [SwaggerParameter(Description = "File to upload")]
-            public IFormFile File { get; set; }
+            public required IFormFile File { get; set; }
             public int? SubjectId { get; set; }
             public int? UserId { get; set; }
             public string? FileType { get; set; }

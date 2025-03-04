@@ -12,7 +12,7 @@ public class FileModel
     [Required]
     [MaxLength(1000)]
     [Column("Name")]
-    public string Name { get; set; }
+    public required string Name { get; set; }
 
     [Required]
     [Column("Length")]

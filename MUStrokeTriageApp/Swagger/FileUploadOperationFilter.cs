@@ -16,7 +16,7 @@ namespace MUStrokeTriageApp.Swagger
             if(fileParams.Any())
             {
                 operation.RequestBody.Content[fileUploadMime].Schema.Properties =
-                    fileParams.ToDictionary(k => k.Name, v => new OpenApiSchema()
+                    fileParams.ToDictionary(p => p.Name ?? string.Empty, p => new OpenApiSchema()
                     {
                         Type = "string",
                         Format = "binary"

@@ -40,4 +40,27 @@ dotnet ef database update --context YourDbContext
 
 These steps will create the Subjects table in your database using the code-first approach and handle any pending model changes.
 
+## Build and Deploy
+
+### Build the Project
+To build the project, run the following command:
+
+```sh
+dotnet build
+```
+
+This will compile the project and generate the necessary binaries.
+
+### Deploy the Project
+To deploy the project, you can publish it to a folder or a hosting service. Run the following command to publish the project to a folder:
+
+```sh
+dotnet publish MUStrokeTriageApp.csproj -c Release -o ./publish
+```
+
+This will create a `publish` folder with the compiled project files.
+
+### Additional Deployment Options
+You can also deploy the project to a hosting service such as Azure, AWS, or any other cloud provider. Refer to the specific hosting service documentation for detailed deployment instructions.
+
 // ...existing code...

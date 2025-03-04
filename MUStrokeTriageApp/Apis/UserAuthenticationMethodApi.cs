@@ -40,11 +40,7 @@ public static class UserAuthenticationMethodApi
             catch (Exception ex)
             {
                 // Log exception
-                return Results.Problem("An error occurred while retrieving user authentication methods." + ex.Message);
-            }
-            finally
-            {
-                await db.DisposeAsync();
+                return Results.Problem("An error occurred while retrieving user authentication methods: " + ex.Message);
             }
         });
         userAuthMethodsApi.MapGet("/{id}", async (string id, DataContext db) =>
@@ -57,17 +53,17 @@ public static class UserAuthenticationMethodApi
             catch (Exception ex)
             {
                 // Log exception
-                return Results.Problem("An error occurred while retrieving the user authentication method." + ex.Message);
-            }
-            finally
-            {
-                await db.DisposeAsync();
+                return Results.Problem("An error occurred while retrieving the user authentication method: " + ex.Message);
             }
         });
         userAuthMethodsApi.MapPost("/", async (UserAuthenticationMethodModel userAuthMethod, DataContext db) =>
         {
             try
             {
+                if (userAuthMethod.User == null)
+                {
+                    return Results.Problem("User cannot be null.");
+                }
                 var existingUser = await db.Users.AsNoTracking().FirstOrDefaultAsync(u => u.Id == userAuthMethod.User.Id);
                 if (existingUser != null)
                 {
@@ -77,7 +73,6 @@ public static class UserAuthenticationMethodApi
                     existingUser.Name = userAuthMethod.User.Name;
                     existingUser.Email = userAuthMethod.User.Email;
                     existingUser.Role = userAuthMethod.User.Role;
-                    // Update other properties as needed
 
                     // Attach the updated instance
                     db.Users.Attach(existingUser);
@@ -85,7 +80,6 @@ public static class UserAuthenticationMethodApi
                 }
                 else
                 {
-                    // Add new user
                     db.Users.Add(userAuthMethod.User);
                 }
 
@@ -111,11 +105,7 @@ public static class UserAuthenticationMethodApi
             catch (Exception ex)
             {
                 // Log exception
-                return Results.Problem("An error occurred while creating the user authentication method.", ex.Message);
-            }
-            finally
-            {
-                await db.DisposeAsync();
+                return Results.Problem("An error occurred while creating the user authentication method: " + ex.Message);
             }
         });
         userAuthMethodsApi.MapPut("/{id}", async (string id, UserAuthenticationMethodModel updatedData, DataContext db) =>
@@ -133,11 +123,7 @@ public static class UserAuthenticationMethodApi
             catch (Exception ex)
             {
                 // Log exception
-                return Results.Problem("An error occurred while updating the user authentication method." + ex.Message);
-            }
-            finally
-            {
-                await db.DisposeAsync();
+                return Results.Problem("An error occurred while updating the user authentication method: " + ex.Message);
             }
         });
         userAuthMethodsApi.MapDelete("/{id}", async (string id, DataContext db) =>
@@ -154,11 +140,7 @@ public static class UserAuthenticationMethodApi
             catch (Exception ex)
             {
                 // Log exception
-                return Results.Problem("An error occurred while deleting the user authentication method." + ex.Message);
-            }
-            finally
-            {
-                await db.DisposeAsync();
+                return Results.Problem("An error occurred while deleting the user authentication method: " + ex.Message);
             }
         });
     }

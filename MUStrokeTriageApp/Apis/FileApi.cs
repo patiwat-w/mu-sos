@@ -49,6 +49,7 @@ public static class FileApi
         /// Uploads a file.
         /// </summary>
         /// <param name="context">The HTTP context.</param>
+        /// <param name="db">The data context.</param>
         _ = uploadApi.MapPost("/upload", async (HttpContext context, DataContext db) =>
         {
             var request = context.Request;
@@ -74,6 +75,13 @@ public static class FileApi
             {
                 context.Response.StatusCode = 400;
                 await context.Response.WriteAsync("Missing required fields.");
+                return;
+            }
+
+            if (string.IsNullOrEmpty(rootUploadFolder))
+            {
+                context.Response.StatusCode = 500;
+                await context.Response.WriteAsync("Upload folder is not configured.");
                 return;
             }
 
