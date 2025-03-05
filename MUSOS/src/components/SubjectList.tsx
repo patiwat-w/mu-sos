@@ -59,7 +59,9 @@ const SubjectList: React.FC<SubjectListProps> = () => {
     }
 
     const handleItemClick = async (subject: ISubject) => {
-        showAlert('This is an alert message', 'Alert Header');
+        if (subject.slidingItem) {
+            subject.slidingItem.close(); // Close sliding item first
+        }
         showLoading(); // Show loading overlay
         try {
             if (subject.id) {
@@ -111,7 +113,8 @@ const SubjectList: React.FC<SubjectListProps> = () => {
                                 className={`${styles.ionItem} ${index % 2 === 0 ? styles.even : styles.odd}`} // ใช้ CSS Modules
                                 placeholder={undefined} onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined}                            >
                                 <IonLabel className={styles.ionLabel} placeholder={undefined} onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined}>
-                                    <h2><span className={styles.label}>ID:</span> <span className={styles.value}>{subject.id}</span></h2>
+                                    <h2><span className={styles.label}>#</span> <span className={styles.value}>{subject.id}</span></h2>
+                                    <p><span className={styles.label}>Subject Id:</span> <span className={styles.value}>{subject.subjectId}</span></p>
                                     <p><span className={styles.label}>Subject Name:</span> <span className={styles.value}>{subject.subjectName}</span></p>
                                     <p><span className={styles.label}>HN:</span> <span className={styles.value}>{subject.hn}</span></p>
                                     <p><span className={styles.label}>Phone Number:</span> <span className={styles.value}>{subject.phoneNumber}</span></p>

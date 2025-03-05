@@ -7,6 +7,7 @@ import { userSessionService } from '../services/UserSessionService'; // Import u
 const Header: React.FC<{ title: string }> = ({ title }) => {
   const history = useHistory();
   const [photoUrl, setPhotoUrl] = useState<string | null>(null); // เพิ่ม state สำหรับ photoUrl
+  const [isPageLoaded, setIsPageLoaded] = useState<boolean>(false); // เพิ่ม state สำหรับตรวจสอบการโหลดหน้า
 
   useEffect(() => {
     userSessionService.getSession().then(user => {
@@ -16,9 +17,31 @@ const Header: React.FC<{ title: string }> = ({ title }) => {
     });
   }, []);
 
+  useEffect(() => {
+    // ฟังการเปลี่ยน URL
+    const unlisten = history.listen((location) => {
+      if (location.pathname === '/home') {
+        setIsPageLoaded(false); // Reset page loaded state
+        setTimeout(() => {
+          if (!isPageLoaded) {
+            window.location.reload(); // รีเฟรชหน้าใหม่ถ้าหน้ายังค้าง
+          }
+        }, 1000); // ตรวจสอบหลังจาก 1 วินาที
+      }
+    });
+
+    // ล้าง listener เมื่อ component ถูก unmount
+    return () => {
+      unlisten();
+    };
+  }, [history, isPageLoaded]);
+
+  useEffect(() => {
+    setIsPageLoaded(true); // ตั้งค่าเมื่อ component ถูกโหลด
+  }, []);
+
   const handleHomeClick = () => {
-    //history.push('/select-assessment'); // Redirect to home page
-    location.href = '/home';
+    history.push('/home');
   };
 
   const handleProfileClick = () => {
