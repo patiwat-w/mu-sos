@@ -26,6 +26,7 @@ import UserProfilePage from './pages/UserProfile';
 import ConsentPage from './pages/Consent/ConsentPage'; // Import ConsentPage
 import SubjectListPage from './pages/SubjectList/SubjectListPage'; // Import SubjectListPage
 import ResultPage from './pages/Result/ResultPage'; // Import ResultPage
+import RegisterPage from './pages/RegisterPage'; // Import RegisterPage
 import { LoadingProvider } from './contexts/LoadingContext';
 import LoadingOverlay from './components/LoadingOverlay';
 import { AlertProvider } from './contexts/AlertContext';
@@ -73,6 +74,9 @@ const App: React.FC = () => (
             </Route>
             <Route exact path="/login">
               <LoginPage />
+            </Route>
+            <Route exact path="/register">
+              <RegisterPage />
             </Route>
             
             {/* Main App Routes */}

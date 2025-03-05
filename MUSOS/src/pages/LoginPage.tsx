@@ -8,7 +8,7 @@ import {
   IonItem,
   IonCheckbox,
 } from '@ionic/react';
-import { useHistory, useLocation } from 'react-router-dom';
+import { useHistory, useLocation, Link } from 'react-router-dom';
 import { auth, googleProvider, signInWithPopup } from "../config/firebase";
 import { userSessionService } from '../services/UserSessionService';
 import { IUser } from '../types/user.type';
@@ -103,19 +103,22 @@ const LoginPage: React.FC = () => {
   };
 
   return (
-    <IonPage>
-      <IonContent>
-        <IonGrid style={{ height: '100%' }}>
-          <IonRow style={{ height: '100%', justifyContent: 'center', alignItems: 'center' }}>
-            <IonCol size="12" sizeMd="6">
+    <IonPage style={{ background: 'linear-gradient(to right, #ff7e5f, #feb47b)' }} placeholder={undefined} onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined}>
+      <IonContent style={{ background: 'linear-gradient(to right, #ff7e5f, #feb47b)' }} placeholder={undefined} onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined}>
+        <IonGrid style={{ height: '100%' }} placeholder={undefined} onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined}>
+          <IonRow style={{ height: '100%', justifyContent: 'center', alignItems: 'center' }} placeholder={undefined} onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined}>
+            <IonCol size="12" sizeMd="6" placeholder={undefined} onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined}>
               <HeaderSection />
-              <IonItem lines="none" style={{ marginBottom: '20px' }}>
-                <IonCheckbox checked={agree} onIonChange={e => setAgree(e.detail.checked)} />
+              <IonItem lines="none" style={{ marginBottom: '20px' }} placeholder={undefined} onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined}>
+                <IonCheckbox checked={agree} onIonChange={e => setAgree(e.detail.checked)} placeholder={undefined} onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined} />
                 <span style={{ marginLeft: '10px' }} onClick={seeAgreement}>
                   By signing in, you agree to our Terms and Conditions.
                 </span>
               </IonItem>
               <GoogleSignInButton onClick={handleGoogleSignIn} />
+              <IonItem lines="none" style={{ marginTop: '20px', justifyContent: 'center', textAlign: 'center' }} placeholder={undefined} onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined}>
+                <Link to="/register" style={{ width: '100%', textAlign: 'center' }}>Don't have an account? Register here</Link>
+              </IonItem>
             </IonCol>
           </IonRow>
         </IonGrid>
