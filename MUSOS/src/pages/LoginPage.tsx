@@ -27,6 +27,7 @@ const LoginPage: React.FC = () => {
   const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
+    sessionStorage.clear();
     if (location.state && typeof location.state === 'object' && 'accepted' in location.state) {
       setAgree((location.state as { accepted: boolean }).accepted);
     }

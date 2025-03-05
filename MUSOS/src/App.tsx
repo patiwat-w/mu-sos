@@ -31,6 +31,8 @@ import { LoadingProvider } from './contexts/LoadingContext';
 import LoadingOverlay from './components/LoadingOverlay';
 import { AlertProvider } from './contexts/AlertContext';
 import AlertService from './services/AlertService';
+import React, { useState, useEffect } from 'react';
+import SplashScreen from './components/SplashScreen';
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
@@ -60,58 +62,84 @@ import FaceAssessmentPage from './pages/Assessmensts/FaceAssessment/FaceAssessme
 import AimAssessmentPage from './pages/Assessmensts/AimAssessment/AimAssesssmentPage';
 setupIonicReact({ mode: 'ios' });
 
-const App: React.FC = () => (
-  <AlertProvider>
-    <AlertService />
-    <LoadingProvider>
-      <LoadingOverlay />
-      <IonApp className="app-container">
-        <IonReactRouter>
-          <IonRouterOutlet placeholder={undefined} onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined}>
-            {/* Authentication Routes */}
-            <Route exact path="/">
-              <Redirect to="/login" />
-            </Route>
-            <Route exact path="/login">
-              <LoginPage />
-            </Route>
-            <Route exact path="/register">
-              <RegisterPage />
-            </Route>
-            
-            {/* Main App Routes */}
-            <ProtectedRoute exact path="/home" component={HomePage} />
-            <ProtectedRoute exact path="/agreement" component={Agreement} />
-            <ProtectedRoute exact path="/pre-information" component={PreInformation} />
+const App: React.FC = () => {
+  const [loading, setLoading] = useState(() => {
+    const hasVisited = sessionStorage.getItem('hasVisited');
+    return !hasVisited;
+  });
 
-            
-            
-            <ProtectedRoute exact path="/nhiss" component={NHISSPage} />
-            <ProtectedRoute exact path="/user-profile" component={UserProfilePage} />
-            <ProtectedRoute exact path="/consent" component={ConsentPage} />
-            <ProtectedRoute exact path="/subject-list" component={SubjectListPage} />
-            
-            <ProtectedRoute exact path="/subject-profile/:id" component={SubjectProfilePage} />
-            <ProtectedRoute exact path="/select-assessment/:subjectId" component={SelectAssessment} />
-            <ProtectedRoute exact path="/image-assessment/:subjectId" component={ImageAssessment} />
-            <ProtectedRoute exact path="/face-assessment/:subjectId" component={FaceAssessmentPage} />
-            <ProtectedRoute exact path="/aim-assessment/:subjectId" component={AimAssessmentPage} />
-            
-            
-            <ProtectedRoute exact path="/voice-assessment/:subjectId" component={VoiceAssessment} />
-            <ProtectedRoute exact path="/pre-diagnosis/:subjectId" component={PreDiagnosisPage} />
-            <ProtectedRoute exact path="/personal-information/:subjectId" component={PersonalInformationPage} />
-            <ProtectedRoute exact path="/health-information/:subjectId" component={HealthInformation} />
-            <ProtectedRoute exact path="/result/:subjectId" component={ResultPage} />
-            {/* Catch-all Route */}
-            <Route>
-              <Redirect to="/login" />
-            </Route>
-          </IonRouterOutlet>
-        </IonReactRouter>
-      </IonApp>
-    </LoadingProvider>
-  </AlertProvider>
-);
+  useEffect(() => {
+    if (loading) {
+      const hasVisited = sessionStorage.getItem('hasVisited');
+      if (hasVisited) {
+        setLoading(false);
+      } else {
+        const timer = setTimeout(() => {
+          setLoading(false);
+        }, 5000); // Adjust the duration as needed
+
+        return () => clearTimeout(timer);
+      }
+    }
+  }, [loading]);
+
+  return (
+    <AlertProvider>
+      <AlertService />
+      <LoadingProvider>
+        <LoadingOverlay />
+        <IonApp className="app-container">
+          {loading ? (
+            <SplashScreen />
+          ) : (
+            <IonReactRouter>
+              <IonRouterOutlet placeholder={undefined} onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined}>
+                {/* Authentication Routes */}
+                <Route exact path="/">
+                  <Redirect to="/login" />
+                </Route>
+                <Route exact path="/login">
+                  <LoginPage />
+                </Route>
+                <Route exact path="/register">
+                  <RegisterPage />
+                </Route>
+                
+                {/* Main App Routes */}
+                <ProtectedRoute exact path="/home" component={HomePage} />
+                <ProtectedRoute exact path="/agreement" component={Agreement} />
+                <ProtectedRoute exact path="/pre-information" component={PreInformation} />
+
+                
+                
+                <ProtectedRoute exact path="/nhiss" component={NHISSPage} />
+                <ProtectedRoute exact path="/user-profile" component={UserProfilePage} />
+                <ProtectedRoute exact path="/consent" component={ConsentPage} />
+                <ProtectedRoute exact path="/subject-list" component={SubjectListPage} />
+                
+                <ProtectedRoute exact path="/subject-profile/:id" component={SubjectProfilePage} />
+                <ProtectedRoute exact path="/select-assessment/:subjectId" component={SelectAssessment} />
+                <ProtectedRoute exact path="/image-assessment/:subjectId" component={ImageAssessment} />
+                <ProtectedRoute exact path="/face-assessment/:subjectId" component={FaceAssessmentPage} />
+                <ProtectedRoute exact path="/aim-assessment/:subjectId" component={AimAssessmentPage} />
+                
+                
+                <ProtectedRoute exact path="/voice-assessment/:subjectId" component={VoiceAssessment} />
+                <ProtectedRoute exact path="/pre-diagnosis/:subjectId" component={PreDiagnosisPage} />
+                <ProtectedRoute exact path="/personal-information/:subjectId" component={PersonalInformationPage} />
+                <ProtectedRoute exact path="/health-information/:subjectId" component={HealthInformation} />
+                <ProtectedRoute exact path="/result/:subjectId" component={ResultPage} />
+                {/* Catch-all Route */}
+                <Route>
+                  <Redirect to="/login" />
+                </Route>
+              </IonRouterOutlet>
+            </IonReactRouter>
+          )}
+        </IonApp>
+      </LoadingProvider>
+    </AlertProvider>
+  );
+};
 
 export default App;
