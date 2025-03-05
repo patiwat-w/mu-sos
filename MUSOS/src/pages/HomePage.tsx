@@ -70,47 +70,35 @@ const HomePage: React.FC = () => {
     
           {/* Profile Card */}
           <div className="profile-card">
-            <div className="profile-header">
-              <IonAvatar>
-                <img src={photoUrl || 'default-profile-image.jpg'} alt="Profile" />
-              </IonAvatar>
-              <div className="profile-info">
-                <IonLabel className="profile-name">{user?.displayName || 'Patiwat Wisedsukol'}</IonLabel>
-                <IonLabel className="profile-email-location"> {user?.location || 'Researcher'}</IonLabel>
-              </div>
-            </div>
-    
-            <IonGrid>
-              <IonRow>
-              <IonCol size="12">
-                  <IonLabel></IonLabel>
-                  <IonButton 
-                      shape="round" 
-                      fill="solid" 
-                      color="primary"
-                      onClick={handleAddSubject}
-                  >
-                    <IonIcon icon={addCircleOutline} />
-                  </IonButton>
-                </IonCol>
-              </IonRow>
-            </IonGrid>
-    
-            {/* Optional: Member Since */}
-            <IonLabel class="member-since">Add Subject </IonLabel> 
-          </div>
+  <div className="profile-header">
+    <IonAvatar className="profile-avatar">
+      <img src={photoUrl || 'default-profile-image.jpg'} alt="Profile" />
+    </IonAvatar>
+    <div className="profile-info">
+      <span className="profile-name">{user?.displayName || 'Patiwat Wisedsukol'}</span>
+      <span className="profile-email-location">{user?.location || 'Researcher'}</span>
+    </div>
+    <IonButton onClick={handleAddSubject} className="add-subject-button" style={{ marginLeft: 'auto' }}>
+      <IonIcon icon={addCircleOutline} />
+    </IonButton>
+  </div>
+</div>
+
+
+
+
     
           {/* Segment Tabs */}
           <IonSegment>
             <IonSegmentButton value="All" >
-              <IonLabel>All</IonLabel>
+              <IonLabel>Subjects</IonLabel>
             </IonSegmentButton>
-            <IonSegmentButton value="Pending">
+            {/* <IonSegmentButton value="Pending">
               <IonLabel>Pending</IonLabel>
             </IonSegmentButton>
             <IonSegmentButton value="Submited">
               <IonLabel>Submited</IonLabel>
-            </IonSegmentButton>
+            </IonSegmentButton> */}
           </IonSegment>
     
           {/* Content based on selected segment */}

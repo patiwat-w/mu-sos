@@ -151,4 +151,42 @@ export const apiSubjectDataService = {
 
     return response.json();
   },
+  delete: async (subjectId: string) => {
+    let requestGuid = generateGUID();
+    let token = userSessionService.getToken();
+    const response = await fetch(`${API_URL}/subjects/${subjectId}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-Request-ID': requestGuid,
+        'Authorization': `Bearer ${token}`,
+      },
+    });
+
+    if (!response.ok) {
+      let errorMessage = '';
+      switch (response.status) {
+        case 400:
+          errorMessage = 'Invalid Input. Please check your input.';
+          break;
+        case 401:
+          errorMessage = 'Unauthorized. Please login again.';
+          break;
+        case 403:
+          errorMessage = 'Forbidden. You do not have permission to perform this action.';
+          break;
+        case 404:
+          errorMessage = 'Not Found. The requested resource could not be found.';
+          break;
+        case 500:
+          errorMessage = 'Internal Server Error. Please try again later.';
+          break;
+        default:
+          errorMessage = `Error: ${response.statusText}`;
+      }
+      throw new Error(errorMessage);
+    }
+
+    return response;
+  },
 };

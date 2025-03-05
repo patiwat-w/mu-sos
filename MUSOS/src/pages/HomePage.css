@@ -1,81 +1,37 @@
-/* Overall layout */
-ion-content {
-    --background: #f4f4f4; /* Light background */
-  }
-  
-  /* Profile Card */
-  .profile-card {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start; /* Align to the left */
-    text-align: left; /* Align text to the left */
-    padding: 20px;
-    background: white;
-    margin-bottom: 20px;
-  }
-  
-  .profile-header {
-    display: flex;
-    align-items: center;
-  }
+.profile-card {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 10px;
+  width: 100%;
+}
 
-  .profile-info {
-    margin-left: 10px;
-    display: flex;
-    flex-direction: column;
-  }
+.profile-header {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
 
-  .profile-name,
-  .profile-email-location {
-    display: block;
-    margin-left: 0; /* Align the labels */
-  }
+.profile-avatar {
+  width: 50px;
+  height: 50px;
+  margin-right: 10px;
+}
 
-  .profile-card ion-avatar {
-    width: 60px; /* Reduced size */
-    height: 60px; /* Reduced size */
-    margin: 0 auto 10px;
-  }
-  
-  .profile-card ion-label {
-    font-weight: bold;
-    display: block; /* Makes labels stack */
-    margin-bottom: 5px;
-  }
-  
-  .profile-card ion-grid {
-    padding: 10px;
-  }
-  
-  .profile-card ion-button {
-    --padding-start: 10px;
-    --padding-end: 10px;
-  }
-  
-  .member-since {
-    font-size: smaller;
-    color: gray;
-    text-align: center; /* Center the label */
-    width: 100%; /* Ensure it takes the full width */
-  }
-  
-  /* Segment Tabs */
-  ion-segment-button {
-    font-weight: bold;
-  }
-  
-  /* Slides (Content Area) */
-  ion-slides {
-    height: 300px; /* Adjust as needed */
-  }
-  
-  ion-slide {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  
-  ion-slide img {
-    max-width: 100%;
-    height: auto;
-  }
+.profile-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start; /* ⭐ บังคับให้ข้อความชิดซ้าย */
+  color: black;
+  font-size: 16px;
+  flex-grow: 1; /* ⭐ ขยายเต็มพื้นที่ด้านขวา */
+}
+
+.profile-name,
+.profile-email-location {
+  font-weight: bold;
+  text-align: left; /* ⭐ บังคับให้ชิดซ้าย */
+  width: 100%;
+  display: inline-block; /* ⭐ ป้องกันการกึ่งกลาง */
+}

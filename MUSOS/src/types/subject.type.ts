@@ -20,4 +20,5 @@ export interface ISubject {
   notes: string;
   photoUrl: string;
   address: string;
+  slidingItem?: any; // Add slidingItem property
 }
